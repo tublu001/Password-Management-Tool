@@ -19,7 +19,7 @@ public class AccountCredentialOperations implements AccountsController
 	{
 		ArrayList<UserAccount> allAccounts = user.getAccounts();
 		UserAccount newAccount = new UserAccount();
-//        String decPwd = operate.decryptPassword(encPwd);
+		
 		newAccount.setAppName(appName);
 		newAccount.setUrl(url);
 		newAccount.setPassword(password);

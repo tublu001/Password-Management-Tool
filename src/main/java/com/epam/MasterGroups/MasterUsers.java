@@ -26,7 +26,6 @@ public class MasterUsers implements MasterUserCredentials
 	
 	static
 	{
-//		add("Manash", "qwerty");
 		PasswordOperations operate = new PwdOperate();
 		masterUsers.add(new MasterUsers().add("Manash", operate.encryptPassword("qwerty")));
 		masterUsers.add(new MasterUsers().add("Suresh", operate.encryptPassword("bfb")));
@@ -47,13 +46,6 @@ public class MasterUsers implements MasterUserCredentials
 	}
 
 	public MasterUsers() {}
-	
-//	public MasterUsers(String userName, String password, UserAccountCredential accounts) 
-//	{
-//		setUserName(userName);
-//		setPassword(password);
-//		add
-//	}
 
 	public String getUserName() {
 		return userName;
@@ -79,10 +71,6 @@ public class MasterUsers implements MasterUserCredentials
 		setPassword(password);
 		this.accounts  = new ArrayList<UserAccount>();
 		prefPass = new PreferredPassword();
-//		accounts.add(new UserAccount().store("google", "myUserName", "poiuytr"));
-//		accounts.add(new UserAccount().store("microsoft", "myUserName", "poiuytr"));
-//		accounts.add(new UserAccount().store("yahoo", "myUserName", "poiuytr"));
-//		accounts.add(new UserAccount().store("orkut", "myUserName", "poiuytr"));
 		return this;
 	}
 

@@ -11,9 +11,6 @@ public class PreferredPassword extends Generator
 	private boolean IncludeSym=true;
 	private int length = 10;
 	
-
-//	public PreferredPassword() 
-//	{}
 	
 //	@Override
 	@SuppressWarnings(value = {"all"})
@@ -94,10 +91,6 @@ public class PreferredPassword extends Generator
 	        int val = in.nextInt();
 	        setLength(val);
 	        in.nextLine();
-	        
-//	        generator = new Generator (IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
-	        
-//	        in.close();
 	        break;
 		}
 		

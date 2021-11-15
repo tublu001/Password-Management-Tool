@@ -25,8 +25,6 @@ public class HomeMenu
 			System.out.println("1. Log In to your Master Account");
 			System.out.println("2. Sign Up for a Master Account");
 			System.out.println("3. Retrive all Master user names");
-//			System.out.println("4. Delete any Account Credential");
-//			System.out.println("5. Set your Password preference");
 			System.out.print("0. Exit..\n\n\nChoose Any: ");
 			
 			char ch = input.next().charAt(0);
@@ -45,12 +43,6 @@ public class HomeMenu
 				case '3':
 					op.showAllMasters();
 					break;
-	//			case 4:
-	//				op.deleteAccountCredential(user);
-	//				break;
-	//			case 5:
-	//				op.setPasswordPreference(user);
-	//				break;
 				case '4':
 					flag = 1;
 					System.out.println("Thank you... Exiting...");
