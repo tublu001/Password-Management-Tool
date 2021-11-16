@@ -15,7 +15,7 @@ public class AccountCredentialOperations implements AccountsController
 	PasswordOperations operate = new PwdOperate();
 	
 	@Override
-	public MasterUsers store(MasterUsers user, String appName, String url, String password) 
+	public MasterUsers store(MasterUsers user, String appName, String url, String password, String groupName) 
 	{
 		ArrayList<UserAccount> allAccounts = user.getAccounts();
 		UserAccount newAccount = new UserAccount();
@@ -23,13 +23,12 @@ public class AccountCredentialOperations implements AccountsController
 		newAccount.setAppName(appName);
 		newAccount.setUrl(url);
 		newAccount.setPassword(password);
+		newAccount.setGroup(groupName);
 		allAccounts.add(newAccount);
 		
 		System.out.println("\nAccount Added...\n\n");
 		return user;
-	}
-	
-	
+	}	
 	
 	@Override
 	public String retrivePassword(UserAccount account) 
@@ -59,10 +58,22 @@ public class AccountCredentialOperations implements AccountsController
 			else
 				return false;
 	}
+	
+	
 
 	@Override
 	public void showAccount(UserAccount account) 
 	{
 		System.out.println(account);
+	}
+
+	@Override
+	public boolean isAppPresent(MasterUsers user, String appName) 
+	{
+		for(UserAccount account : user.getAccounts())
+			if(isAppName(account, appName))
+				return true;
+		
+		return false;
 	}
 }

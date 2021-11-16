@@ -2,8 +2,10 @@ package com.epam.userAccounts;
 
 import java.util.Scanner;
 
+import com.epam.AccountGroups.GroupOperations;
 import com.epam.MasterGroups.MasterUsers;
 import com.epam.MasterGroups.UserVerify;
+import com.epam.UI.GroupMenu;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PasswordValidate;
 import com.epam.passwordOperations.PreferredPassword;
@@ -16,27 +18,33 @@ public class UserAccountOperations implements CrudMenuOperations
 	{}
 	
 	Scanner input = new Scanner(System.in);
+	GroupOperations goperate = new GroupOperations();
 	
 	@Override
 	public MasterUsers acquireAccountCredentials(MasterUsers user) 
 	{
 		System.out.print("\n\nStore Account credentials\n\nEnter App Name: ");
 		String appName = input.nextLine();
-		System.out.print("Enter URL: ");
-		String url = input.nextLine();
-		System.out.print("Press enter to generate a new password for ("+appName+")..  ");
-		input.nextLine();
-		
-		//Password generation and encryption
-		PasswordOperations operate = new PwdOperate();
-        String pwd = operate.generatePassword(user);
-        String encPwd = operate.encryptPassword(pwd);
-        
-        System.out.println("\n\nPassword generated as per your preference. Use it in your application:\n" + pwd);
-        System.out.print("\nPress enter to save");
-        input.nextLine();
-        
-		user = new AccountCredentialOperations().store(user, appName, url, encPwd);
+		if(!new AccountCredentialOperations().isAppPresent(user, appName))
+		{
+			System.out.print("Enter URL: ");
+			String url = input.nextLine();
+			System.out.print("Press enter to generate a new password for ("+appName+")..  ");
+			input.nextLine();
+			
+			//Password generation and encryption
+			PasswordOperations operate = new PwdOperate();
+	        String pwd = operate.generatePassword(user);
+	        String encPwd = operate.encryptPassword(pwd);
+	        
+	        System.out.println("\n\nPassword generated as per your preference. Copy this password and use it in your application:\n" + pwd);
+	        System.out.print("\nPress enter for setting up Group\n");
+	        input.nextLine();
+	        String groupName = GroupMenu.showGroupUI(user);
+			user = new AccountCredentialOperations().store(user, appName, url, encPwd, groupName);
+			return user;
+		}
+		System.out.println("App already present in Database... Try again..\n");
 		return user;
 	}
 
@@ -92,7 +100,7 @@ public class UserAccountOperations implements CrudMenuOperations
 	@Override
 	public void retriveAllAccounts(MasterUsers user) 
 	{
-		System.out.print("\n\nRetrive All Account Credentials\n\n");
+		System.out.print("\n\nAll Account Details\n\n");
 		int sl = 1;
 		for(UserAccount account : user.getAccounts())
 		{
@@ -106,6 +114,35 @@ public class UserAccountOperations implements CrudMenuOperations
 	{
 		PreferredPassword pp = user.getPrefPass();
 		pp.setPrefferdPassword();
+	}
+
+	@Override
+	public void retriveGroupWiseAllAccounts(MasterUsers user) 
+	{
+		goperate.getGroupWiseAccounts(user);
+	}
+
+	@Override
+	public boolean renameGroupName(MasterUsers user) 
+	{
+		System.out.println("\n\n|------------Rename Group--------------|\n");
+		goperate.showGroups(user);
+		System.out.print("\nChoose any group you want to rename: ");
+		int groupNum = input.nextInt();
+		input.nextLine();	//consume new line character
+		if(goperate.isGroupIndex(user, groupNum-1))
+		{
+			String oldGroupName = goperate.getGroup(user, groupNum-1);
+			System.out.println("Give a new Group name: ");
+			String newGroupName = input.nextLine();
+			goperate.updateGroupName(user, groupNum-1, newGroupName);
+			goperate.updateAccountGroupName(user, oldGroupName, newGroupName);
+			System.out.println("Group Name Updated Successfully.. (" + oldGroupName + " ----> " + newGroupName +")");
+			return true;
+		}
+		else
+			System.out.println("Invalid Selection..\n\n");
+		return false;
 	}
 
 }

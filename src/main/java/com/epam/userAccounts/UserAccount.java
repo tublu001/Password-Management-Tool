@@ -6,6 +6,7 @@ public class UserAccount implements UserAccountCredential
 	private String appName;
 	private String url;
 	private String password;
+	private String group = "Undefined";
 	
 	
 	public String getAppName() {
@@ -32,9 +33,17 @@ public class UserAccount implements UserAccountCredential
 		this.password = password;
 	}
 	
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
 	@Override
 	public String toString() {
-		return "appName: " + appName + ", url: " + url + "";
+		return "appName: " + appName + ", url: " + url;
 	}
 	
 

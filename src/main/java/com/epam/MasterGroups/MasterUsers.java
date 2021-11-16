@@ -21,6 +21,7 @@ public class MasterUsers implements MasterUserCredentials
 	private String userName;
 	private String password;
 	private ArrayList<UserAccount> accounts;
+	private ArrayList<String> groups;
 	private PreferredPassword prefPass;
 	//private UserAccountCredential accounts;
 	
@@ -70,6 +71,8 @@ public class MasterUsers implements MasterUserCredentials
 		setUserName(userName);
 		setPassword(password);
 		this.accounts  = new ArrayList<UserAccount>();
+		this.groups = new ArrayList<String>();
+		groups.add("Undefined");
 		prefPass = new PreferredPassword();
 		return this;
 	}
@@ -115,6 +118,26 @@ public class MasterUsers implements MasterUserCredentials
 
 	public void setPrefPass(PreferredPassword prefPass) {
 		this.prefPass = prefPass;
+	}
+
+	public ArrayList<String> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(ArrayList<String> groups) {
+		this.groups = groups;
+	}
+	
+	public void addGroup(String groupName) {
+		this.groups.add(groupName);
+	}
+	
+	public static boolean isMasterPresent(String userNm)
+	{
+		for(MasterUsers user : masterUsers)
+			if(userNm.equals(user.getUserName()))
+				return true;
+		return false;
 	}
 	
 

@@ -16,10 +16,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
-/**
- * @author Manash_Rauta
- *
- */
 public class PwdOperate implements PasswordOperations 
 {
 

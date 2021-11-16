@@ -9,4 +9,6 @@ public interface CrudMenuOperations
 	MasterUsers deleteAccountCredential(MasterUsers user);
 	void retriveAllAccounts(MasterUsers user);
 	void setPasswordPreference(MasterUsers user);
+	void retriveGroupWiseAllAccounts(MasterUsers user);
+	boolean renameGroupName(MasterUsers user);
 }

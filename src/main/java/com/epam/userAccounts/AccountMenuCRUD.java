@@ -19,10 +19,12 @@ public class AccountMenuCRUD {
 		{
 			System.out.println("\n\nChoose any of the Operation");
 			System.out.println("1. Store a Account Credential");
-			System.out.println("2. Retrive all Account Credential");
-			System.out.println("3. Retrive any Account Credential");
-			System.out.println("4. Delete any Account Credential");
-			System.out.println("5. Set your Password preference");
+			System.out.println("2. Retrive all Account details");
+			System.out.println("3. Retrive Group wise Accounts details");
+			System.out.println("4. Retrive any Account details");
+			System.out.println("5. Rename any Group name");
+			System.out.println("6. Delete any Account Credential");
+			System.out.println("7. Set your Password preference");
 			System.out.print("0. Sign Out\n\n\nChoose Any: ");
 			
 			char ch = input.next().charAt(0);
@@ -36,12 +38,18 @@ public class AccountMenuCRUD {
 					op.retriveAllAccounts(user);
 					break;
 				case '3':
-					op.retriveAccountCredential(user);
+					op.retriveGroupWiseAllAccounts(user);
 					break;
 				case '4':
-					op.deleteAccountCredential(user);
+					op.retriveAccountCredential(user);
 					break;
 				case '5':
+					op.renameGroupName(user);
+					break;
+				case '6':
+					op.deleteAccountCredential(user);
+					break;
+				case '7':
 					op.setPasswordPreference(user);
 					break;
 				case '0':
