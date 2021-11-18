@@ -1,6 +1,6 @@
 package com.epam.userAccounts;
 
-public class UserAccount implements UserAccountCredential
+public class UserAccount
 {
 
 	private String appName;

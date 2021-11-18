@@ -19,7 +19,7 @@ import java.util.Base64;
 public class PwdOperate implements PasswordOperations 
 {
 
-	private static final String SECRET_KEY = "my_super_secret_key_ho_ho_ho";
+	private static final String SECRET_KEY = "my_super_secret_key_yo_yo_yo";
 	private static final String SALT = "ssshhhhhhhhhhh!!!!";
 	
 	public PwdOperate() {}

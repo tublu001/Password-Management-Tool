@@ -12,10 +12,10 @@ public class AccountMenuCRUD {
 	@SuppressWarnings(value = {"all"})
 	public static void showCrudMenu(MasterUsers user)
 	{
-		int flag = 0;
+		boolean repeatLoop = true;
 		final Scanner input = new Scanner(System.in);
 		
-		while(flag==0)
+		while(repeatLoop)
 		{
 			System.out.println("\n\nChoose any of the Operation");
 			System.out.println("1. Store a Account Credential");
@@ -27,9 +27,9 @@ public class AccountMenuCRUD {
 			System.out.println("7. Set your Password preference");
 			System.out.print("0. Sign Out\n\n\nChoose Any: ");
 			
-			char ch = input.next().charAt(0);
+			char selection = input.next().charAt(0);
 			CrudMenuOperations op = new UserAccountOperations();
-			switch(ch)
+			switch(selection)
 			{
 				case '1':
 					op.acquireAccountCredentials(user);
@@ -53,7 +53,7 @@ public class AccountMenuCRUD {
 					op.setPasswordPreference(user);
 					break;
 				case '0':
-					flag = 1;
+					repeatLoop = false;
 					System.out.println("Thank you... Signing Out...");
 					break;
 				default:
