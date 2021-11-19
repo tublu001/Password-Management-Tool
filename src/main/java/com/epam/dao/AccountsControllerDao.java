@@ -1,8 +1,9 @@
-package com.epam.userAccounts;
+package com.epam.dao;
 
-import com.epam.MasterGroups.MasterUsers;
+import com.epam.model.MasterUsers;
+import com.epam.model.UserAccount;
 
-public interface AccountsController 
+public interface AccountsControllerDao 
 {
 	public MasterUsers store(MasterUsers user, String appName, String url, String password, String groupName);
 	public String retrivePassword(UserAccount account);

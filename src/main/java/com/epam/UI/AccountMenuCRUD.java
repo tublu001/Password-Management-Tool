@@ -1,8 +1,10 @@
-package com.epam.userAccounts;
+package com.epam.UI;
 
 import java.util.Scanner;
 
-import com.epam.MasterGroups.MasterUsers;
+import com.epam.model.MasterUsers;
+import com.epam.service.AccountCrudFactory;
+import com.epam.service.UserAccountCrudOperation;
 
 public class AccountMenuCRUD {
 
@@ -28,38 +30,13 @@ public class AccountMenuCRUD {
 			System.out.print("0. Sign Out\n\n\nChoose Any: ");
 			
 			char selection = input.next().charAt(0);
-			CrudMenuOperations op = new UserAccountOperations();
-			switch(selection)
-			{
-				case '1':
-					op.acquireAccountCredentials(user);
-					break;
-				case '2':
-					op.retriveAllAccounts(user);
-					break;
-				case '3':
-					op.retriveGroupWiseAllAccounts(user);
-					break;
-				case '4':
-					op.retriveAccountCredential(user);
-					break;
-				case '5':
-					op.renameGroupName(user);
-					break;
-				case '6':
-					op.deleteAccountCredential(user);
-					break;
-				case '7':
-					op.setPasswordPreference(user);
-					break;
-				case '0':
-					repeatLoop = false;
-					System.out.println("Thank you... Signing Out...");
-					break;
-				default:
-					System.out.println("Invalid Input! Try again...");
-					break;
-			}
+			
+			UserAccountCrudOperation operations = new AccountCrudFactory().getOperation(selection);
+			if(operations!=null)
+				operations.execute(user);
+			
+			if(selection == '0')
+				repeatLoop = false;
 		}
 		
 	}

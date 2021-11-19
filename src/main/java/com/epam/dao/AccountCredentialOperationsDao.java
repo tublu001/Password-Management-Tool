@@ -1,15 +1,16 @@
-package com.epam.userAccounts;
+package com.epam.dao;
 
 import java.util.ArrayList;
 
-import com.epam.MasterGroups.MasterUsers;
+import com.epam.model.MasterUsers;
+import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PwdOperate;
 
-public class AccountCredentialOperations implements AccountsController
+public class AccountCredentialOperationsDao implements AccountsControllerDao
 {
 
-	public AccountCredentialOperations() 
+	public AccountCredentialOperationsDao() 
 	{}
 	
 	PasswordOperations operate = new PwdOperate();

@@ -1,16 +1,14 @@
-package com.epam.MasterGroups;
+package com.epam.passwordOperations;
 
 import java.util.Scanner;
 
-import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PasswordValidate;
-import com.epam.passwordOperations.PwdOperate;
+import com.epam.dao.MasterUsersOperationsDao;
+import com.epam.model.MasterUsers;
 
-public class UserVerify implements PasswordValidate
+public class UserValidate implements PasswordValidate
 {
 
-	public UserVerify() 
-	{}
+	public UserValidate() {}
 	Scanner input = new Scanner(System.in);
 	PasswordOperations operate = new PwdOperate();
 	
@@ -19,7 +17,7 @@ public class UserVerify implements PasswordValidate
 	{
 		System.out.print("\nEnter Your MASTER Account credentials - \n\nUser Name: ");
 		String userName = input.nextLine();
-		MasterUsers user = MasterUsers.getUser(userName);
+		MasterUsers user = MasterUsersOperationsDao.getUser(userName);
 		if( user != null)
 		{
 			System.out.print("User Found...");
@@ -38,7 +36,7 @@ public class UserVerify implements PasswordValidate
 	@Override
 	public boolean validatePassword(MasterUsers user) 
 	{
-		System.out.println("\n\nEnter your password: ");
+		System.out.println("\n\nEnter your (Master) password: ");
 		String password = input.nextLine();
 		if(operate.encryptPassword(password).equals(user.getPassword()))
 		{

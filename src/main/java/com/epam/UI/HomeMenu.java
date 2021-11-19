@@ -2,10 +2,7 @@ package com.epam.UI;
 
 import java.util.Scanner;
 
-import com.epam.MasterGroups.MasterCrudMenu;
-import com.epam.MasterGroups.MasterOperations;
-import com.epam.MasterGroups.MasterUsers;
-import com.epam.userAccounts.AccountMenuCRUD;
+import com.epam.model.MasterUsers;
 
 public class HomeMenu 
 {

@@ -2,10 +2,7 @@ package com.epam.UI;
 
 import java.util.Scanner;
 
-import com.epam.AccountGroups.AccountCrudGroup;
-import com.epam.AccountGroups.GroupCrudOperations;
-import com.epam.AccountGroups.GroupOperations;
-import com.epam.MasterGroups.MasterUsers;
+import com.epam.model.MasterUsers;
 
 public class GroupMenu 
 {
@@ -20,7 +17,6 @@ public class GroupMenu
 		int flag = 0;
 		String groupName = "Undefined";
 		final Scanner input = new Scanner(System.in);
-		GroupOperations goperate = new GroupOperations();
 		
 		while(flag==0)
 		{

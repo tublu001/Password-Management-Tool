@@ -1,6 +1,6 @@
-package com.epam.AccountGroups;
+package com.epam.UI;
 
-import com.epam.MasterGroups.MasterUsers;
+import com.epam.model.MasterUsers;
 
 public interface AccountCrudGroup 
 {

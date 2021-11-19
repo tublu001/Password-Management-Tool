@@ -1,6 +1,6 @@
 package com.epam.passwordOperations;
 
-import com.epam.MasterGroups.MasterUsers;
+import com.epam.model.MasterUsers;
 
 public interface PasswordValidate 
 {

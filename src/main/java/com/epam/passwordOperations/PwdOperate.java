@@ -10,7 +10,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.epam.MasterGroups.MasterUsers;
+import com.epam.model.MasterUsers;
 
 import java.nio.charset.StandardCharsets;
 import java.security.spec.KeySpec;

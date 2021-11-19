@@ -1,8 +1,9 @@
-package com.epam.AccountGroups;
+package com.epam.UI;
 
 import java.util.Scanner;
 
-import com.epam.MasterGroups.MasterUsers;
+import com.epam.dao.GroupOperationsDao;
+import com.epam.model.MasterUsers;
 
 public class GroupCrudOperations implements AccountCrudGroup {
 
@@ -10,7 +11,7 @@ public class GroupCrudOperations implements AccountCrudGroup {
 	{}
 	
 	Scanner sc = new Scanner(System.in);
-	GroupOperations goperate = new GroupOperations();
+	GroupOperationsDao goperate = new GroupOperationsDao();
 	
 	@Override
 	public boolean createGroup(MasterUsers user) 

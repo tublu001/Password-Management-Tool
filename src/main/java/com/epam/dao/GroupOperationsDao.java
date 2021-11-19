@@ -1,15 +1,15 @@
-package com.epam.AccountGroups;
+package com.epam.dao;
 
-import com.epam.MasterGroups.MasterUsers;
-import com.epam.userAccounts.UserAccount;
+import com.epam.model.MasterUsers;
+import com.epam.model.UserAccount;
 
-public class GroupOperations 
+public class GroupOperationsDao
 {
 
-	public GroupOperations() 
+	public GroupOperationsDao() 
 	{}
 	
-	boolean isGroupAvailable(MasterUsers user, String groupName)
+	public boolean isGroupAvailable(MasterUsers user, String groupName)
 	{
 		for(String dbGroupName : user.getGroups())
 		{
@@ -21,7 +21,7 @@ public class GroupOperations
 	
 	public String addGroupName(MasterUsers user, String groupName)
 	{
-		user.addGroup(groupName);
+		MasterUserOperationsDao.addGroup(user, groupName);
 		return groupName;
 	}
 	

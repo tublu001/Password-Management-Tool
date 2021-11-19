@@ -1,4 +1,4 @@
-package com.epam.userAccounts;
+package com.epam.model;
 
 public class UserAccount
 {

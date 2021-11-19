@@ -1,4 +1,6 @@
-package com.epam.MasterGroups;
+package com.epam.UI;
+
+import com.epam.model.MasterUsers;
 
 public interface MasterCrudMenu 
 {
