@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/password-management-tool.iml" filepath="$PROJECT_DIR$/.idea/password-management-tool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/password_mngr.iml" filepath="$PROJECT_DIR$/password_mngr.iml" />
     </modules>
   </component>
 </project>

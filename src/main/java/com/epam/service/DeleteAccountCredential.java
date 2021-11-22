@@ -3,21 +3,25 @@ package com.epam.service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import com.epam.UI.HomeMenu;
 import com.epam.dao.AccountCredentialOperationsDao;
 import com.epam.model.MasterUsers;
 import com.epam.model.UserAccount;
-import com.epam.passwordOperations.PasswordValidate;
 import com.epam.passwordOperations.UserValidate;
+import com.epam.passwordOperations.UserValidation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DeleteAccountCredential implements UserAccountCrudOperation 
 {
+	private static final Logger LOGGER = LogManager.getLogger(DeleteAccountCredential.class);
 	Scanner input = new Scanner(System.in);
 	@Override
 	public Optional<MasterUsers> execute(MasterUsers user) 
 	{
-		PasswordValidate pv = new UserValidate();
+		UserValidation uv = new UserValidate();
 		AccountCredentialOperationsDao op = new AccountCredentialOperationsDao();
-		System.out.print("\n\nDelete Account credential\n\nEnter App Name: ");
+		LOGGER.info("\n\nDelete Account credential\n\nEnter App Name: ");
 		String appName = input.nextLine();
 		boolean isApp = false;
 		
@@ -26,18 +30,18 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
 			if(op.isAppName(account, appName))
 			{
 				isApp = true;
-				System.out.println("Application Found : "+ appName);
-				if(pv.validatePassword(user))
+				LOGGER.info("Application Found : "+ appName);
+				if(uv.validatePassword(user))
 					op.remove(user, account);
 				else
-					System.out.println("Incorrect Password...");
+					LOGGER.info("Incorrect Password...");
 				break;
 			}
 		}
 		if(!isApp)
-			System.out.println("App not found...\n");
+			LOGGER.info("App not found...\n");
 		
-		return null;
+		return Optional.ofNullable(user);
 	}
 
 }

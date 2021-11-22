@@ -1,7 +1,12 @@
 package com.epam.service;
 
-public class AccountCrudFactory 
+import com.epam.UI.HomeMenu;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class AccountCrudFactory
 {
+	private static final Logger LOGGER = LogManager.getLogger(AccountCrudFactory.class);
 	public UserAccountCrudOperation getOperation(char ch)
 	{
 		if(ch == '1')
@@ -19,9 +24,9 @@ public class AccountCrudFactory
 		else if(ch == '7')
 			return new SetPasswordPreference();
 		else if(ch == '0')
-			System.out.println("Thank you... Signing Out...");
+			LOGGER.info("Thank you... Signing Out...");
 		else
-			System.out.println("Invalid Input! Try again...");
+			LOGGER.info("Invalid Input! Try again...");
 		
 		return null;
 	}

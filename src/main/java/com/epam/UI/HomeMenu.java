@@ -3,10 +3,12 @@ package com.epam.UI;
 import java.util.Scanner;
 
 import com.epam.model.MasterUsers;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class HomeMenu 
 {
-
+	private static final Logger LOGGER = LogManager.getLogger(HomeMenu.class);
 	public HomeMenu() 
 	{}
 	
@@ -18,11 +20,11 @@ public class HomeMenu
 		
 		while(flag==0)
 		{
-			System.out.println("\n\n*************** WELCOME TO PASSWORD MANAGEMENT TOOL ***************\n\n");
-			System.out.println("1. Log In to your Master Account");
-			System.out.println("2. Sign Up for a Master Account");
-			System.out.println("3. Retrive all Master user names");
-			System.out.print("0. Exit..\n\n\nChoose Any: ");
+			LOGGER.info("\n\n*************** WELCOME TO PASSWORD MANAGEMENT TOOL ***************\n\n");
+			LOGGER.info("1. Log In to your Master Account");
+			LOGGER.info("2. Sign Up for a Master Account");
+			LOGGER.info("3. Retrive all Master user names");
+			LOGGER.info("0. Exit..\n\n\nChoose Any: ");
 			
 			char ch = input.next().charAt(0);
 			
@@ -40,12 +42,12 @@ public class HomeMenu
 				case '3':
 					op.showAllMasters();
 					break;
-				case '4':
+				case '0':
 					flag = 1;
-					System.out.println("Thank you... Exiting...");
+					LOGGER.info("Thank you... Exiting...");
 					break;
 				default:
-					System.out.println("Invalid Input! Try again...");
+					LOGGER.warn("Invalid Input! Try again...");
 					break;
 			}
 		}

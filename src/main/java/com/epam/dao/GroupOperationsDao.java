@@ -2,10 +2,12 @@ package com.epam.dao;
 
 import com.epam.model.MasterUsers;
 import com.epam.model.UserAccount;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GroupOperationsDao
 {
-
+	private static final Logger LOGGER = LogManager.getLogger(GroupOperationsDao.class);
 	public GroupOperationsDao() 
 	{}
 	
@@ -30,7 +32,7 @@ public class GroupOperationsDao
 		int count = 0;
 		if(user != null)
 			for(String groupName : user.getGroups())
-				System.out.println(++count + ". " +groupName);
+				LOGGER.info(++count + ". " +groupName);
 	}
 	
 	public String getGroup(MasterUsers user, int index)
@@ -38,7 +40,7 @@ public class GroupOperationsDao
 		if(user != null && (index < user.getGroups().size() && index > 0))
 			return user.getGroups().get(index);
 		else
-			System.out.println("Invalid Input");
+			LOGGER.info("Invalid Input");
 		return "";
 	}
 	
@@ -50,22 +52,22 @@ public class GroupOperationsDao
 			return true;
 		}
 		else
-			System.out.println("Invalid Input");
+			LOGGER.info("Invalid Input");
 		return false;
 	}
 	
 	
 	public void getGroupWiseAccounts(MasterUsers user)
 	{
-		System.out.println("\n\n|--------------Group Wise All Available Accounts--------------|\n");
+		LOGGER.info("\n\n|--------------Group Wise All Available Accounts--------------|\n");
 		if(user != null)
 			for(String groupName : user.getGroups())
 			{
-				System.out.println("\n              "+groupName+"");
-				System.out.println("--------------------------------");
+				LOGGER.info("\n              "+groupName+"");
+				LOGGER.info("--------------------------------");
 				getGroupAccounts(user, groupName);
 			}
-		System.out.println("\n");
+		LOGGER.info("\n");
 	}
 	
 	
@@ -76,15 +78,13 @@ public class GroupOperationsDao
 			for(UserAccount account : user.getAccounts())
 			{
 				if(groupName.equals(account.getGroup()))
-					System.out.println(++count + ". " + account);
+					LOGGER.info(++count + ". " + account);
 			}
 	}
 
 	public boolean isGroupIndex(MasterUsers user, int index) 
 	{
-		if(index < user.getGroups().size() && index > 0)
-			return true;
-		return false;
+		return index < user.getGroups().size() && index > 0;
 	}
 
 	public void updateAccountGroupName(MasterUsers user, String oldGroupName, String newGroupName) 

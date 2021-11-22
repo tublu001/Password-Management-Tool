@@ -4,9 +4,12 @@ import java.util.Scanner;
 
 import com.epam.dao.GroupOperationsDao;
 import com.epam.model.MasterUsers;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class GroupCrudOperations implements AccountCrudGroup {
-
+public class GroupCrudOperations implements AccountCrudGroup
+{
+	private static final Logger LOGGER = LogManager.getLogger(GroupCrudOperations.class);
 	public GroupCrudOperations() 
 	{}
 	
@@ -16,23 +19,23 @@ public class GroupCrudOperations implements AccountCrudGroup {
 	@Override
 	public boolean createGroup(MasterUsers user) 
 	{
-		System.out.println("Enter a new Group Name: ");
+		LOGGER.info("Enter a new Group Name: ");
 		String groupName = sc.nextLine();
 		if(!goperate.isGroupAvailable(user, groupName))
 		{
 			goperate.addGroupName(user, groupName);
 			return true;
 		}
-		System.out.println("Group already present in the Database\n");
+		LOGGER.info("Group already present in the Database\n");
 		return false;
 	}
 
 	@Override
 	public String storeInExistingGroup(MasterUsers user) 
 	{
-		System.out.println("\n\nAll the Existing Groups Available: ");
+		LOGGER.info("\n\nAll the Existing Groups Available: ");
 		goperate.showGroups(user);
-		System.out.println("\nSelect any one: ");
+		LOGGER.info("\nSelect any one: ");
 		int groupNum = sc.nextInt();
 		if(goperate.isGroupIndex(user, groupNum-1))
 		{
@@ -40,7 +43,7 @@ public class GroupCrudOperations implements AccountCrudGroup {
 			if(goperate.isGroupAvailable(user, groupName))
 				return groupName;
 			else
-				System.out.println("Group not available...");
+				LOGGER.info("Group not available...");
 		}
 		return "Undefined";
 	}	

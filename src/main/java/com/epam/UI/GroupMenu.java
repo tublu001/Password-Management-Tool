@@ -3,10 +3,12 @@ package com.epam.UI;
 import java.util.Scanner;
 
 import com.epam.model.MasterUsers;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GroupMenu 
 {
-
+	private static final Logger LOGGER = LogManager.getLogger(GroupMenu.class);
 	public GroupMenu() 
 	{}
 	
@@ -20,9 +22,9 @@ public class GroupMenu
 		
 		while(flag==0)
 		{
-			System.out.println("1. Create a new group");
-			System.out.println("2. Store in a existing group");
-			System.out.print("0. Skip..(Ungrouped)\n\n\nChoose Any: ");
+			LOGGER.info("1. Create a new group");
+			LOGGER.info("2. Store in a existing group");
+			LOGGER.info("0. Skip..(Ungrouped)\n\n\nChoose Any: ");
 			
 			char ch = input.next().charAt(0);
 			
@@ -48,7 +50,7 @@ public class GroupMenu
 					flag = 1;
 					break;
 				default:
-					System.out.println("Invalid Input! Try again...");
+					LOGGER.info("Invalid Input! Try again...");
 					break;
 			}
 		}

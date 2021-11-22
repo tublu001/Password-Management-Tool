@@ -7,7 +7,10 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.epam.dao.AccountCredentialOperationsDao;
 import com.epam.model.MasterUsers;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.security.spec.KeySpec;
@@ -15,7 +18,7 @@ import java.util.Base64;
 
 public class PwdOperate implements PasswordOperations 
 {
-
+	private static final Logger LOGGER = LogManager.getLogger(PwdOperate.class);
 	private static final String SECRET_KEY = "my_super_secret_key_yo_yo_yo";
 	private static final String SALT = "ssshhhhhhhhhhh!!!!";
 	
@@ -47,7 +50,7 @@ public class PwdOperate implements PasswordOperations
 		      return Base64.getEncoder()
 		          .encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
 		    } catch (Exception e) {
-		      System.out.println("Error while encrypting: " + e);
+		      LOGGER.info("Error while encrypting: " + e);
 		    }
 		    return null;
 		  }
@@ -68,7 +71,7 @@ public class PwdOperate implements PasswordOperations
 		      cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
 		      return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
 		    } catch (Exception e) {
-		      System.out.println("Error while decrypting: " + e);
+		      LOGGER.info("Error while decrypting: " + e);
 		    }
 		    return null;
 	}

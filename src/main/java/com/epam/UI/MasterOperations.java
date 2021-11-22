@@ -4,14 +4,13 @@ import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.model.MasterUsers;
-import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PasswordValidate;
-import com.epam.passwordOperations.PwdOperate;
-import com.epam.passwordOperations.UserValidate;
+import com.epam.passwordOperations.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MasterOperations implements MasterCrudMenu
 {
-
+	private static final Logger LOGGER = LogManager.getLogger(MasterOperations.class);
 	Scanner input = new Scanner(System.in);
 	
 	public MasterOperations() {}
@@ -28,20 +27,20 @@ public class MasterOperations implements MasterCrudMenu
 	@Override
 	public void createMaster() 
 	{
-		System.out.print("\n\nCreate a new Master Account\n\nUser Name: ");
+		LOGGER.info("\n\nCreate a new Master Account\n\nUser Name: ");
 		String userName = input.nextLine();
 		if(!MasterUsersOperationsDao.isMasterPresent(userName))
 		{
-			System.out.print("Enter a New Password: ");
+			LOGGER.info("Enter a New Password: ");
 			String password = input.nextLine();
 			
 			PasswordOperations operate = new PwdOperate();
 			
 			MasterUsersOperationsDao.add(userName, operate.encryptPassword(password));
-			System.out.print("\nMaster User created");
+			LOGGER.info("\nMaster User created");
 		}
 		else
-			System.out.print("\nFailed.. Master already present in database..\n\n");
+			LOGGER.info("\nFailed.. Master already present in database..\n\n");
 	}
 
 	@Override
@@ -53,9 +52,8 @@ public class MasterOperations implements MasterCrudMenu
 	@Override
 	public MasterUsers loginMaster() 
 	{
-		PasswordValidate pv = new UserValidate();
-        MasterUsers user = pv.validateUser();
-		return user;
+		UserValidation uv = new UserValidate();
+        return uv.validateUser();
 	}
 
 }

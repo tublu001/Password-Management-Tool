@@ -2,17 +2,20 @@ package com.epam.dao;
 
 import java.util.ArrayList;
 
+import com.epam.UI.HomeMenu;
 import com.epam.model.MasterUsers;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PwdOperate;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AccountCredentialOperationsDao implements AccountsControllerDao
 {
 
 	public AccountCredentialOperationsDao() 
 	{}
-	
+	private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
 	PasswordOperations operate = new PwdOperate();
 	
 	@Override
@@ -27,7 +30,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 		newAccount.setGroup(groupName);
 		allAccounts.add(newAccount);
 		
-		System.out.println("\nAccount Added...\n\n");
+		LOGGER.info("\nAccount Added...\n\n");
 		return user;
 	}	
 	
@@ -42,11 +45,11 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	{
 		if(user.getAccounts().remove(account))
 		{
-			System.out.println("Account Removed...");
+			LOGGER.info("Account Removed...");
 			return true;
 		}
 		else
-			System.out.println("Some Error Occured");
+			LOGGER.info("Some Error Occured");
 		
 		return false;
 	}
@@ -54,10 +57,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	@Override
 	public boolean isAppName(UserAccount account, String appName)
 	{
-			if(account.getAppName().equals(appName))
-				return true;
-			else
-				return false;
+			return account.getAppName().equals(appName);
 	}
 	
 	
@@ -65,7 +65,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	@Override
 	public void showAccount(UserAccount account) 
 	{
-		System.out.println(account);
+		LOGGER.info(account);
 	}
 
 	@Override

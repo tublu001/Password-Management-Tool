@@ -1,10 +1,13 @@
 package com.epam.passwordOperations;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Scanner;
 
 public class PreferredPassword extends Generator
 {
-
+	private static final Logger LOGGER = LogManager.getLogger(PreferredPassword.class);
 	private boolean IncludeUpper=true;
 	private boolean IncludeLower=true;
 	private boolean IncludeNum=true;
@@ -18,14 +21,13 @@ public class PreferredPassword extends Generator
 	{
 		String Input;
 		Scanner in = new Scanner(System.in);
-		
-		System.out.println();
-		System.out.println("Hello, welcome to the Password Generator :) answer"
+
+		LOGGER.info("\nHello, welcome to the Password Generator :) answer"
 				+" the following questions by Yes or No \n");
 		
 		
 		while(true) {
-			System.out.println("Do you want Lowercase letters \"abcd...\" to be used? ");
+			LOGGER.info("Do you want Lowercase letters \"abcd...\" to be used? ");
 	        Input = in.nextLine();
 
 	        if (Input.equals("YES") || Input.equals("Yes") || Input.equals("yes")) {
@@ -39,7 +41,7 @@ public class PreferredPassword extends Generator
 	        	}
 	        }
 	      
-			System.out.println("Do you want Uppercase letters \"ABCD...\" to be used? ");
+			LOGGER.info("Do you want Uppercase letters \"ABCD...\" to be used? ");
 			Input = in.nextLine();
 
 			if (Input.equals("YES") || Input.equals("Yes") || Input.equals("yes")) {
@@ -53,7 +55,7 @@ public class PreferredPassword extends Generator
 	        	}
 	        }
 			
-			System.out.println("Do you want Numbers \"1234...\" to be used? ");
+			LOGGER.info("Do you want Numbers \"1234...\" to be used? ");
 			Input = in.nextLine();
 
 			if (Input.equals("YES") || Input.equals("Yes") || Input.equals("yes")) {
@@ -67,7 +69,7 @@ public class PreferredPassword extends Generator
 	        	}
 	        }
 			
-			System.out.println("Do you want Symbols \"!@#$...\" to be used? ");
+			LOGGER.info("Do you want Symbols \"!@#$...\" to be used? ");
 			Input = in.nextLine();
 
 			if (Input.equals("YES") || Input.equals("Yes") || Input.equals("yes")) {
@@ -83,11 +85,11 @@ public class PreferredPassword extends Generator
 			
 			//No Pool Selected
 			if(!IncludeUpper && !IncludeLower && !IncludeNum && !IncludeSym) {
-				System.out.println("You have selected no characters to generate your password at least one of your answers should be Yes");
+				LOGGER.info("You have selected no characters to generate your password at least one of your answers should be Yes");
 				break;
 			}
 			
-	        System.out.println("Great! Now enter the length of the password");
+	        LOGGER.info("Great! Now enter the length of the password");
 	        int val = in.nextInt();
 	        setLength(val);
 	        in.nextLine();
@@ -167,7 +169,7 @@ public class PreferredPassword extends Generator
 
 
 	public static void PasswordRequestError() {
-		System.out.println("You have entered something incorrect let's go over it again \n");
+		LOGGER.info("You have entered something incorrect let's go over it again \n");
 	}
 
 }

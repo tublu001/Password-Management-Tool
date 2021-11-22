@@ -3,17 +3,21 @@ package com.epam.service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import com.epam.UI.HomeMenu;
 import com.epam.dao.AccountCredentialOperationsDao;
 import com.epam.model.MasterUsers;
 import com.epam.model.UserAccount;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RetriveAccountPassword implements UserAccountCrudOperation 
 {
+	private static final Logger LOGGER = LogManager.getLogger(RetriveAccountPassword.class);
 	Scanner input = new Scanner(System.in);
 	@Override
 	public Optional<MasterUsers> execute(MasterUsers user) 
 	{
-		System.out.print("\n\nRetrive Account password\n\nEnter App Name: ");
+		LOGGER.info("\n\nRetrive Account password\n\nEnter App Name: ");
 		String appName = input.nextLine();
 		AccountCredentialOperationsDao op = new AccountCredentialOperationsDao();
 		boolean isApp = false;
@@ -23,14 +27,14 @@ public class RetriveAccountPassword implements UserAccountCrudOperation
 			if(op.isAppName(account, appName))
 			{
 				isApp = true;
-				System.out.println("Account password is: " + op.retrivePassword(account));
+				LOGGER.info("Account password is: " + op.retrivePassword(account));
 				break;
 			}
 		}
 		if(!isApp)
-			System.out.println("App not found...\n");
+			LOGGER.info("App not found...\n");
 		
-		return Optional.ofNullable(user);
+		return Optional.of(user);
 	}
 
 }

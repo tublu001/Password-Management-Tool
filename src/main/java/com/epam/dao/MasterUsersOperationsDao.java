@@ -6,9 +6,12 @@ import com.epam.model.MasterUsers;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PreferredPassword;
 import com.epam.repository.MasterUsersDB;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MasterUsersOperationsDao
 {
+	private static final Logger LOGGER = LogManager.getLogger(MasterUserOperationsDao.class);
 	static ArrayList<MasterUsers> masterUsers = MasterUsersDB.getMasterUsers(); 
 	
 	public static MasterUsers add(String userName, String password) 
@@ -17,8 +20,8 @@ public class MasterUsersOperationsDao
 		MasterUsers user = new MasterUsers();
 		user.setUserName(userName);
 		user.setPassword(password);
-		user.setAccounts(new ArrayList<UserAccount>());
-		user.setGroups(new ArrayList<String>());
+		user.setAccounts(new ArrayList<>());
+		user.setGroups(new ArrayList<>());
 		user.getGroups().add("Undefined");
 		user.setPrefPass(new PreferredPassword());
 		masterUsers.add(user);
@@ -28,7 +31,7 @@ public class MasterUsersOperationsDao
 	public static void showUsers()
 	{
 		for(MasterUsers users : masterUsers)
-			System.out.println(users.toString());
+			LOGGER.info(users.toString());
 	}
 	
 

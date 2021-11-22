@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.model.MasterUsers;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class UserValidate implements PasswordValidate
+public class UserValidate implements UserValidation
 {
-
+	private static final Logger LOGGER = LogManager.getLogger(UserValidate.class);
 	public UserValidate() {}
 	Scanner input = new Scanner(System.in);
 	PasswordOperations operate = new PwdOperate();
@@ -15,36 +17,36 @@ public class UserValidate implements PasswordValidate
 	@Override
 	public MasterUsers validateUser() 
 	{
-		System.out.print("\nEnter Your MASTER Account credentials - \n\nUser Name: ");
+		LOGGER.info("\nEnter Your MASTER Account credentials - \n\nUser Name: ");
 		String userName = input.nextLine();
 		MasterUsers user = MasterUsersOperationsDao.getUser(userName);
 		if( user != null)
 		{
-			System.out.print("User Found...");
+			LOGGER.info("User Found...");
 			if(validatePassword(user))
 			{
-				System.out.println("\nLogging you in");
+				LOGGER.info("\nLogging you in");
 				return user;
 			}
 			else
 				return null;
 		}
-		System.out.println("User not found..");
+		LOGGER.info("User not found..");
 		return null;
 	}
 
 	@Override
 	public boolean validatePassword(MasterUsers user) 
 	{
-		System.out.println("\n\nEnter your (Master) password: ");
+		LOGGER.info("\n\nEnter your (Master) password: ");
 		String password = input.nextLine();
 		if(operate.encryptPassword(password).equals(user.getPassword()))
 		{
-			System.out.println("Verified...");
+			LOGGER.info("Verified...");
 			return true;
 		}
 		else
-			System.out.println("Incorrect Password");
+			LOGGER.info("Incorrect Password");
 		return false;
 	}
 
