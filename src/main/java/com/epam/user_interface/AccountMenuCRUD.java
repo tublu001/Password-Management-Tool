@@ -1,8 +1,8 @@
-package com.epam.UI;
+package com.epam.user_interface;
 
 import java.util.Scanner;
 
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import com.epam.service.AccountCrudFactory;
 import com.epam.service.UserAccountCrudOperation;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +14,7 @@ public class AccountMenuCRUD {
 	{}
 	private static final Logger LOGGER = LogManager.getLogger(AccountMenuCRUD.class);
 	@SuppressWarnings(value = {"all"})
-	public static void showCrudMenu(MasterUsers user)
+	public static void showCrudMenu(MasterUser user)
 	{
 		boolean repeatLoop = true;
 		final Scanner input = new Scanner(System.in);

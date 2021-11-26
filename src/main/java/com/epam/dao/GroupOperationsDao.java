@@ -1,6 +1,6 @@
 package com.epam.dao;
 
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import com.epam.model.UserAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,10 +8,8 @@ import org.apache.logging.log4j.Logger;
 public class GroupOperationsDao
 {
 	private static final Logger LOGGER = LogManager.getLogger(GroupOperationsDao.class);
-	public GroupOperationsDao() 
-	{}
 	
-	public boolean isGroupAvailable(MasterUsers user, String groupName)
+	public boolean isGroupAvailable(MasterUser user, String groupName)
 	{
 		for(String dbGroupName : user.getGroups())
 		{
@@ -21,13 +19,16 @@ public class GroupOperationsDao
 		return false;
 	}
 	
-	public String addGroupName(MasterUsers user, String groupName)
+	public String addGroupName(MasterUser user, String groupName)
 	{
-		MasterUserOperationsDao.addGroup(user, groupName);
-		return groupName;
+		String groupAdded = null;
+		if(MasterUserOperationsDao.addGroup(user, groupName))
+			groupAdded = groupName;
+
+		return groupAdded;
 	}
 	
-	public void showGroups(MasterUsers user)
+	public void showGroups(MasterUser user)
 	{
 		int count = 0;
 		if(user != null)
@@ -35,7 +36,7 @@ public class GroupOperationsDao
 				LOGGER.info(++count + ". " +groupName);
 	}
 	
-	public String getGroup(MasterUsers user, int index)
+	public String getGroup(MasterUser user, int index)
 	{
 		if(user != null && (index < user.getGroups().size() && index > 0))
 			return user.getGroups().get(index);
@@ -44,20 +45,21 @@ public class GroupOperationsDao
 		return "";
 	}
 	
-	public boolean updateGroupName(MasterUsers user, int index, String newGroupName)
+	public boolean updateGroupName(MasterUser user, int index, String newGroupName)
 	{
+		boolean groupUpdated = false;
 		if(index < user.getGroups().size() && index > 0)
 		{
 			user.getGroups().set(index, newGroupName);
-			return true;
+			groupUpdated = true;
 		}
 		else
 			LOGGER.info("Invalid Input");
-		return false;
+		return groupUpdated;
 	}
 	
 	
-	public void getGroupWiseAccounts(MasterUsers user)
+	public void getGroupWiseAccounts(MasterUser user)
 	{
 		LOGGER.info("\n\n|--------------Group Wise All Available Accounts--------------|\n");
 		if(user != null)
@@ -71,7 +73,7 @@ public class GroupOperationsDao
 	}
 	
 	
-	void getGroupAccounts(MasterUsers user, String groupName)
+	void getGroupAccounts(MasterUser user, String groupName)
 	{
 		int count = 0;
 		if(user != null)
@@ -82,12 +84,12 @@ public class GroupOperationsDao
 			}
 	}
 
-	public boolean isGroupIndex(MasterUsers user, int index) 
+	public boolean isGroupIndex(MasterUser user, int index)
 	{
 		return index < user.getGroups().size() && index > 0;
 	}
 
-	public void updateAccountGroupName(MasterUsers user, String oldGroupName, String newGroupName) 
+	public void updateAccountGroupName(MasterUser user, String oldGroupName, String newGroupName)
 	{
 		if(user != null)
 			for(UserAccount account : user.getAccounts())

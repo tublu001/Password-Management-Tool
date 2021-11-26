@@ -1,8 +1,8 @@
-package com.epam.UI;
+package com.epam.user_interface;
 
 import java.util.Scanner;
 
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +32,7 @@ public class HomeMenu
 			switch(ch)
 			{
 				case '1':
-					MasterUsers user = op.loginMaster();
+					MasterUser user = op.loginMaster();
 					if(user!=null)
 						AccountMenuCRUD.showCrudMenu(user);
 					break;

@@ -2,8 +2,7 @@ package com.epam.dao;
 
 import java.util.ArrayList;
 
-import com.epam.model.MasterUsers;
-import com.epam.model.UserAccount;
+import com.epam.model.MasterUser;
 import com.epam.passwordOperations.PreferredPassword;
 import com.epam.repository.MasterUsersDB;
 import org.apache.logging.log4j.LogManager;
@@ -12,43 +11,45 @@ import org.apache.logging.log4j.Logger;
 public class MasterUsersOperationsDao
 {
 	private static final Logger LOGGER = LogManager.getLogger(MasterUserOperationsDao.class);
-	static ArrayList<MasterUsers> masterUsers = MasterUsersDB.getMasterUsers(); 
+	static ArrayList<MasterUser> masterUsers = MasterUsersDB.getMasterUsers();
 	
-	public static MasterUsers add(String userName, String password) 
+	public static boolean add(String userName, String password)
 	{
-//		DB = MasterUsersDB.getMasterUsers();
-		MasterUsers user = new MasterUsers();
-		user.setUserName(userName);
-		user.setPassword(password);
-		user.setAccounts(new ArrayList<>());
-		user.setGroups(new ArrayList<>());
-		user.getGroups().add("Undefined");
-		user.setPrefPass(new PreferredPassword());
-		masterUsers.add(user);
-		return user;
+		MasterUser user = null;
+		boolean status = false;
+		if(userName != null && password != null && userName != "" && password != "") {
+			user = new MasterUser();
+			user.setUserName(userName);
+			user.setPassword(password);
+			user.setAccounts(new ArrayList<>());
+			user.setGroups(new ArrayList<>());
+			user.getGroups().add("Undefined");
+			user.setPrefPass(new PreferredPassword());
+			status = masterUsers.add(user);
+		}
+		return status;
 	}
 
 	public static void showUsers()
 	{
-		for(MasterUsers users : masterUsers)
+		for(MasterUser users : masterUsers)
 			LOGGER.info(users.toString());
 	}
 	
 
 
-	public static MasterUsers getUser(String userName) 
+	public static MasterUser getUser(String userName)
 	{
-		for(MasterUsers user : masterUsers)
-		{
+		MasterUser master = null;
+		for(MasterUser user : masterUsers)
 			if(userName.equals(user.getUserName()))
-				return user;
-		}
-		return null;
+				master = user;
+		return master;
 	}
 	
 	public static boolean isMasterPresent(String userNm)
 	{
-		for(MasterUsers user : masterUsers)
+		for(MasterUser user : masterUsers)
 			if(userNm.equals(user.getUserName()))
 				return true;
 		return false;

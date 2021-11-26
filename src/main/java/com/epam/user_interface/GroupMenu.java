@@ -1,8 +1,8 @@
-package com.epam.UI;
+package com.epam.user_interface;
 
 import java.util.Scanner;
 
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +14,7 @@ public class GroupMenu
 	
 	
 	@SuppressWarnings(value = {"all"})
-	public static String showGroupUI(MasterUsers user)
+	public static String showGroupUI(MasterUser user)
 	{
 		int flag = 0;
 		String groupName = "Undefined";

@@ -1,10 +1,10 @@
 package com.epam.passwordOperations;
 
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 
 public interface PasswordOperations 
 {
-	String generatePassword(MasterUsers user);
+	String generatePassword(MasterUser user);
 	String encryptPassword(String strToEncrypt);
 	String decryptPassword(String strToDecrypt);
 }

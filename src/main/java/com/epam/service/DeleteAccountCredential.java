@@ -3,9 +3,8 @@ package com.epam.service;
 import java.util.Optional;
 import java.util.Scanner;
 
-import com.epam.UI.HomeMenu;
 import com.epam.dao.AccountCredentialOperationsDao;
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.UserValidate;
 import com.epam.passwordOperations.UserValidation;
@@ -17,7 +16,7 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
 	private static final Logger LOGGER = LogManager.getLogger(DeleteAccountCredential.class);
 	Scanner input = new Scanner(System.in);
 	@Override
-	public Optional<MasterUsers> execute(MasterUsers user) 
+	public Optional<MasterUser> execute(MasterUser user)
 	{
 		UserValidation uv = new UserValidate();
 		AccountCredentialOperationsDao op = new AccountCredentialOperationsDao();
@@ -31,7 +30,9 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
 			{
 				isApp = true;
 				LOGGER.info("Application Found : "+ appName);
-				if(uv.validatePassword(user))
+				LOGGER.info("\n\nEnter your (Master) password: ");
+				String password = input.nextLine();
+				if(uv.validatePassword(user, password))
 					op.remove(user, account);
 				else
 					LOGGER.info("Incorrect Password...");

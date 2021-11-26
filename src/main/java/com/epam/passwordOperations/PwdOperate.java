@@ -7,8 +7,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.epam.dao.AccountCredentialOperationsDao;
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +24,7 @@ public class PwdOperate implements PasswordOperations
 	public PwdOperate() {}
 
 	@Override
-	public String generatePassword(MasterUsers user) 
+	public String generatePassword(MasterUser user)
 	{
 		PreferredPassword prefPass = user.getPrefPass();
 		return prefPass.generatePassword(prefPass);

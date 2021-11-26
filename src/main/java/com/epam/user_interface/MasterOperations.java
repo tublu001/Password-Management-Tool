@@ -1,9 +1,9 @@
-package com.epam.UI;
+package com.epam.user_interface;
 
 import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import com.epam.passwordOperations.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,14 +15,14 @@ public class MasterOperations implements MasterCrudMenu
 	
 	public MasterOperations() {}
 	
-	static
-	{
-		PasswordOperations operate = new PwdOperate();
-		MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
-		MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
-		MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
-		MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
-	}
+//	static
+//	{
+//		PasswordOperations operate = new PwdOperate();
+//		MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
+//		MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
+//		MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
+//		MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
+//	}
 
 	@Override
 	public void createMaster() 
@@ -50,10 +50,10 @@ public class MasterOperations implements MasterCrudMenu
 	}
 
 	@Override
-	public MasterUsers loginMaster() 
+	public MasterUser loginMaster()
 	{
 		UserValidation uv = new UserValidate();
-        return uv.validateUser();
+        return uv.validateMaster();
 	}
 
 }

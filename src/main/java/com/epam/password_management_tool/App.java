@@ -1,7 +1,7 @@
 package com.epam.password_management_tool;
 
 
-import com.epam.UI.HomeMenu;
+import com.epam.user_interface.HomeMenu;
 
 public class App 
 {

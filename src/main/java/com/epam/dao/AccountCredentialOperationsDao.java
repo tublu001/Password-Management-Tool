@@ -2,8 +2,7 @@ package com.epam.dao;
 
 import java.util.ArrayList;
 
-import com.epam.UI.HomeMenu;
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PwdOperate;
@@ -19,19 +18,20 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	PasswordOperations operate = new PwdOperate();
 	
 	@Override
-	public MasterUsers store(MasterUsers user, String appName, String url, String password, String groupName) 
+	public boolean store(MasterUser user, String appName, String url, String password, String groupName)
 	{
 		ArrayList<UserAccount> allAccounts = user.getAccounts();
 		UserAccount newAccount = new UserAccount();
-		
+		boolean isAccountStored;
+
 		newAccount.setAppName(appName);
 		newAccount.setUrl(url);
 		newAccount.setPassword(password);
 		newAccount.setGroup(groupName);
-		allAccounts.add(newAccount);
+		isAccountStored = allAccounts.add(newAccount);
 		
 		LOGGER.info("\nAccount Added...\n\n");
-		return user;
+		return isAccountStored;
 	}	
 	
 	@Override
@@ -41,7 +41,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	}
 	
 	@Override
-	public boolean remove(MasterUsers user, UserAccount account) 
+	public boolean remove(MasterUser user, UserAccount account)
 	{
 		if(user.getAccounts().remove(account))
 		{
@@ -69,7 +69,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	}
 
 	@Override
-	public boolean isAppPresent(MasterUsers user, String appName) 
+	public boolean isAppPresent(MasterUser user, String appName)
 	{
 		for(UserAccount account : user.getAccounts())
 			if(isAppName(account, appName))

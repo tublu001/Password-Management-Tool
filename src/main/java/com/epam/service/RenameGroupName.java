@@ -3,9 +3,8 @@ package com.epam.service;
 import java.util.Optional;
 import java.util.Scanner;
 
-import com.epam.UI.HomeMenu;
 import com.epam.dao.GroupOperationsDao;
-import com.epam.model.MasterUsers;
+import com.epam.model.MasterUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +14,7 @@ public class RenameGroupName implements UserAccountCrudOperation
 	Scanner input = new Scanner(System.in);
 	GroupOperationsDao goperate = new GroupOperationsDao();
 	@Override
-	public Optional<MasterUsers> execute(MasterUsers user) 
+	public Optional<MasterUser> execute(MasterUser user)
 	{
 		LOGGER.info("\n\n|------------Rename Group--------------|\n");
 		goperate.showGroups(user);
