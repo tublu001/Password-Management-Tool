@@ -2,19 +2,19 @@ package com.epam.repository;
 
 import java.util.ArrayList;
 
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 
 public class MasterUsersDB 
 {
-	private static ArrayList<MasterUser> masterUsers = new ArrayList<MasterUser>();
+	private static ArrayList<User> users = new ArrayList<User>();
 	
 	
-	public static ArrayList<MasterUser> getMasterUsers() {
-		return masterUsers;
+	public static ArrayList<User> getMasterUsers() {
+		return users;
 	}
 
-	public static void setMasterUsers(ArrayList<MasterUser> masterUsers) {
-		MasterUsersDB.masterUsers = masterUsers;
+	public static void setMasterUsers(ArrayList<User> users) {
+		MasterUsersDB.users = users;
 	}
 	
 

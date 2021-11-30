@@ -1,9 +1,9 @@
 package com.epam.user_interface;
 
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 
 public interface AccountCrudGroup 
 {
-	boolean createGroup(MasterUser user);
-	String storeInExistingGroup(MasterUser user);
+	boolean createGroup(User user);
+	String storeInExistingGroup(User user);
 }

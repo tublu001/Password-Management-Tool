@@ -2,7 +2,7 @@ package com.epam.user_interface;
 
 import java.util.Scanner;
 
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 import com.epam.service.AccountCrudFactory;
 import com.epam.service.UserAccountCrudOperation;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +14,7 @@ public class AccountMenuCRUD {
 	{}
 	private static final Logger LOGGER = LogManager.getLogger(AccountMenuCRUD.class);
 	@SuppressWarnings(value = {"all"})
-	public static void showCrudMenu(MasterUser user)
+	public static void showCrudMenu(User user)
 	{
 		boolean repeatLoop = true;
 		final Scanner input = new Scanner(System.in);
@@ -31,13 +31,13 @@ public class AccountMenuCRUD {
 			LOGGER.info("7. Set your Password preference");
 			LOGGER.info("0. Sign Out\n\n\nChoose Any: ");
 			
-			char selection = input.next().charAt(0);
+			String selection = input.next();
 			
 			UserAccountCrudOperation operations = new AccountCrudFactory().getOperation(selection);
 			if(operations!=null)
 				operations.execute(user);
 			
-			if(selection == '0')
+			if(selection.equals("0"))
 				repeatLoop = false;
 		}
 		

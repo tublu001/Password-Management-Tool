@@ -3,9 +3,10 @@ package com.epam;
 import com.epam.dao.AccountCredentialOperationsDao;
 import com.epam.dao.MasterUserOperationsDao;
 import com.epam.dao.MasterUsersOperationsDao;
-import com.epam.model.MasterUser;
+import com.epam.dao.UserData;
+import com.epam.model.User;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PwdOperate;
+import com.epam.passwordOperations.PasswordOperationsImpl;
 import com.epam.service.RetriveAllAccounts;
 import com.epam.service.UserAccountCrudOperation;
 import org.junit.jupiter.api.Assertions;
@@ -17,38 +18,38 @@ public class RetriveAllAccountsTest
 {
     UserAccountCrudOperation operation = new RetriveAllAccounts();
     AccountCredentialOperationsDao accountOperate = new AccountCredentialOperationsDao();
-    MasterUser user,user1;
+    User user,user1;
 
     @BeforeEach
     void initiate()
     {
-        PasswordOperations operate = new PwdOperate();
+        PasswordOperations operate = new PasswordOperationsImpl();
         MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
         MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
         MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
         MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
 
-        user = MasterUsersOperationsDao.getUser("Manash");
+        user = MasterUsersOperationsDao.getUser("Manash").get();
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 1"));
-        Assertions.assertTrue(accountOperate.store(user,"a", "url", "password", "Group 1"));
-        Assertions.assertTrue(accountOperate.store(user,"b", "url", "password", "Group 1"));
+        Assertions.assertTrue(accountOperate.store(new UserData(user,"a", "url", "password", "Group 1")));
+        Assertions.assertTrue(accountOperate.store(new UserData(user,"b", "url", "password", "Group 1")));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 2"));
-        Assertions.assertTrue(accountOperate.store(user,"c", "url", "password", "Group 2"));
-        Assertions.assertTrue(accountOperate.store(user,"d", "url", "password", "Group 2"));
+        Assertions.assertTrue(accountOperate.store(new UserData(user,"c", "url", "password", "Group 2")));
+        Assertions.assertTrue(accountOperate.store(new UserData(user,"d", "url", "password", "Group 2")));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 3"));
-        Assertions.assertTrue(accountOperate.store(user,"e", "url", "password", "Group 3"));
-        Assertions.assertTrue(accountOperate.store(user,"f", "url", "password", "Group 3"));
+        Assertions.assertTrue(accountOperate.store(new UserData(user,"e", "url", "password", "Group 3")));
+        Assertions.assertTrue(accountOperate.store(new UserData(user,"f", "url", "password", "Group 3")));
 
-        user1 = MasterUsersOperationsDao.getUser("Suresh");
+        user1 = MasterUsersOperationsDao.getUser("Suresh").get();
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user1,"Group 1"));
-        Assertions.assertTrue(accountOperate.store(user1,"a", "url", "password", "Group 1"));
-        Assertions.assertTrue(accountOperate.store(user1,"b", "url", "password", "Group 1"));
+        Assertions.assertTrue(accountOperate.store(new UserData(user1,"a", "url", "password", "Group 1")));
+        Assertions.assertTrue(accountOperate.store(new UserData(user1,"b", "url", "password", "Group 1")));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user1,"Group 2"));
-        Assertions.assertTrue(accountOperate.store(user1,"c", "url", "password", "Group 2"));
-        Assertions.assertTrue(accountOperate.store(user1,"d", "url", "password", "Group 2"));
+        Assertions.assertTrue(accountOperate.store(new UserData(user1,"c", "url", "password", "Group 2")));
+        Assertions.assertTrue(accountOperate.store(new UserData(user1,"d", "url", "password", "Group 2")));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user1,"Group 3"));
-        Assertions.assertTrue(accountOperate.store(user1,"e", "url", "password", "Group 3"));
-        Assertions.assertTrue(accountOperate.store(user1,"f", "url", "password", "Group 3"));
+        Assertions.assertTrue(accountOperate.store(new UserData(user1,"e", "url", "password", "Group 3")));
+        Assertions.assertTrue(accountOperate.store(new UserData(user1,"f", "url", "password", "Group 3")));
     }
 
     @Test

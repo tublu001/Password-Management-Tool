@@ -1,16 +1,16 @@
 package com.epam.dao;
 
-import com.epam.model.MasterUser;
-import com.epam.model.UserAccount;
+import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MasterUserOperationsDao 
 {
 	private static final Logger LOGGER = LogManager.getLogger(MasterUserOperationsDao.class);
-	public static boolean addGroup(MasterUser user, String groupName)
+	public static boolean addGroup(User user, String groupName)
 	{
 		boolean isAdded = false;
 		if(user != null && groupName != null && groupName != "")
@@ -18,15 +18,15 @@ public class MasterUserOperationsDao
 		return isAdded;
 	}
 	
-	public static Optional<MasterUser> showAccounts(MasterUser user)
+	public static Optional<User> showAccounts(User user)
 	{
 		LOGGER.info("\n\nAll Account Details\n\n");
-		int sl = 1;
-		for(UserAccount account : user.getAccounts())
-		{
-			LOGGER.info(sl++ + ". ");
-			new AccountCredentialOperationsDao().showAccount(account);
-		}
+		AtomicInteger sl = new AtomicInteger(1);
+		user.getAccounts().forEach(account->
+				{
+						LOGGER.info(sl.getAndIncrement() + ". ");
+						new AccountCredentialOperationsDao().showAccount(account);
+				});
 		return Optional.ofNullable(user);
 	}
 }

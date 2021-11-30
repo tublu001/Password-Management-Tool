@@ -1,10 +1,10 @@
 package com.epam.passwordOperations;
 
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 
 public interface UserValidation {
-    MasterUser validateMaster();
-    MasterUser getMasterUser(String userName);
+    User validateMaster();
+//    User getMasterUser(String userName);
     boolean validateUserName(String userName);
-    boolean validatePassword(MasterUser user, String password);
+    boolean validatePassword(User user, String password);
 }

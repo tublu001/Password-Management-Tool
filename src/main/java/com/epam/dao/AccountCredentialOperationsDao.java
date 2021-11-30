@@ -2,10 +2,10 @@ package com.epam.dao;
 
 import java.util.ArrayList;
 
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PwdOperate;
+import com.epam.passwordOperations.PasswordOperationsImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,19 +15,19 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	public AccountCredentialOperationsDao() 
 	{}
 	private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
-	PasswordOperations operate = new PwdOperate();
+	PasswordOperations operate = new PasswordOperationsImpl();
 	
 	@Override
-	public boolean store(MasterUser user, String appName, String url, String password, String groupName)
+	public boolean store(UserData userDetail)
 	{
-		ArrayList<UserAccount> allAccounts = user.getAccounts();
+		ArrayList<UserAccount> allAccounts = userDetail.getUser().getAccounts();
 		UserAccount newAccount = new UserAccount();
 		boolean isAccountStored;
 
-		newAccount.setAppName(appName);
-		newAccount.setUrl(url);
-		newAccount.setPassword(password);
-		newAccount.setGroup(groupName);
+		newAccount.setAppName(userDetail.getAppName());
+		newAccount.setUrl(userDetail.getUrl());
+		newAccount.setPassword(userDetail.getPassword());
+		newAccount.setGroup(userDetail.getGroupName());
 		isAccountStored = allAccounts.add(newAccount);
 		
 		LOGGER.info("\nAccount Added...\n\n");
@@ -41,7 +41,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	}
 	
 	@Override
-	public boolean remove(MasterUser user, UserAccount account)
+	public boolean remove(User user, UserAccount account)
 	{
 		if(user.getAccounts().remove(account))
 		{
@@ -69,7 +69,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	}
 
 	@Override
-	public boolean isAppPresent(MasterUser user, String appName)
+	public boolean isAppPresent(User user, String appName)
 	{
 		for(UserAccount account : user.getAccounts())
 			if(isAppName(account, appName))

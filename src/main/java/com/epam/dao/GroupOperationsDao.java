@@ -1,25 +1,25 @@
 package com.epam.dao;
 
-import com.epam.model.MasterUser;
-import com.epam.model.UserAccount;
+import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GroupOperationsDao
 {
 	private static final Logger LOGGER = LogManager.getLogger(GroupOperationsDao.class);
 	
-	public boolean isGroupAvailable(MasterUser user, String groupName)
+	public boolean isGroupAvailable(User user, String groupName)
 	{
-		for(String dbGroupName : user.getGroups())
+		user.getGroups().forEach(dbGroupName->
 		{
-			if(groupName.equals(dbGroupName))
-				return true;
-		}
+			groupName.equals(dbGroupName);
+		});
 		return false;
 	}
 	
-	public String addGroupName(MasterUser user, String groupName)
+	public String addGroupName(User user, String groupName)
 	{
 		String groupAdded = null;
 		if(MasterUserOperationsDao.addGroup(user, groupName))
@@ -28,15 +28,14 @@ public class GroupOperationsDao
 		return groupAdded;
 	}
 	
-	public void showGroups(MasterUser user)
+	public void showGroups(User user)
 	{
-		int count = 0;
+		AtomicInteger count = new AtomicInteger();
 		if(user != null)
-			for(String groupName : user.getGroups())
-				LOGGER.info(++count + ". " +groupName);
+			user.getGroups().forEach(groupName->LOGGER.info(count.incrementAndGet() + ". " +groupName));
 	}
 	
-	public String getGroup(MasterUser user, int index)
+	public String getGroup(User user, int index)
 	{
 		if(user != null && (index < user.getGroups().size() && index > 0))
 			return user.getGroups().get(index);
@@ -45,7 +44,7 @@ public class GroupOperationsDao
 		return "";
 	}
 	
-	public boolean updateGroupName(MasterUser user, int index, String newGroupName)
+	public boolean updateGroupName(User user, int index, String newGroupName)
 	{
 		boolean groupUpdated = false;
 		if(index < user.getGroups().size() && index > 0)
@@ -59,44 +58,44 @@ public class GroupOperationsDao
 	}
 	
 	
-	public void getGroupWiseAccounts(MasterUser user)
+	public void getGroupWiseAccounts(User user)
 	{
 		LOGGER.info("\n\n|--------------Group Wise All Available Accounts--------------|\n");
 		if(user != null)
-			for(String groupName : user.getGroups())
-			{
+			user.getGroups().forEach(groupName ->
+					{
 				LOGGER.info("\n              "+groupName+"");
 				LOGGER.info("--------------------------------");
 				getGroupAccounts(user, groupName);
-			}
+			});
 		LOGGER.info("\n");
 	}
 	
 	
-	void getGroupAccounts(MasterUser user, String groupName)
+	void getGroupAccounts(User user, String groupName)
 	{
-		int count = 0;
+		AtomicInteger count = new AtomicInteger();
 		if(user != null)
-			for(UserAccount account : user.getAccounts())
-			{
-				if(groupName.equals(account.getGroup()))
-					LOGGER.info(++count + ". " + account);
-			}
+			user.getAccounts().forEach(account ->
+					{
+						if (groupName.equals(account.getGroup()))
+							LOGGER.info(count.incrementAndGet() + ". " + account);
+					});
 	}
 
-	public boolean isGroupIndex(MasterUser user, int index)
+	public boolean isGroupIndex(User user, int index)
 	{
 		return index < user.getGroups().size() && index > 0;
 	}
 
-	public void updateAccountGroupName(MasterUser user, String oldGroupName, String newGroupName)
+	public void updateAccountGroupName(User user, String oldGroupName, String newGroupName)
 	{
 		if(user != null)
-			for(UserAccount account : user.getAccounts())
+			user.getAccounts().forEach(account->
 			{
 				if(oldGroupName.equals(account.getGroup()))
 					account.setGroup(newGroupName);
-			}
+			});
 	}
 	
 	

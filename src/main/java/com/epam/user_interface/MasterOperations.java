@@ -3,7 +3,7 @@ package com.epam.user_interface;
 import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 import com.epam.passwordOperations.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,14 +15,14 @@ public class MasterOperations implements MasterCrudMenu
 	
 	public MasterOperations() {}
 	
-//	static
-//	{
-//		PasswordOperations operate = new PwdOperate();
-//		MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
-//		MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
-//		MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
-//		MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
-//	}
+	static
+	{	//Static Users provided for debugging of application
+		PasswordOperations operate = new PasswordOperationsImpl();
+		MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
+		MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
+		MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
+		MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
+	}
 
 	@Override
 	public void createMaster() 
@@ -34,13 +34,15 @@ public class MasterOperations implements MasterCrudMenu
 			LOGGER.info("Enter a New Password: ");
 			String password = input.nextLine();
 			
-			PasswordOperations operate = new PwdOperate();
+			PasswordOperations operate = new PasswordOperationsImpl();
 			
 			MasterUsersOperationsDao.add(userName, operate.encryptPassword(password));
 			LOGGER.info("\nMaster User created");
 		}
 		else
+		{
 			LOGGER.info("\nFailed.. Master already present in database..\n\n");
+		}
 	}
 
 	@Override
@@ -50,9 +52,9 @@ public class MasterOperations implements MasterCrudMenu
 	}
 
 	@Override
-	public MasterUser loginMaster()
+	public User loginMaster()
 	{
-		UserValidation uv = new UserValidate();
+		UserValidation uv = new UserValidationImpl();
         return uv.validateMaster();
 	}
 

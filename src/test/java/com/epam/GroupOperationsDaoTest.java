@@ -3,9 +3,9 @@ package com.epam;
 import com.epam.dao.GroupOperationsDao;
 import com.epam.dao.MasterUserOperationsDao;
 import com.epam.dao.MasterUsersOperationsDao;
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PwdOperate;
+import com.epam.passwordOperations.PasswordOperationsImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,7 @@ public class GroupOperationsDaoTest
     @BeforeEach
     void initiate()
     {
-        PasswordOperations operate = new PwdOperate();
+        PasswordOperations operate = new PasswordOperationsImpl();
         MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
         MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
         MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
@@ -28,7 +28,7 @@ public class GroupOperationsDaoTest
     void getGroupNameTest1()
     {
         GroupOperationsDao groupOperate = new GroupOperationsDao();
-        MasterUser user = MasterUsersOperationsDao.getUser("Manash");
+        User user = MasterUsersOperationsDao.getUser("Manash").get();
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 1"));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 2"));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 3"));
@@ -42,7 +42,7 @@ public class GroupOperationsDaoTest
     void getGroupNameTest2()
     {
         GroupOperationsDao groupOperate = new GroupOperationsDao();
-        MasterUser user = MasterUsersOperationsDao.getUser("Manash");
+        User user = MasterUsersOperationsDao.getUser("Manash").get();
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 1"));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 2"));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 3"));
@@ -55,7 +55,7 @@ public class GroupOperationsDaoTest
     void updateGroupNameTest1()
     {
         GroupOperationsDao groupOperate = new GroupOperationsDao();
-        MasterUser user = MasterUsersOperationsDao.getUser("Manash");
+        User user = MasterUsersOperationsDao.getUser("Manash").get();
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 1"));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 2"));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 3"));
@@ -70,7 +70,7 @@ public class GroupOperationsDaoTest
     void updateGroupNameTest2()
     {
         GroupOperationsDao groupOperate = new GroupOperationsDao();
-        MasterUser user = MasterUsersOperationsDao.getUser("Manash");
+        User user = MasterUsersOperationsDao.getUser("Manash").get();
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 1"));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 2"));
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 3"));

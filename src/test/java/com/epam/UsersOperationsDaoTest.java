@@ -2,20 +2,20 @@ package com.epam;
 
 import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PwdOperate;
+import com.epam.passwordOperations.PasswordOperationsImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MasterUsersOperationsDaoTest
+public class UsersOperationsDaoTest
 {
     PasswordOperations operate;
 
     @BeforeEach
     void initiate()
     {
-        operate = new PwdOperate();
+        operate = new PasswordOperationsImpl();
         MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
         MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
         MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
@@ -89,7 +89,7 @@ public class MasterUsersOperationsDaoTest
     @DisplayName(value = "Get Wrong Master User Object")
     void getMasterUsersTest2()
     {
-        Assertions.assertNull(MasterUsersOperationsDao.getUser("Hello"));
+        Assertions.assertFalse(MasterUsersOperationsDao.getUser("Hello").isPresent());
     }
 
 }

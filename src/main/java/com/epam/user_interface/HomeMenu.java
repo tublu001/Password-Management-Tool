@@ -2,7 +2,7 @@ package com.epam.user_interface;
 
 import java.util.Scanner;
 
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,23 +26,23 @@ public class HomeMenu
 			LOGGER.info("3. Retrive all Master user names");
 			LOGGER.info("0. Exit..\n\n\nChoose Any: ");
 			
-			char ch = input.next().charAt(0);
+			String selection = input.next();
 			
 			MasterCrudMenu op = new MasterOperations();
-			switch(ch)
+			switch(selection)
 			{
-				case '1':
-					MasterUser user = op.loginMaster();
+				case "1":
+					User user = op.loginMaster();
 					if(user!=null)
 						AccountMenuCRUD.showCrudMenu(user);
 					break;
-				case '2':
+				case "2":
 					op.createMaster();
 					break;
-				case '3':
+				case "3":
 					op.showAllMasters();
 					break;
-				case '0':
+				case "0":
 					flag = 1;
 					LOGGER.info("Thank you... Exiting...");
 					break;

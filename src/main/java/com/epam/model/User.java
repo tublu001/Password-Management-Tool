@@ -11,7 +11,7 @@ import com.epam.passwordOperations.PreferredPassword;
  * @author Manash_Rauta
  *
  */
-public class MasterUser
+public class User
 {
 	private String userName;
 	private String password;
@@ -24,7 +24,7 @@ public class MasterUser
 		this.accounts = accounts;
 	}
 
-	public MasterUser() {}
+	public User() {}
 
 	public String getUserName() {
 		return userName;

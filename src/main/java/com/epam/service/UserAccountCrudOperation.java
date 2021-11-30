@@ -2,10 +2,10 @@ package com.epam.service;
 
 import java.util.Optional;
 
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 
 @FunctionalInterface
 public interface UserAccountCrudOperation 
 {
-	Optional<MasterUser> execute(MasterUser user);
+	Optional<User> execute(User user);
 }

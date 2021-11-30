@@ -3,11 +3,12 @@ package com.epam.service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import com.epam.dao.UserData;
 import com.epam.user_interface.GroupMenu;
 import com.epam.dao.AccountCredentialOperationsDao;
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PwdOperate;
+import com.epam.passwordOperations.PasswordOperationsImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +17,7 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
 	private static final Logger LOGGER = LogManager.getLogger(AcquireAccountCredentials.class);
 	Scanner input = new Scanner(System.in);
 	@Override
-	public Optional<MasterUser> execute(MasterUser user)
+	public Optional<User> execute(User user)
 	{
 		boolean isProperAppName = false;
 		boolean isStored = false;
@@ -32,7 +33,7 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
 			input.nextLine();
 			
 			//Password generation and encryption
-			PasswordOperations operate = new PwdOperate();
+			PasswordOperations operate = new PasswordOperationsImpl();
 	        String pwd = operate.generatePassword(user);
 	        String encPwd = operate.encryptPassword(pwd);
 	        
@@ -40,7 +41,8 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
 	        LOGGER.info("\nPress enter for setting up Group\n");
 	        input.nextLine();
 	        String groupName = GroupMenu.showGroupUI(user);
-			isStored = new AccountCredentialOperationsDao().store(user, appName, url, encPwd, groupName);
+			UserData userDetail = new UserData(user, appName, url, encPwd, groupName);
+			isStored = new AccountCredentialOperationsDao().store(userDetail);
 		}
 		else
 		{

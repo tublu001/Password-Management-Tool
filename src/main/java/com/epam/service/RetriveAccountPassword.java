@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.AccountCredentialOperationsDao;
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 import com.epam.model.UserAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +14,7 @@ public class RetriveAccountPassword implements UserAccountCrudOperation
 	private static final Logger LOGGER = LogManager.getLogger(RetriveAccountPassword.class);
 	Scanner input = new Scanner(System.in);
 	@Override
-	public Optional<MasterUser> execute(MasterUser user)
+	public Optional<User> execute(User user)
 	{
 		LOGGER.info("\n\nRetrive Account password\n\nEnter App Name: ");
 		String appName = input.nextLine();

@@ -3,7 +3,7 @@ package com.epam.user_interface;
 import java.util.Scanner;
 
 import com.epam.dao.GroupOperationsDao;
-import com.epam.model.MasterUser;
+import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +17,7 @@ public class GroupCrudOperations implements AccountCrudGroup
 	GroupOperationsDao goperate = new GroupOperationsDao();
 	
 	@Override
-	public boolean createGroup(MasterUser user)
+	public boolean createGroup(User user)
 	{
 		LOGGER.info("Enter a new Group Name: ");
 		String groupName = sc.nextLine();
@@ -31,7 +31,7 @@ public class GroupCrudOperations implements AccountCrudGroup
 	}
 
 	@Override
-	public String storeInExistingGroup(MasterUser user)
+	public String storeInExistingGroup(User user)
 	{
 		LOGGER.info("\n\nAll the Existing Groups Available: ");
 		goperate.showGroups(user);
