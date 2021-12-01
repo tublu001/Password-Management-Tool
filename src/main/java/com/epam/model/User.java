@@ -7,18 +7,35 @@ import java.util.ArrayList;
 
 import com.epam.passwordOperations.PreferredPassword;
 
+import javax.persistence.*;
+
 /**
  * @author Manash_Rauta
  *
  */
+@Entity
+@Table(name="Master_Users")
 public class User
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
+	private Long id;
+
 	private String userName;
 	private String password;
 	private ArrayList<UserAccount> accounts;
 	private ArrayList<String> groups;
-	private PreferredPassword prefPass;	
-	
+	private PreferredPassword prefPass;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 	public void setAccounts(ArrayList<UserAccount> accounts) {
 		this.accounts = accounts;

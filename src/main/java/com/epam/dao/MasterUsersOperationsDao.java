@@ -6,13 +6,19 @@ import java.util.Optional;
 import com.epam.model.User;
 import com.epam.passwordOperations.PreferredPassword;
 import com.epam.repository.MasterUsersDB;
+import com.epam.repository.MySQL_DB;
+import com.epam.repository.RepositoryDB;
+import com.epam.repository.RepositoryManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.persistence.EntityManager;
 
 public class MasterUsersOperationsDao
 {
 	private static final Logger LOGGER = LogManager.getLogger(MasterUserOperationsDao.class);
-	static ArrayList<User> users = MasterUsersDB.getMasterUsers();
+	static RepositoryDB database = new MySQL_DB();
+	static ArrayList<User> users = (ArrayList<User>)database.getMasterUsers();
 	
 	public static boolean add(String userName, String password)
 	{
@@ -27,6 +33,8 @@ public class MasterUsersOperationsDao
 			user.getGroups().add("Undefined");
 			user.setPrefPass(new PreferredPassword());
 			status = users.add(user);
+			RepositoryDB dB = new MySQL_DB();
+			dB.setMasterUsers(user);
 		}
 		return status;
 	}

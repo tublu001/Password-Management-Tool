@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 import com.epam.model.User;
 
-public class MasterUsersDB 
+public class MasterUsersDB implements RepositoryDB
 {
-	private static ArrayList<User> users = new ArrayList<User>();
-	
-	
-	public static ArrayList<User> getMasterUsers() {
-		return users;
+	private final ArrayList<User> users = new ArrayList<User>();
+
+
+	@Override
+	public Object getMasterUsers() {
+		return null;
 	}
 
-	public static void setMasterUsers(ArrayList<User> users) {
-		MasterUsersDB.users = users;
-	}
-	
+	@Override
+	public void setMasterUsers(Object obj) {
 
+	}
 }
 
