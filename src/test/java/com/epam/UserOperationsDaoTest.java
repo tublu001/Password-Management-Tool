@@ -19,10 +19,10 @@ public class UserOperationsDaoTest
     {
         PasswordOperations operate = new PasswordOperationsImpl();
         GroupOperationsDao groupOperate = new GroupOperationsDao();
-        MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
-        MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
-        MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
-        MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
+//        MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
+//        MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
+//        MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
+//        MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
     }
 
     @Test

@@ -15,14 +15,6 @@ public class MasterOperations implements MasterCrudMenu
 	
 	public MasterOperations() {}
 	
-	static
-	{	//Static Users provided for debugging of application
-		PasswordOperations operate = new PasswordOperationsImpl();
-		MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
-		MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
-		MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
-		MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
-	}
 
 	@Override
 	public void createMaster() 

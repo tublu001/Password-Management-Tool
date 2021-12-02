@@ -1,25 +1,58 @@
 package com.epam.repository;
 
-import com.epam.model.User;
+import java.util.List;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
+
+import com.epam.model.User;
 
 public class MySQL_DB implements RepositoryDB
 {
-    EntityManager entityManager = RepositoryManager.getEntityManager();
+    static EntityManager entityManager = RepositoryManager.getEntityManager().createEntityManager();
 
     @Override
-    public Object getMasterUsers()
+    @SuppressWarnings(value = "Unchecked")
+    public List<User> getMasterUsers()
     {
-        return entityManager.createQuery("select usr from User usr").getResultList();
+        return entityManager.createQuery("Select usr from User usr").getResultList();
     }
 
     @Override
-    public void setMasterUsers(Object obj)
+    public boolean setMasterUser(User user)
     {
-        entityManager.getTransaction().begin();
-        entityManager.persist(obj);
+        boolean isSuccess = false;
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+        isSuccess = true;
+        }
+        catch (Exception e) {
+//            e.printStackTrace();
+			if (entityManager != null)
+				entityManager.getTransaction().rollback();
+			}
+        return isSuccess;
+    }
+
+    @Override
+    public boolean setMasterUsers(List<User> users)
+    {
+        boolean isSuccess = false;
+        users.forEach(user ->
+        {
+            entityManager.persist(user);
+        });
+        try {
         entityManager.getTransaction().commit();
+            isSuccess = true;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            if (entityManager != null)
+                entityManager.getTransaction().rollback();
+        }
+        return isSuccess;
     }
 }

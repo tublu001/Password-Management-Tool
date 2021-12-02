@@ -2,12 +2,26 @@ package com.epam.user_interface;
 
 import java.util.Scanner;
 
+import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.model.User;
+import com.epam.passwordOperations.PasswordOperations;
+import com.epam.passwordOperations.PasswordOperationsImpl;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class HomeMenu 
 {
+	
+//	static
+//	{	//Static Users provided for debugging of application
+//		PasswordOperations operate = new PasswordOperationsImpl();
+//		MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
+//		MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
+//		MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
+//		MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
+//	}
+	
 	private static final Logger LOGGER = LogManager.getLogger(HomeMenu.class);
 	public HomeMenu() 
 	{}

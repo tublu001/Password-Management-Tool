@@ -1,11 +1,13 @@
 package com.epam.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PasswordOperationsImpl;
+
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,18 +18,19 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	{}
 	private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
 	PasswordOperations operate = new PasswordOperationsImpl();
+
 	
 	@Override
 	public boolean store(UserData userDetail)
 	{
-		ArrayList<UserAccount> allAccounts = userDetail.getUser().getAccounts();
+		List<UserAccount> allAccounts = userDetail.getUser().getAccounts();
 		UserAccount newAccount = new UserAccount();
 		boolean isAccountStored;
 
 		newAccount.setAppName(userDetail.getAppName());
 		newAccount.setUrl(userDetail.getUrl());
 		newAccount.setPassword(userDetail.getPassword());
-		newAccount.setGroup(userDetail.getGroupName());
+		newAccount.setAccountGroup(userDetail.getGroupName());
 		isAccountStored = allAccounts.add(newAccount);
 		
 		LOGGER.info("\nAccount Added...\n\n");

@@ -24,10 +24,10 @@ public class RetriveAllAccountsTest
     void initiate()
     {
         PasswordOperations operate = new PasswordOperationsImpl();
-        MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
-        MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
-        MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
-        MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
+//        MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
+//        MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
+//        MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
+//        MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
 
         user = MasterUsersOperationsDao.getUser("Manash").get();
         Assertions.assertTrue(MasterUserOperationsDao.addGroup(user,"Group 1"));

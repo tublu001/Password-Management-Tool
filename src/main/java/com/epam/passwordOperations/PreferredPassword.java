@@ -3,8 +3,21 @@ package com.epam.passwordOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.epam.model.User;
+
 import java.util.Scanner;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Embeddable
 public class PreferredPassword extends Generator
 {
 	private static final Logger LOGGER = LogManager.getLogger(PreferredPassword.class);
@@ -13,6 +26,7 @@ public class PreferredPassword extends Generator
 	private boolean IncludeNum=true;
 	private boolean IncludeSym=true;
 	private int length = 10;
+	
 	
 	
 //	@Override

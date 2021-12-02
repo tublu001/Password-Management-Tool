@@ -1,0 +1,8 @@
+
+P
+java:S1118
+":Add a private constructor to hide the implicit public one.(·ÎÇ
+W
+java:S3457"AFormat specifiers should be used instead of string concatenation.(’º¸
+R
+java:S4973"<Strings and Boxed types should be compared using "equals()".(ôèÒµ

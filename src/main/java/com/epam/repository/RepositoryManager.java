@@ -1,18 +1,17 @@
 package com.epam.repository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class RepositoryManager
 {
-    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("PMT_DataBase");
-    private static EntityManager repositoryManager = null;
+    private static EntityManagerFactory emf;
+    
     private RepositoryManager() {}
-    public static EntityManager getEntityManager()
+    public static EntityManagerFactory getEntityManager()
     {
-        if(repositoryManager == null)
-            repositoryManager = emf.createEntityManager();
-        return repositoryManager;
+        if(emf == null)
+            emf = Persistence.createEntityManagerFactory("PMT_DataBase");
+        return emf;
     }
 }

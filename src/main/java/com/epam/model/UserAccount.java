@@ -1,14 +1,35 @@
 package com.epam.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="User_Accounts")
 public class UserAccount
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "Account_id", nullable = false)
+	private Long id;
 
 	private String appName;
 	private String url;
 	private String password;
-	private String group = "Undefined";
+	private String accountGroup = "Undefined";
 	
-	
+	@ManyToOne
+	@JoinColumn(name = "id")
+	private User user;
+
+	public UserAccount(){}
+
+	public UserAccount(String appName, String url, String password, String group, User user) {
+		this.appName = appName;
+		this.url = url;
+		this.password = password;
+		this.accountGroup = group;
+		this.user = user;
+	}
+
 	public String getAppName() {
 		return appName;
 	}
@@ -33,18 +54,24 @@ public class UserAccount
 		this.password = password;
 	}
 	
-	public String getGroup() {
-		return group;
+	public String getAccountGroup() {
+		return accountGroup;
 	}
 
-	public void setGroup(String group) {
-		this.group = group;
+	public void setAccountGroup(String accountGroup) {
+		this.accountGroup = accountGroup;
 	}
 
 	@Override
 	public String toString() {
 		return "appName: " + appName + ", url: " + url;
 	}
-	
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

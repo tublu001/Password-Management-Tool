@@ -19,11 +19,11 @@ public class AccountCredentialOperationsDaoTest
     @BeforeEach
     void initiate()
     {
-        PasswordOperations operate = new PasswordOperationsImpl();
-        MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
-        MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
-        MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
-        MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
+//        PasswordOperations operate = new PasswordOperationsImpl();
+//        MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
+//        MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
+//        MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
+//        MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
     }
 
 
