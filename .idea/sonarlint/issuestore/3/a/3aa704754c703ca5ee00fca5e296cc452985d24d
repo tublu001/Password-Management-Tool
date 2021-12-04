@@ -1,23 +1,0 @@
-
-q	java:S116"WRename this field "IncludeUpper" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÕÄâ£ıÿÿÿÿ
-l	java:S116"WRename this field "IncludeLower" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ĞœÀØ
-o	java:S116"URename this field "IncludeNum" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£Ê Ğùÿÿÿÿ
-j	java:S116"URename this field "IncludeSym" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Â½ê‹
-m
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(÷ŸÿÙûÿÿÿÿ
-B
-java:S1125B"'Remove the unnecessary boolean literal.(â¯Çÿÿÿÿÿ
-B
-java:S1125B"'Remove the unnecessary boolean literal.(â¯Çÿÿÿÿÿ
-B
-java:S1125B"'Remove the unnecessary boolean literal.(â¯Çÿÿÿÿÿ
-B
-java:S1125P"'Remove the unnecessary boolean literal.(â¯Çÿÿÿÿÿ
-B
-java:S1125P"'Remove the unnecessary boolean literal.(â¯Çÿÿÿÿÿ
-B
-java:S1125P"'Remove the unnecessary boolean literal.(â¯Çÿÿÿÿÿ
-d	java:S100«"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º¿Ü¸
-s	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ
-f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚ëşÚ
-n	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ó×C

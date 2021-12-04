@@ -8,6 +8,7 @@ public class RepositoryManager
     private static EntityManagerFactory emf;
     
     private RepositoryManager() {}
+
     public static EntityManagerFactory getEntityManager()
     {
         if(emf == null)

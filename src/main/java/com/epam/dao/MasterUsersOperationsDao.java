@@ -28,7 +28,6 @@ public class MasterUsersOperationsDao
 			user.setUserName(userName);
 			user.setPassword(password);
 			user.getGroups().add("Undefined");
-			user.setPrefPass(new PreferredPassword());
 			status = database.setMasterUser(user);
 		}
 		return status;

@@ -11,4 +11,5 @@ public interface RepositoryDB
     List<User> getMasterUsers();
     boolean setMasterUser(User obj);
     boolean setMasterUsers(List<User> obj);
+    boolean merge(User obj);
 }

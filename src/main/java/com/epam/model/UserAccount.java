@@ -1,5 +1,8 @@
 package com.epam.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,9 +10,9 @@ import javax.persistence.*;
 public class UserAccount
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Account_id", nullable = false)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Account_id")
+	private final Long id = 0l;
 
 	private String appName;
 	private String url;

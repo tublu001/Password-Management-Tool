@@ -12,10 +12,9 @@ public class GroupOperationsDao
 	
 	public boolean isGroupAvailable(User user, String groupName)
 	{
-		user.getGroups().forEach(dbGroupName->
-		{
-			groupName.equals(dbGroupName);
-		});
+		for(String dBGroupName : user.getGroups())
+			if(dBGroupName.equals(groupName))
+				return true;
 		return false;
 	}
 	

@@ -3,6 +3,7 @@ package com.epam.user_interface;
 import java.util.Scanner;
 
 import com.epam.model.User;
+import com.epam.repository.MySQL_DB;
 import com.epam.service.AccountCrudFactory;
 import com.epam.service.UserAccountCrudOperation;
 import org.apache.logging.log4j.LogManager;
@@ -38,7 +39,10 @@ public class AccountMenuCRUD {
 				operations.execute(user);
 			
 			if(selection.equals("0"))
+			{
+				MySQL_DB.close();
 				repeatLoop = false;
+			}
 		}
 		
 	}

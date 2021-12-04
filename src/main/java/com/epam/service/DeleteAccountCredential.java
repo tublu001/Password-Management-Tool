@@ -8,6 +8,8 @@ import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.UserValidationImpl;
 import com.epam.passwordOperations.UserValidation;
+import com.epam.repository.MySQL_DB;
+import com.epam.repository.RepositoryDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +17,7 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
 {
 	private static final Logger LOGGER = LogManager.getLogger(DeleteAccountCredential.class);
 	Scanner input = new Scanner(System.in);
+	RepositoryDB database = new MySQL_DB();
 	@Override
 	public Optional<User> execute(User user)
 	{
@@ -33,7 +36,10 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
 				LOGGER.info("\n\nEnter your (Master) password: ");
 				String password = input.nextLine();
 				if(uv.validatePassword(user, password))
+				{
 					op.remove(user, account);
+					database.merge(user);
+				}
 				else
 					LOGGER.info("Incorrect Password...");
 				break;

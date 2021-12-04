@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import com.epam.dao.GroupOperationsDao;
 import com.epam.model.User;
+import com.epam.repository.MySQL_DB;
+import com.epam.repository.RepositoryDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +15,7 @@ public class RenameGroupName implements UserAccountCrudOperation
 	private static final Logger LOGGER = LogManager.getLogger(RenameGroupName.class);
 	Scanner input = new Scanner(System.in);
 	GroupOperationsDao goperate = new GroupOperationsDao();
+	RepositoryDB database = new MySQL_DB();
 	@Override
 	public Optional<User> execute(User user)
 	{
@@ -28,6 +31,7 @@ public class RenameGroupName implements UserAccountCrudOperation
 			String newGroupName = input.nextLine();
 			goperate.updateGroupName(user, groupNum-1, newGroupName);
 			goperate.updateAccountGroupName(user, oldGroupName, newGroupName);
+			database.merge(user);
 			LOGGER.info("Group Name Updated Successfully.. (" + oldGroupName + " ----> " + newGroupName +")");
 //			return true;
 		}

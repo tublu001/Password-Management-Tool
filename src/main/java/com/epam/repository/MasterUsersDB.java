@@ -5,23 +5,31 @@ import java.util.List;
 
 import com.epam.model.User;
 
-//public class MasterUsersDB implements RepositoryDB
-public class MasterUsersDB
+public class MasterUsersDB implements RepositoryDB
 {
-	private final ArrayList<User> users = new ArrayList<User>();
+	private final ArrayList<User> users = new ArrayList<>();
 
-//	@Override
+	@Override
 	public List<User> getMasterUsers() {
-		return null;
+		return users;
 	}
 
-//	@Override
+	@Override
+	public boolean setMasterUser(User obj) {
+		return false;
+	}
+
+	@Override
 	public boolean setMasterUsers(List<User> obj) {
 		return false;
 	}
-//	@Override
-	public boolean setMasterUser(User user) {
+
+	@Override
+	public boolean merge(User obj) {
 		return false;
 	}
+
+
+
 }
 

@@ -7,6 +7,7 @@ import com.epam.model.User;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PasswordOperationsImpl;
 
+import com.epam.repository.MySQL_DB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,11 +30,13 @@ public class HomeMenu
 	@SuppressWarnings(value = {"all"})
 	public static void showHomeUI()
 	{
+
 		int flag = 0;
 		final Scanner input = new Scanner(System.in);
 		
 		while(flag==0)
 		{
+			MySQL_DB.initialize();
 			LOGGER.info("\n\n*************** WELCOME TO PASSWORD MANAGEMENT TOOL ***************\n\n");
 			LOGGER.info("1. Log In to your Master Account");
 			LOGGER.info("2. Sign Up for a Master Account");

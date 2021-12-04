@@ -8,6 +8,8 @@ import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PasswordOperationsImpl;
 
 
+import com.epam.repository.MySQL_DB;
+import com.epam.repository.RepositoryDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,12 +20,13 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	{}
 	private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
 	PasswordOperations operate = new PasswordOperationsImpl();
-
+	RepositoryDB database = new MySQL_DB();
 	
 	@Override
 	public boolean store(UserData userDetail)
 	{
-		List<UserAccount> allAccounts = userDetail.getUser().getAccounts();
+		User user = userDetail.getUser();
+		List<UserAccount> allAccounts = user.getAccounts();
 		UserAccount newAccount = new UserAccount();
 		boolean isAccountStored;
 
@@ -31,8 +34,10 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 		newAccount.setUrl(userDetail.getUrl());
 		newAccount.setPassword(userDetail.getPassword());
 		newAccount.setAccountGroup(userDetail.getGroupName());
+		newAccount.setUser(user);
 		isAccountStored = allAccounts.add(newAccount);
-		
+
+		database.merge(user);
 		LOGGER.info("\nAccount Added...\n\n");
 		return isAccountStored;
 	}	
@@ -48,6 +53,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	{
 		if(user.getAccounts().remove(account))
 		{
+			database.merge(user);
 			LOGGER.info("Account Removed...");
 			return true;
 		}

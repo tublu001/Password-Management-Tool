@@ -9,6 +9,8 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.epam.passwordOperations.PreferredPassword;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * @author Manash_Rauta
@@ -19,14 +21,14 @@ import com.epam.passwordOperations.PreferredPassword;
 public class User
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", nullable = false)
-	private Long user_Id;
+	@GeneratedValue(strategy= GenerationType.AUTO)
+	@Column(name = "id")
+	private Long user_Id = 0l;
 
 	private String userName;
 	private String password;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<UserAccount> accounts = new ArrayList<>();
 	
 	@ElementCollection
@@ -34,7 +36,7 @@ public class User
 	private List<String> groups = new ArrayList<>();
 	
 	@Embedded
-	private PreferredPassword prefPass;
+	private PreferredPassword prefPass = new PreferredPassword();
 
 	public Long getUser_Id() {
 		return user_Id;
@@ -77,11 +79,14 @@ public class User
 	}
 
 	public void setAccounts(List<UserAccount> accounts) {
-		accounts.forEach(account->
-				account.setUser(this));
+//		accounts.forEach(account->
+//				account.setUser(this));
 		this.accounts = accounts;
 	}
 
+	public void setAccount(UserAccount account) {
+		this.accounts.add(account);
+	}
 //	@Override
 //	public String toString() {
 //		return "MasterUsers [userName=" + userName + ", password=" + password + ", accounts=" + accounts + ", prefPass="
