@@ -1,5 +1,6 @@
 package com.epam.user_interface;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
@@ -13,16 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 public class HomeMenu 
 {
-	
-//	static
-//	{	//Static Users provided for debugging of application
-//		PasswordOperations operate = new PasswordOperationsImpl();
-//		MasterUsersOperationsDao.add("Manash", operate.encryptPassword("qwerty"));
-//		MasterUsersOperationsDao.add("Suresh", operate.encryptPassword("bfb"));
-//		MasterUsersOperationsDao.add("Roshan", operate.encryptPassword("dewdw"));
-//		MasterUsersOperationsDao.add("Lokesh", operate.encryptPassword("odhc"));
-//	}
-	
 	private static final Logger LOGGER = LogManager.getLogger(HomeMenu.class);
 	public HomeMenu() 
 	{}
@@ -42,16 +33,24 @@ public class HomeMenu
 			LOGGER.info("2. Sign Up for a Master Account");
 			LOGGER.info("3. Retrive all Master user names");
 			LOGGER.info("0. Exit..\n\n\nChoose Any: ");
-			
-			String selection = input.next();
+			String selection = "invalid";
+			try
+			{
+				selection = input.next();
+			}
+			catch (Exception e)
+			{
+				LOGGER.info(e.getMessage());
+			}
+
 			
 			MasterCrudMenu op = new MasterOperations();
 			switch(selection)
 			{
 				case "1":
-					User user = op.loginMaster();
-					if(user!=null)
-						AccountMenuCRUD.showCrudMenu(user);
+					Optional<User> user = op.loginMaster();
+					if(user.isPresent())
+						AccountMenuCRUD.showCrudMenu(user.get());
 					break;
 				case "2":
 					op.createMaster();

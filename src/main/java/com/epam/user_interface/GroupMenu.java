@@ -25,11 +25,18 @@ public class GroupMenu
 			LOGGER.info("1. Create a new group");
 			LOGGER.info("2. Store in a existing group");
 			LOGGER.info("0. Skip..(Ungrouped)\n\n\nChoose Any: ");
-			
-			char ch = input.next().charAt(0);
+			char selection = 'Z';
+			try
+			{
+				selection = input.next().charAt(0);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 			
 			AccountCrudGroup op = new GroupCrudOperations();
-			switch(ch)
+			switch(selection)
 			{
 				case '1':
 					if(op.createGroup(user))
@@ -43,9 +50,6 @@ public class GroupMenu
 					groupName = op.storeInExistingGroup(user);
 					flag = 1;
 					break;
-//				case '3':
-//					op.showAllMasters();
-//					break;
 				case '0':
 					flag = 1;
 					break;

@@ -41,9 +41,13 @@ public class GroupCrudOperations implements AccountCrudGroup
 		{
 			String groupName = goperate.getGroup(user, groupNum-1);
 			if(goperate.isGroupAvailable(user, groupName))
+			{
 				return groupName;
+			}
 			else
+			{
 				LOGGER.info("Group not available...");
+			}
 		}
 		return "Undefined";
 	}	

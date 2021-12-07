@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.UserData;
+import com.epam.exceptions.UserException;
 import com.epam.user_interface.GroupMenu;
 import com.epam.dao.AccountCredentialOperationsDao;
 import com.epam.model.User;
@@ -17,7 +18,7 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
 	private static final Logger LOGGER = LogManager.getLogger(AcquireAccountCredentials.class);
 	Scanner input = new Scanner(System.in);
 	@Override
-	public Optional<User> execute(User user)
+	public Optional<User> execute(User user) throws UserException
 	{
 		boolean isProperAppName = false;
 		boolean isStored = false;

@@ -29,7 +29,12 @@ public class RenameGroupName implements UserAccountCrudOperation
 			String oldGroupName = goperate.getGroup(user, groupNum-1);
 			LOGGER.info("Give a new Group name: ");
 			String newGroupName = input.nextLine();
-			goperate.updateGroupName(user, groupNum-1, newGroupName);
+			try{goperate.updateGroupName(user, groupNum-1, newGroupName);}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+
 			goperate.updateAccountGroupName(user, oldGroupName, newGroupName);
 			database.merge(user);
 			LOGGER.info("Group Name Updated Successfully.. (" + oldGroupName + " ----> " + newGroupName +")");

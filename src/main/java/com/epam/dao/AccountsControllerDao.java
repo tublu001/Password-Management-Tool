@@ -1,11 +1,12 @@
 package com.epam.dao;
 
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
 
 public interface AccountsControllerDao 
 {
-	boolean store(UserData userDetail);
+	boolean store(UserData userDetail) throws UserException;
 	String retrivePassword(UserAccount account);
 	void showAccount(UserAccount account);
 	boolean remove(User user, UserAccount account);

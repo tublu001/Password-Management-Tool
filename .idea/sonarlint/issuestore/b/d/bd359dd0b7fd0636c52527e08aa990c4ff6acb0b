@@ -1,0 +1,11 @@
+
+s	java:S116"RRename this field "user_Id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–†×üÿÿÿÿ8ÅŸãÜ×/
+o	java:S100)"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ñèıÿÿÿÿ8ËŸãÜ×/
+j	java:S100-"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ƒŸ°8ÍŸãÜ×/
+]	java:S125S"<This block of commented-out lines of code should be removed.(¿ßİ¬ıÿÿÿÿ8âÔà¡Ø/
+]	java:S125["<This block of commented-out lines of code should be removed.(òß¿•üÿÿÿÿ8ÒŸãÜ×/
+`
+java:S1128">Remove this unused import 'org.hibernate.annotations.Cascade'.(ğØˆğûÿÿÿÿ8åÔà¡Ø/
+d
+java:S1128"GRemove this unused import 'org.hibernate.annotations.GenericGenerator'.(ƒİŸÉ8åÔà¡Ø/
+m	java:S117-"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ƒŸ°8ÓŸãÜ×/

@@ -1,29 +1,28 @@
 package com.epam.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.model.User;
-import com.epam.passwordOperations.PreferredPassword;
 import com.epam.repository.MySQL_DB;
 import com.epam.repository.RepositoryDB;
 
 public class MasterUsersOperationsDao
 {
-	private static final Logger LOGGER = LogManager.getLogger(MasterUserOperationsDao.class);
+	private static final Logger LOGGER = LogManager.getLogger(MasterUsersOperationsDao.class);
 	static RepositoryDB database = new MySQL_DB();
 	static List<User> users;
 
 	
 	public static boolean add(String userName, String password)
 	{
-		User user = null;
+		User user;
 		boolean status = false;
-		if(userName != null && password != null && userName != "" && password != "") {
+		if(!userName.equals(null) && !password.equals(null) && !userName.equals("") && !password.equals("")) {
 			user = new User();
 			user.setUserName(userName);
 			user.setPassword(password);
@@ -36,8 +35,7 @@ public class MasterUsersOperationsDao
 	public static void showUsers()
 	{
 		users = database.getMasterUsers();
-		for(Object users : users)
-			LOGGER.info(users.toString());
+		users.forEach(LOGGER::info);
 	}
 	
 
@@ -46,18 +44,31 @@ public class MasterUsersOperationsDao
 	{
 		users = database.getMasterUsers();
 		User master = null;
+//		users.forEach(user ->
+//		{
+//			if(userName.equals(user.getUserName()))
+//			{master = user;}
+//		});
 		for(User user : users)
 			if(userName.equals(user.getUserName()))
-				master =  user;
-		return Optional.ofNullable(master);
+				master = user;
+		return  Optional.ofNullable(master);
 	}
-	
+
 	public static boolean isMasterPresent(String userName)
 	{
 		users = database.getMasterUsers();
+//		return users.forEach(user -> {if(userName.equals(user.getUserName()))
+//			return user;
+//		});
+		boolean isMasterPresent = false;
 		for(User user : users)
+		{
 			if(userName.equals(user.getUserName()))
-				return true;
-		return false;
+			{
+				isMasterPresent = true;
+			}
+		}
+		return isMasterPresent;
 	}
 }

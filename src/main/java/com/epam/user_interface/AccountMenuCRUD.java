@@ -2,6 +2,7 @@ package com.epam.user_interface;
 
 import java.util.Scanner;
 
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.repository.MySQL_DB;
 import com.epam.service.AccountCrudFactory;
@@ -36,7 +37,16 @@ public class AccountMenuCRUD {
 			
 			UserAccountCrudOperation operations = new AccountCrudFactory().getOperation(selection);
 			if(operations!=null)
-				operations.execute(user);
+			{
+				try
+				{
+					operations.execute(user);
+				}
+				catch (UserException e)
+				{
+					e.printStackTrace();
+				}
+			}
 			
 			if(selection.equals("0"))
 			{

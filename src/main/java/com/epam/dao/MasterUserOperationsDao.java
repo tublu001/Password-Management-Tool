@@ -13,8 +13,10 @@ public class MasterUserOperationsDao
 	public static boolean addGroup(User user, String groupName)
 	{
 		boolean isAdded = false;
-		if(user != null && groupName != null && groupName != "")
+		if(!user.equals(null) && !groupName.equals(null) && !groupName.equals(""))
+		{
 			isAdded = user.getGroups().add(groupName);
+		}
 		return isAdded;
 	}
 	

@@ -1,5 +1,6 @@
 package com.epam.user_interface;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
@@ -44,10 +45,11 @@ public class MasterOperations implements MasterCrudMenu
 	}
 
 	@Override
-	public User loginMaster()
+	public Optional<User> loginMaster()
 	{
 		UserValidation uv = new UserValidationImpl();
-        return uv.validateMaster();
+		Optional<User> user = uv.validateMaster();
+		return user;
 	}
 
 }

@@ -1,0 +1,14 @@
+
+]	java:S125"<This block of commented-out lines of code should be removed.(æÄÌöıÿÿÿÿ8¹Öà¡Ø/
+g
+java:S1128"JRemove this unused import 'com.epam.passwordOperations.PreferredPassword'.(š¬•ì8»Öà¡Ø/
+R
+java:S1128"0Remove this unused import 'com.epam.repository'.(“²Ïšÿÿÿÿÿ8»Öà¡Ø/
+^
+java:S1128"<Remove this unused import 'javax.persistence.EntityManager'.(ğàËÒıÿÿÿÿ8»Öà¡Ø/
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8»Öà¡Ø/
+O
+java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8»Öà¡Ø/
+M
+java:S1128	"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8¼Öà¡Ø/

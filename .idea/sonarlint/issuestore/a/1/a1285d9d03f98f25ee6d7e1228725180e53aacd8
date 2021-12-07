@@ -1,0 +1,7 @@
+
+=
+java:S1170"!Make this final field static too.(Ì÷å8´Ôà¡Ø/
+`
+java:S1128">Remove this unused import 'org.hibernate.annotations.Cascade'.(ğØˆğûÿÿÿÿ8ºÔà¡Ø/
+d
+java:S1128"GRemove this unused import 'org.hibernate.annotations.GenericGenerator'.(ƒİŸÉ8»Ôà¡Ø/

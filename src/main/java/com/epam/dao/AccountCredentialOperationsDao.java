@@ -1,7 +1,9 @@
 package com.epam.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
@@ -15,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 
 public class AccountCredentialOperationsDao implements AccountsControllerDao
 {
-
 	public AccountCredentialOperationsDao() 
 	{}
 	private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
@@ -23,7 +24,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	RepositoryDB database = new MySQL_DB();
 	
 	@Override
-	public boolean store(UserData userDetail)
+	public boolean store(UserData userDetail) throws UserException
 	{
 		User user = userDetail.getUser();
 		List<UserAccount> allAccounts = user.getAccounts();
@@ -35,10 +36,10 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 		newAccount.setPassword(userDetail.getPassword());
 		newAccount.setAccountGroup(userDetail.getGroupName());
 		newAccount.setUser(user);
-		isAccountStored = allAccounts.add(newAccount);
-
-		database.merge(user);
-		LOGGER.info("\nAccount Added...\n\n");
+		allAccounts.add(newAccount);
+		isAccountStored = database.merge(user);
+		if(!isAccountStored)
+			throw new UserException("Account not Added Successfully!!! Error storing to Database");
 		return isAccountStored;
 	}	
 	
@@ -58,7 +59,9 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 			return true;
 		}
 		else
+		{
 			LOGGER.info("Some Error Occured");
+		}
 		
 		return false;
 	}
@@ -66,7 +69,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	@Override
 	public boolean isAppName(UserAccount account, String appName)
 	{
-			return account.getAppName().equals(appName);
+		return account.getAppName().equals(appName);
 	}
 	
 	
@@ -80,10 +83,14 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	@Override
 	public boolean isAppPresent(User user, String appName)
 	{
+		boolean isAppPresent = false;
 		for(UserAccount account : user.getAccounts())
-			if(isAppName(account, appName))
-				return true;
-		
-		return false;
+		{
+			if (isAppName(account, appName))
+			{
+				isAppPresent = true;
+			}
+		}
+		return isAppPresent;
 	}
 }

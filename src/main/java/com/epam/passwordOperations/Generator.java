@@ -14,7 +14,7 @@ public class Generator
 		
 		alphabet=new Alphabet(IncludeUpper , IncludeLower, IncludeNum, IncludeSym);
 		
-		final StringBuilder pass = new StringBuilder("");
+		final StringBuilder pass = new StringBuilder();
 
 		final int alphabetLength = alphabet.getAlphabet().length();
 		
@@ -24,7 +24,8 @@ public class Generator
         
 		
 		
-		for(int i=0;i<length;i++) {
+		for(int i=0;i<length;i++)
+		{
 			
 			int index=(int)(Math.random() * range) + min; 
 			

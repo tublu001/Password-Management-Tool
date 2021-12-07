@@ -1,5 +1,6 @@
 package com.epam.passwordOperations;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
@@ -14,24 +15,28 @@ public class UserValidationImpl implements UserValidation
 	PasswordOperations operate = new PasswordOperationsImpl();
 	
 	@Override
-	public User validateMaster()
+	public Optional<User> validateMaster()
 	{
-		User user = null;
+		Optional<User> user = Optional.empty();
 		LOGGER.info("\nEnter Your MASTER Account credentials - \n\nUser Name: ");
 		String userName = input.nextLine();
 
 		if(validateUserName(userName))
-			user = MasterUsersOperationsDao.getUser(userName).get();
-		if(user != null)
+		{
+			user = MasterUsersOperationsDao.getUser(userName);
+		}
+		if(user.isPresent())
 		{
 			LOGGER.info("\n\nEnter your (Master) password: ");
 			String password = input.nextLine();
-			if(validatePassword(user, password))
+			if(validatePassword(user.get(), password))
 			{
 				LOGGER.info("\nLogging you in");
 			}
 			else
-				user = null;
+			{
+				user = Optional.empty();
+			}
 		}
 		return user;
 	}
@@ -40,8 +45,9 @@ public class UserValidationImpl implements UserValidation
 	public boolean validateUserName(String userName)
 	{
 		boolean isUserName = false;
-		if(userName != null && userName != "")
-			if(MasterUsersOperationsDao.isMasterPresent(userName))
+		if(!userName.equals(null) && !userName.equals(""))
+		{
+			if (MasterUsersOperationsDao.isMasterPresent(userName))
 			{
 				isUserName = true;
 			}
@@ -49,6 +55,7 @@ public class UserValidationImpl implements UserValidation
 			{
 				LOGGER.info("User Not Found...");
 			}
+		}
 		else
 		{
 			LOGGER.info("Invalid User Name..");
@@ -60,7 +67,7 @@ public class UserValidationImpl implements UserValidation
 	public boolean validatePassword(User user, String password)
 	{
 		boolean isPassword = false;
-		if(password != null && password != "")
+		if(!password.equals(null) && !password.equals(""))
 		{
 			isPassword = operate.encryptPassword(password).equals(user.getPassword());
 		}
