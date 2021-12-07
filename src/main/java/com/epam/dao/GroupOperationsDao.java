@@ -1,5 +1,6 @@
 package com.epam.dao;
 
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,25 +14,25 @@ public class GroupOperationsDao
 {
 	private static final Logger LOGGER = LogManager.getLogger(GroupOperationsDao.class);
 	
-	public boolean isGroupAvailable(User user, String groupName)
+	public boolean isGroupAvailable(User user, String groupName) throws UserException
 	{
-		boolean isGroupAvailable = false;
-
 		List<String> matchedGroups = user.getGroups().stream().filter(i->i.equals(groupName)).collect(Collectors.toList());
-		if(!matchedGroups.isEmpty())
-			isGroupAvailable = true;
+		boolean isGroupAvailable = (!matchedGroups.isEmpty());
 		return isGroupAvailable;
 	}
 	
-	public String addGroupName(User user, String groupName)
+	public String addGroupName(User user, String groupName) throws UserException
 	{
-		String groupAdded = null;
+		String addedGroupName = null;
 		if(MasterUserOperationsDao.addGroup(user, groupName))
 		{
-			groupAdded = groupName;
+			addedGroupName = groupName;
 		}
-
-		return groupAdded;
+		else
+		{
+			throw new UserException("Error in adding group to the Database!!!");
+		}
+		return addedGroupName;
 	}
 	
 	public void showGroups(User user)
@@ -40,32 +41,21 @@ public class GroupOperationsDao
 			user.getGroups().forEach(groupName->LOGGER.info(count.incrementAndGet() + ". " +groupName));
 	}
 	
-	public String getGroup(User user, int index)
+	public String getGroup(User user, int index) throws UserException
 	{
-		if(!user.equals(null) && (index < user.getGroups().size() && index > 0))
-		{
-			return user.getGroups().get(index);
-		}
-		else
-		{
-			LOGGER.info("Invalid Input");
-		}
-		return "";
+		if(user.equals(null) || (index > user.getGroups().size() || index < 0))
+			throw new UserException("Invalid selection!!! Group not available in this index");
+		return user.getGroups().get(index);
 	}
 	
-	public boolean updateGroupName(User user, int index, String newGroupName)
+	public boolean updateGroupName(User user, int index, String newGroupName) throws UserException
 	{
 		boolean groupUpdated = false;
-		if(index < user.getGroups().size() && index > 0)
-		{
-			user.getGroups().set(index, newGroupName);
-			groupUpdated = true;
-		}
+		if(user.equals(null) || (index > user.getGroups().size() || index < 0))
+			throw new UserException("Invalid selection!!! Group not available in this index");
 		else
-		{
-			throw new NoSuchElementException("No element found");
-//			LOGGER.info("Invalid Input");
-		}
+			groupUpdated = true;
+		user.getGroups().set(index, newGroupName);
 		return groupUpdated;
 	}
 	
@@ -101,9 +91,12 @@ public class GroupOperationsDao
 		}
 	}
 
-	public boolean isGroupIndex(User user, int index)
+	public boolean isGroupIndex(User user, int index) throws UserException
 	{
-		return index < user.getGroups().size() && index > 0;
+		if(index > user.getGroups().size() || index < 0)
+			throw new UserException("Invalid selection!!! Group not available in this index");
+		else
+			return true;
 	}
 
 	public void updateAccountGroupName(User user, String oldGroupName, String newGroupName)

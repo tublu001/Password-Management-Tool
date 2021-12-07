@@ -4,10 +4,11 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.AccountCredentialOperationsDao;
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.passwordOperations.UserValidationImpl;
-import com.epam.passwordOperations.UserValidation;
+import com.epam.passwordOperations.UserLoginValidationImpl;
+import com.epam.passwordOperations.UserLoginValidation;
 import com.epam.repository.MySQL_DB;
 import com.epam.repository.RepositoryDB;
 import org.apache.logging.log4j.LogManager;
@@ -19,9 +20,9 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
 	Scanner input = new Scanner(System.in);
 	RepositoryDB database = new MySQL_DB();
 	@Override
-	public Optional<User> execute(User user)
+	public Optional<User> execute(User user) throws UserException
 	{
-		UserValidation uv = new UserValidationImpl();
+		UserLoginValidation uv = new UserLoginValidationImpl();
 		AccountCredentialOperationsDao op = new AccountCredentialOperationsDao();
 		LOGGER.info("\n\nDelete Account credential\n\nEnter App Name: ");
 		String appName = input.nextLine();

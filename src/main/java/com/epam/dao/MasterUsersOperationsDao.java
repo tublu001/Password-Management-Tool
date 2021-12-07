@@ -3,7 +3,9 @@ package com.epam.dao;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
+import com.epam.exceptions.UserException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,17 +20,21 @@ public class MasterUsersOperationsDao
 	static List<User> users;
 
 	
-	public static boolean add(String userName, String password)
+	public static boolean add(String userName, String password) throws UserException
 	{
 		User user;
 		boolean status = false;
-		if(!userName.equals(null) && !password.equals(null) && !userName.equals("") && !password.equals("")) {
-			user = new User();
-			user.setUserName(userName);
-			user.setPassword(password);
-			user.getGroups().add("Undefined");
-			status = database.setMasterUser(user);
+		if(userName.equals(null) || password.equals(null) || userName.equals("") || password.equals(""))
+		{
+			throw new UserException("Invalid User Name provided!!!");
 		}
+		user = new User();
+		user.setUserName(userName);
+		user.setPassword(password);
+		user.getGroups().add("Undefined");
+		status = database.setMasterUser(user);
+		if(!status)
+			throw new UserException("Some Errors occured... Cannot add User to the Database!!!");
 		return status;
 	}
 
@@ -55,20 +61,17 @@ public class MasterUsersOperationsDao
 		return  Optional.ofNullable(master);
 	}
 
-	public static boolean isMasterPresent(String userName)
+	public static boolean isMasterPresent(String userName) throws UserException
 	{
-		users = database.getMasterUsers();
-//		return users.forEach(user -> {if(userName.equals(user.getUserName()))
-//			return user;
-//		});
-		boolean isMasterPresent = false;
-		for(User user : users)
+		if(userName.equals(null) || userName.equals(""))
 		{
-			if(userName.equals(user.getUserName()))
-			{
-				isMasterPresent = true;
-			}
+			throw new UserException("Invalid User Name provided!!!");
 		}
+		users = database.getMasterUsers();
+		boolean isMasterPresent = !(users.stream()
+				.filter(user -> userName.equals(user.getUserName()))
+				.collect(Collectors.toList())
+				.isEmpty());
 		return isMasterPresent;
 	}
 }

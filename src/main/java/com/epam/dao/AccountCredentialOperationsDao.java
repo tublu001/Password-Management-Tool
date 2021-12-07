@@ -2,6 +2,7 @@ package com.epam.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
@@ -50,20 +51,21 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	}
 	
 	@Override
-	public boolean remove(User user, UserAccount account)
+	public boolean remove(User user, UserAccount account) throws UserException
 	{
+		boolean isDeleted = false;
 		if(user.getAccounts().remove(account))
 		{
-			database.merge(user);
-			LOGGER.info("Account Removed...");
-			return true;
+			isDeleted = database.merge(user);
+			if(!isDeleted)
+				throw new UserException("Account cannot be removed!!! Error accessing to Database");
 		}
 		else
 		{
-			LOGGER.info("Some Error Occured");
+			throw new UserException("Some Error Occured");
 		}
 		
-		return false;
+		return isDeleted;
 	}
 
 	@Override
@@ -81,16 +83,12 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	}
 
 	@Override
-	public boolean isAppPresent(User user, String appName)
+	public boolean isAppPresent(User user, String appName) throws UserException
 	{
-		boolean isAppPresent = false;
-		for(UserAccount account : user.getAccounts())
-		{
-			if (isAppName(account, appName))
-			{
-				isAppPresent = true;
-			}
-		}
+		List<UserAccount> matchedAccounts = user.getAccounts().stream().filter(account -> isAppName(account, appName)).collect(Collectors.toList());
+		boolean isAppPresent = (!matchedAccounts.isEmpty());
+		if(isAppPresent)
+			throw new UserException("App already present in Database");
 		return isAppPresent;
 	}
 }

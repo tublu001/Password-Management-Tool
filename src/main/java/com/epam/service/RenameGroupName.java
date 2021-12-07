@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.GroupOperationsDao;
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.repository.MySQL_DB;
 import com.epam.repository.RepositoryDB;
@@ -17,7 +18,7 @@ public class RenameGroupName implements UserAccountCrudOperation
 	GroupOperationsDao goperate = new GroupOperationsDao();
 	RepositoryDB database = new MySQL_DB();
 	@Override
-	public Optional<User> execute(User user)
+	public Optional<User> execute(User user) throws UserException
 	{
 		LOGGER.info("\n\n|------------Rename Group--------------|\n");
 		goperate.showGroups(user);

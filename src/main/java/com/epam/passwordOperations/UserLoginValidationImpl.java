@@ -4,18 +4,19 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class UserValidationImpl implements UserValidation
+public class UserLoginValidationImpl implements UserLoginValidation
 {
-	private static final Logger LOGGER = LogManager.getLogger(UserValidationImpl.class);
+	private static final Logger LOGGER = LogManager.getLogger(UserLoginValidationImpl.class);
 	Scanner input = new Scanner(System.in);
 	PasswordOperations operate = new PasswordOperationsImpl();
 	
 	@Override
-	public Optional<User> validateMaster()
+	public Optional<User> validateMaster() throws UserException
 	{
 		Optional<User> user = Optional.empty();
 		LOGGER.info("\nEnter Your MASTER Account credentials - \n\nUser Name: ");
@@ -42,42 +43,33 @@ public class UserValidationImpl implements UserValidation
 	}
 
 	@Override
-	public boolean validateUserName(String userName)
+	public boolean validateUserName(String userName) throws UserException
 	{
 		boolean isUserName = false;
-		if(!userName.equals(null) && !userName.equals(""))
+		if (MasterUsersOperationsDao.isMasterPresent(userName))
 		{
-			if (MasterUsersOperationsDao.isMasterPresent(userName))
-			{
-				isUserName = true;
-			}
-			else
-			{
-				LOGGER.info("User Not Found...");
-			}
+			isUserName = true;
 		}
 		else
 		{
-			LOGGER.info("Invalid User Name..");
+			throw new UserException("User not present in Database");
 		}
 		return isUserName;
 	}
 
 	@Override
-	public boolean validatePassword(User user, String password)
+	public boolean validatePassword(User user, String password) throws UserException
 	{
 		boolean isPassword = false;
-		if(!password.equals(null) && !password.equals(""))
+		if(password.equals(null) || password.equals(""))
 		{
+			throw new UserException("Invalid password provided!!!");
+		}
 			isPassword = operate.encryptPassword(password).equals(user.getPassword());
-		}
-		if(isPassword)
+
+		if(!isPassword)
 		{
-			LOGGER.info("Verified...");
-		}
-		else
-		{
-			LOGGER.info("Incorrect Password");
+			throw new UserException("Incorrect Password!!!");
 		}
 
 		return isPassword;

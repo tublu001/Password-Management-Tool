@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.passwordOperations.*;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +19,7 @@ public class MasterOperations implements MasterCrudMenu
 	
 
 	@Override
-	public void createMaster() 
+	public void createMaster() throws UserException
 	{
 		LOGGER.info("\n\nCreate a new Master Account\n\nUser Name: ");
 		String userName = input.nextLine();
@@ -45,9 +46,9 @@ public class MasterOperations implements MasterCrudMenu
 	}
 
 	@Override
-	public Optional<User> loginMaster()
+	public Optional<User> loginMaster() throws UserException
 	{
-		UserValidation uv = new UserValidationImpl();
+		UserLoginValidation uv = new UserLoginValidationImpl();
 		Optional<User> user = uv.validateMaster();
 		return user;
 	}

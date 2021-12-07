@@ -1,15 +1,5 @@
 package com.epam;
 
-import com.epam.dao.MasterUsersOperationsDao;
-import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PasswordOperationsImpl;
-import com.epam.passwordOperations.UserValidationImpl;
-import com.epam.passwordOperations.UserValidation;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 public class UserValidationImplTest
 {
 //    UserValidation uV;

@@ -81,7 +81,8 @@ class AccountCredentialOperationsDaoTest {
         private UserAccount account1, account2;
 
         @Test
-        void removeObject() {
+        void removeObject() throws UserException
+        {
             user = new User();
             account1 = new UserAccount("a", "vsgvsgvs", "qwerty", "grp1", user);
             account2 = new UserAccount("b", "vsgvsgvs", "qwerty", "grp1", user);
@@ -144,7 +145,8 @@ class AccountCredentialOperationsDaoTest {
         private UserAccount account2;
 
         @Test
-        void isAppPresentTest() {
+        void isAppPresentTest() throws UserException
+        {
             user = new User();
             account1 = new UserAccount("a", "vsgvsgvs", "qwerty", "grp1", user);
             account2 = new UserAccount("b", "vsgvsgvs", "qwerty", "grp1", user);

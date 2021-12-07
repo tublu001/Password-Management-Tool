@@ -1,6 +1,7 @@
 package com.epam;
 
 import com.epam.dao.*;
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PasswordOperationsImpl;
@@ -29,7 +30,7 @@ public class AccountCredentialOperationsDaoTest
 
     @Test
     @DisplayName(value = "storing a App and validating")
-    void storeAppInAccountTest1()
+    void storeAppInAccountTest1() throws UserException
     {
 
         GroupOperationsDao groupOperate = new GroupOperationsDao();
@@ -43,7 +44,7 @@ public class AccountCredentialOperationsDaoTest
 
     @Test
     @DisplayName(value = "Checking a App is present or not wrong app name provided")
-    void checkAppPresentOrNotTest2()
+    void checkAppPresentOrNotTest2() throws UserException
     {
         GroupOperationsDao groupOperate = new GroupOperationsDao();
         User user = MasterUsersOperationsDao.getUser("Manash").get();

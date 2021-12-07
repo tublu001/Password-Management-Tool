@@ -20,14 +20,17 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
 	@Override
 	public Optional<User> execute(User user) throws UserException
 	{
-		boolean isProperAppName = false;
 		boolean isStored = false;
 		LOGGER.info("\n\nStore Account credentials\n\nEnter App Name: ");
 		String appName = input.nextLine();
-		if(appName != null && appName != "")
-			isProperAppName = true;
-		if(!new AccountCredentialOperationsDao().isAppPresent(user, appName) && isProperAppName)
+		if(appName.equals(null) || appName.equals(""))
 		{
+			throw new UserException("Invalid App Name");
+		}
+		if(new AccountCredentialOperationsDao().isAppPresent(user, appName))
+		{
+			throw new UserException("App already present in Database");
+		}
 			LOGGER.info("Enter URL: ");
 			String url = input.nextLine();
 			LOGGER.info("Press enter to generate a new password for ("+appName+")..  ");
@@ -44,17 +47,8 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
 	        String groupName = GroupMenu.showGroupUI(user);
 			UserData userDetail = new UserData(user, appName, url, encPwd, groupName);
 			isStored = new AccountCredentialOperationsDao().store(userDetail);
-		}
-		else
-		{
-			if(!isProperAppName)
-				LOGGER.info("App name is incorrect..\n");
-			else if(!isStored)
-				LOGGER.info("Something is wrong..\n");
-			else
-				LOGGER.info("App already present in Database... Try again..\n");
-		}
-
+			if(!isStored)
+				throw new UserException("Something went wrong... Cannot able to store data in Database!!!");
 		return Optional.ofNullable(user);
 	}
 

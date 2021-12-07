@@ -9,7 +9,7 @@ public interface AccountsControllerDao
 	boolean store(UserData userDetail) throws UserException;
 	String retrivePassword(UserAccount account);
 	void showAccount(UserAccount account);
-	boolean remove(User user, UserAccount account);
+	boolean remove(User user, UserAccount account) throws UserException;
 	boolean isAppName(UserAccount account, String appName);
-	boolean isAppPresent(User user, String appName);
+	boolean isAppPresent(User user, String appName) throws UserException;
 }

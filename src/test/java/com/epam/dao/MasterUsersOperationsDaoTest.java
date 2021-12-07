@@ -1,5 +1,6 @@
 package com.epam.dao;
 
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.repository.MySQL_DB;
 import com.epam.repository.RepositoryDB;
@@ -29,7 +30,8 @@ class MasterUsersOperationsDaoTest {
         private final String PASSWORD = "PASSWORD";
 
         @Test
-        void addMasterUserTest() {
+        void addMasterUserTest() throws UserException
+        {
             when(database.setMasterUser(new User())).thenReturn(true);
             assertTrue(MasterUsersOperationsDao.add(USER_NAME, PASSWORD));
         }

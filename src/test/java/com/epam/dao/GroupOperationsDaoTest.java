@@ -1,5 +1,6 @@
 package com.epam.dao;
 
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
 import org.junit.jupiter.api.Assertions;
@@ -31,7 +32,8 @@ class GroupOperationsDaoTest {
         private UserAccount account2;
 
         @Test
-        void isGroupPresent() {
+        void isGroupPresent() throws UserException
+        {
             user = new User();
             account1 = new UserAccount("a", "vsgvsgvs", "qwerty", "grp1", user);
             account2 = new UserAccount("b", "vsgvsgvs", "qwerty", "grp1", user);

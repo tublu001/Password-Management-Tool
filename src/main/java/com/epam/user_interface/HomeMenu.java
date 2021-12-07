@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.epam.dao.MasterUsersOperationsDao;
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PasswordOperationsImpl;
@@ -34,37 +35,39 @@ public class HomeMenu
 			LOGGER.info("3. Retrive all Master user names");
 			LOGGER.info("0. Exit..\n\n\nChoose Any: ");
 			String selection = "invalid";
-			try
-			{
+
 				selection = input.next();
-			}
-			catch (Exception e)
-			{
-				LOGGER.info(e.getMessage());
-			}
+
 
 			
 			MasterCrudMenu op = new MasterOperations();
-			switch(selection)
+			try
 			{
-				case "1":
-					Optional<User> user = op.loginMaster();
-					if(user.isPresent())
-						AccountMenuCRUD.showCrudMenu(user.get());
-					break;
-				case "2":
-					op.createMaster();
-					break;
-				case "3":
-					op.showAllMasters();
-					break;
-				case "0":
-					flag = 1;
-					LOGGER.info("Thank you... Exiting...");
-					break;
-				default:
-					LOGGER.warn("Invalid Input! Try again...");
-					break;
+				switch (selection)
+				{
+					case "1":
+						Optional<User> user = op.loginMaster();
+						if (user.isPresent())
+							AccountMenuCRUD.showCrudMenu(user.get());
+						break;
+					case "2":
+						op.createMaster();
+						break;
+					case "3":
+						op.showAllMasters();
+						break;
+					case "0":
+						flag = 1;
+						LOGGER.info("Thank you... Exiting...");
+						break;
+					default:
+						LOGGER.warn("Invalid Input! Try again...");
+						break;
+				}
+			}
+			catch (UserException e)
+			{
+				e.printStackTrace();
 			}
 		}
 	}

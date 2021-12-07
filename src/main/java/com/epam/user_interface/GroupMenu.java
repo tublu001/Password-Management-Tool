@@ -1,7 +1,9 @@
 package com.epam.user_interface;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,36 +28,41 @@ public class GroupMenu
 			LOGGER.info("2. Store in a existing group");
 			LOGGER.info("0. Skip..(Ungrouped)\n\n\nChoose Any: ");
 			char selection = 'Z';
-			try
-			{
+
 				selection = input.next().charAt(0);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
+
 			
 			AccountCrudGroup op = new GroupCrudOperations();
-			switch(selection)
+			try
 			{
-				case '1':
-					if(op.createGroup(user))
-					{
-						int lastItem = user.getGroups().size();
-						groupName = user.getGroups().get(lastItem-1);
+				switch (selection)
+				{
+					case '1':
+						if (op.createGroup(user))
+						{
+							int lastItem = user.getGroups().size();
+							groupName = user.getGroups().get(lastItem - 1);
+							flag = 1;
+						}
+						break;
+					case '2':
+						groupName = op.storeInExistingGroup(user);
 						flag = 1;
-					}
-					break;
-				case '2':
-					groupName = op.storeInExistingGroup(user);
-					flag = 1;
-					break;
-				case '0':
-					flag = 1;
-					break;
-				default:
-					LOGGER.info("Invalid Input! Try again...");
-					break;
+						break;
+					case '0':
+						flag = 1;
+						break;
+					default:
+						break;
+				}
+			}
+			catch (UserException e)
+			{
+				LOGGER.info(e.getMessage()+"\n\n");
+			}
+			catch (InputMismatchException e)
+			{
+				LOGGER.info("Invalid selection\n\n");
 			}
 		}
 		return groupName;
