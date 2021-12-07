@@ -50,11 +50,6 @@ public class MasterUsersOperationsDao
 	{
 		users = database.getMasterUsers();
 		User master = null;
-//		users.forEach(user ->
-//		{
-//			if(userName.equals(user.getUserName()))
-//			{master = user;}
-//		});
 		for(User user : users)
 			if(userName.equals(user.getUserName()))
 				master = user;
