@@ -1,0 +1,8 @@
+com\epam\AccountCrudFactoryTest.class
+com\epam\UserOperationsDaoTest.class
+com\epam\UserValidationImplTest.class
+com\epam\AppTest.class
+com\epam\AccountCredentialOperationsDaoTest.class
+com\epam\RetriveAllAccountsTest.class
+com\epam\UsersOperationsDaoTest.class
+com\epam\GroupOperationsDaoTest.class
