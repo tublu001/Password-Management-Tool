@@ -1,19 +1,5 @@
 package com.epam;
 
-import com.epam.dao.AccountCredentialOperationsDao;
-import com.epam.dao.MasterUserOperationsDao;
-import com.epam.dao.MasterUsersOperationsDao;
-import com.epam.dao.UserData;
-import com.epam.model.User;
-import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PasswordOperationsImpl;
-import com.epam.service.RetriveAllAccounts;
-import com.epam.service.UserAccountCrudOperation;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 public class RetriveAllAccountsTest
 {
 //    UserAccountCrudOperation operation = new RetriveAllAccounts();

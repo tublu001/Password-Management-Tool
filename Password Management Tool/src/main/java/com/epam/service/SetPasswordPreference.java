@@ -7,17 +7,17 @@ import com.epam.passwordOperations.PreferredPassword;
 import com.epam.repository.MySQL_DB;
 import com.epam.repository.RepositoryDB;
 
-public class SetPasswordPreference implements UserAccountCrudOperation {
+public class SetPasswordPreference implements UserAccountCrudOperation
+{
 
-	RepositoryDB database = new MySQL_DB();
+    RepositoryDB database = new MySQL_DB();
 
-	@Override
-	public Optional<User> execute(User user)
-	{
-		PreferredPassword pp = user.getPrefPass();
-		pp.setPrefferdPassword();
-		database.merge(user);
-		return Optional.ofNullable(user);
-	}
+    @Override
+    public Optional<User> execute(User user)
+    {
+        PreferredPassword pp = user.getPrefPass();
+        pp.setPrefferdPassword();
+        return database.merge(user);
+    }
 
 }

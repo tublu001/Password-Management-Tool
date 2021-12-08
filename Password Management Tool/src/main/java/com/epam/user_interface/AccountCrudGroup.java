@@ -5,6 +5,6 @@ import com.epam.model.User;
 
 public interface AccountCrudGroup 
 {
-	boolean createGroup(User user) throws UserException;
+	String createGroup(User user) throws UserException;
 	String storeInExistingGroup(User user) throws UserException;
 }

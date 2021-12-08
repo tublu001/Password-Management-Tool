@@ -1,4 +1,4 @@
-package com.epam.password_management_tool;
+package com.epam.app;
 
 
 import com.epam.user_interface.HomeMenu;

@@ -3,6 +3,7 @@ package com.epam.dao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
+import com.epam.model.UserData;
 
 public interface AccountsControllerDao 
 {

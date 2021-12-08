@@ -11,48 +11,47 @@ import org.apache.logging.log4j.Logger;
 
 public class GroupCrudOperations implements AccountCrudGroup
 {
-	private static final Logger LOGGER = LogManager.getLogger(GroupCrudOperations.class);
-	public GroupCrudOperations() 
-	{}
-	
-	Scanner sc = new Scanner(System.in);
-	GroupOperationsDao goperate = new GroupOperationsDao();
-	
-	@Override
-	public boolean createGroup(User user) throws UserException
-	{
-		LOGGER.info("Enter a new Group Name: ");
-		String groupName = sc.nextLine();
-		boolean groupCreated = false;
-		if(!goperate.isGroupAvailable(user, groupName))
-		{
-			goperate.addGroupName(user, groupName);
-			groupCreated = true;
-		}
-		else
-		{
-			throw new UserException("Group already exists in Database!!!");
-		}
+    private static final Logger LOGGER = LogManager.getLogger(GroupCrudOperations.class);
 
-		return groupCreated;
-	}
+    public GroupCrudOperations()
+    {
+    }
 
-	@Override
-	public String storeInExistingGroup(User user) throws UserException, InputMismatchException
-	{
-		LOGGER.info("\n\nAll the Existing Groups Available: ");
-		goperate.showGroups(user);
-		LOGGER.info("\nSelect any one: ");
-		int groupNum = sc.nextInt();
-		String grpName = "Undefined";
-		if(goperate.isGroupIndex(user, groupNum-1))
-		{
-			String groupName = goperate.getGroup(user, groupNum-1);
-			if(goperate.isGroupAvailable(user, groupName))
-			{
-				grpName = groupName;
-			}
-		}
-		return grpName;
-	}	
+    Scanner input = new Scanner(System.in);
+    GroupOperationsDao groupOperationsDao = new GroupOperationsDao();
+
+    @Override
+    public String createGroup(User user) throws UserException
+    {
+        LOGGER.info("Enter a new Group Name: ");
+        String groupName = input.nextLine();
+        if (!groupOperationsDao.isGroupAvailable(user, groupName))
+        {
+            groupOperationsDao.addGroupName(user, groupName);
+        } else
+        {
+            throw new UserException("Group already exists in Database!!!");
+        }
+
+        return groupName;
+    }
+
+    @Override
+    public String storeInExistingGroup(User user) throws UserException, InputMismatchException
+    {
+        LOGGER.info("\n\nAll the Existing Groups Available: ");
+        groupOperationsDao.showGroups(user);
+        LOGGER.info("\nSelect any one: ");
+        int selectedGroupIndex = input.nextInt();
+        String groupName = "Undefined";
+        if (groupOperationsDao.isGroupIndex(user, selectedGroupIndex - 1))
+        {
+            String repositoryGroupName = groupOperationsDao.getGroup(user, selectedGroupIndex - 1);
+            if (groupOperationsDao.isGroupAvailable(user, repositoryGroupName))
+            {
+                groupName = repositoryGroupName;
+            }
+        }
+        return groupName;
+    }
 }

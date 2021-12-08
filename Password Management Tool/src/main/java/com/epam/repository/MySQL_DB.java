@@ -20,12 +20,15 @@ public class MySQL_DB implements RepositoryDB
     {
         return entityManager.createQuery("Select usr from User usr").getResultList();
     }
+
     public static void initialize()
     {
         entityManagerFactory = RepositoryManager.getEntityManager();
-        try {
+        try
+        {
             entityManager = entityManagerFactory.createEntityManager();
-        }catch(Exception e){
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
@@ -38,27 +41,29 @@ public class MySQL_DB implements RepositoryDB
     @Override
     public Optional<User> setMasterUser(User user)
     {
-        try {
+        try
+        {
             entityManager.getTransaction().begin();
             entityManager.persist(user);
             entityManager.getTransaction().commit();
-        }
-        catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
-			if (entityManager != null)
-				entityManager.getTransaction().rollback();
-			}
+            if (entityManager != null)
+                entityManager.getTransaction().rollback();
+        }
         return Optional.ofNullable(user);
     }
 
     public Optional<User> merge(User user)
     {
-        try {
+        try
+        {
             entityManager.getTransaction().begin();
             entityManager.merge(user);
             entityManager.getTransaction().commit();
-        }
-        catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             if (entityManager != null)
                 entityManager.getTransaction().rollback();

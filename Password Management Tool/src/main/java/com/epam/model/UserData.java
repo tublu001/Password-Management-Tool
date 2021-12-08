@@ -1,4 +1,4 @@
-package com.epam.dao;
+package com.epam.model;
 
 import com.epam.model.User;
 

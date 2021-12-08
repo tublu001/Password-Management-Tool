@@ -23,7 +23,7 @@ public class User
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column(name = "id")
-	private Long user_Id = 0l;
+	private Long user_Id = 0L;
 
 	private String userName;
 	private String password;
@@ -79,19 +79,12 @@ public class User
 	}
 
 	public void setAccounts(List<UserAccount> accounts) {
-//		accounts.forEach(account->
-//				account.setUser(this));
 		this.accounts = accounts;
 	}
 
 	public void setAccount(UserAccount account) {
 		this.accounts.add(account);
 	}
-//	@Override
-//	public String toString() {
-//		return "MasterUsers [userName=" + userName + ", password=" + password + ", accounts=" + accounts + ", prefPass="
-//				+ prefPass + "]";
-//	}
 
 	@Override
 	public String toString() {

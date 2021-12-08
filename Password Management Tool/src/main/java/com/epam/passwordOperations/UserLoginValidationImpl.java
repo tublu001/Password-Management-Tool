@@ -13,7 +13,7 @@ public class UserLoginValidationImpl implements UserLoginValidation
 {
 	private static final Logger LOGGER = LogManager.getLogger(UserLoginValidationImpl.class);
 	Scanner input = new Scanner(System.in);
-	PasswordOperations operate = new PasswordOperationsImpl();
+	PasswordOperations passwordOperations = new PasswordOperationsImpl();
 	
 	@Override
 	public Optional<User> validateMaster() throws UserException
@@ -60,12 +60,11 @@ public class UserLoginValidationImpl implements UserLoginValidation
 	@Override
 	public boolean validatePassword(User user, String password) throws UserException
 	{
-		boolean isPassword = false;
 		if(password.equals(null) || password.equals(""))
 		{
 			throw new UserException("Invalid password provided!!!");
 		}
-			isPassword = operate.encryptPassword(password).equals(user.getPassword());
+		boolean isPassword = passwordOperations.encryptPassword(password).equals(user.getPassword());
 
 		if(!isPassword)
 		{
