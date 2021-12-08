@@ -2,15 +2,12 @@ package com.epam.repository;
 
 import com.epam.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public interface RepositoryDB
 {
     List<User> getMasterUsers();
-    boolean setMasterUser(User obj);
-    boolean merge(User obj);
-//    boolean setMasterUsers(List<User> obj);
-
+    Optional<User> setMasterUser(User obj);
+    Optional<User> merge(User obj);
 }

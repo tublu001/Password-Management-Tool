@@ -7,7 +7,7 @@ import com.epam.model.UserAccount;
 public interface AccountsControllerDao 
 {
 	boolean store(UserData userDetail) throws UserException;
-	String retrivePassword(UserAccount account);
+	String retrievePassword(UserAccount account);
 	void showAccount(UserAccount account);
 	boolean remove(User user, UserAccount account) throws UserException;
 	boolean isAppName(UserAccount account, String appName);

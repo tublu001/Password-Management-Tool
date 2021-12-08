@@ -26,7 +26,7 @@ public class RetriveAccountPassword implements UserAccountCrudOperation
 			if(op.isAppName(account, appName))
 			{
 				isApp = true;
-				LOGGER.info("Account password is: " + op.retrivePassword(account));
+				LOGGER.info("Account password is: " + op.retrievePassword(account));
 				break;
 			}
 		}

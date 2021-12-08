@@ -19,8 +19,9 @@ public class MasterOperations implements MasterCrudMenu
 	
 
 	@Override
-	public void createMaster() throws UserException
+	public Optional<User> createMaster() throws UserException
 	{
+		Optional<User> user;
 		LOGGER.info("\n\nCreate a new Master Account\n\nUser Name: ");
 		String userName = input.nextLine();
 		if(!MasterUsersOperationsDao.isMasterPresent(userName))
@@ -30,13 +31,14 @@ public class MasterOperations implements MasterCrudMenu
 			
 			PasswordOperations operate = new PasswordOperationsImpl();
 			
-			MasterUsersOperationsDao.add(userName, operate.encryptPassword(password));
+			user = MasterUsersOperationsDao.add(userName, operate.encryptPassword(password));
 			LOGGER.info("\nMaster User created");
 		}
 		else
 		{
-			LOGGER.info("\nFailed.. Master already present in database..\n\n");
+			throw new UserException("Failed.. Master already present in database..");
 		}
+		return user;
 	}
 
 	@Override

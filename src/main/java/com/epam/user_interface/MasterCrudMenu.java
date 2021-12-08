@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface MasterCrudMenu 
 {
-	void createMaster() throws UserException;
+	Optional<User> createMaster() throws UserException;
 	void showAllMasters();
 	Optional<User> loginMaster() throws UserException;
 }

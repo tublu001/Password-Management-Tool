@@ -14,9 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -63,7 +60,7 @@ class AccountCredentialOperationsDaoTest {
             User user = new User();
             account = new UserAccount("a", "vsgvsgvs", "IECQGzreFylRp0dpPcAHXA==", "grp1", user);
             when(operate.decryptPassword(account.getPassword())).thenReturn("qwerty");
-            Assertions.assertTrue(underTest.retrivePassword(account).equals("qwerty"));
+            Assertions.assertTrue(underTest.retrievePassword(account).equals("qwerty"));
         }
 
         @BeforeEach

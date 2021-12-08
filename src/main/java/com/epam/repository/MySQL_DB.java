@@ -1,6 +1,7 @@
 package com.epam.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,102 +20,6 @@ public class MySQL_DB implements RepositoryDB
     {
         return entityManager.createQuery("Select usr from User usr").getResultList();
     }
-
-    @Override
-    public boolean setMasterUser(User user)
-    {
-        boolean isSuccess = false;
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(user);
-            entityManager.getTransaction().commit();
-        isSuccess = true;
-        }
-        catch (Exception e) {
-//            e.printStackTrace();
-			if (entityManager != null)
-				entityManager.getTransaction().rollback();
-			}
-//        finally {
-//            entityManager.close();
-//        }
-        return isSuccess;
-    }
-
-//    @Override
-    public boolean setMasterUsers(List<User> users)
-    {
-        boolean isSuccess = false;
-        users.forEach(user ->
-        {
-            entityManager.persist(user);
-        });
-        try {
-        entityManager.getTransaction().commit();
-            isSuccess = true;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            if (entityManager != null)
-                entityManager.getTransaction().rollback();
-        }
-        return isSuccess;
-    }
-
-    public boolean persistAndCommit(User obj)
-    {
-        boolean isSuccess = false;
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(obj);
-            entityManager.getTransaction().commit();
-            isSuccess = true;
-        }
-        catch (Exception e) {
-            if (entityManager != null)
-                entityManager.getTransaction().rollback();
-        }
-        finally {
-            entityManager.close();
-        }
-        return isSuccess;
-    }
-
-    public boolean commit(User obj)
-    {
-        boolean isSuccess = false;
-        try {
-            entityManager.getTransaction().commit();
-            isSuccess = true;
-        }
-        catch (Exception e) {
-            if (entityManager != null)
-                entityManager.getTransaction().rollback();
-        }
-        return isSuccess;
-    }
-
-    public boolean merge(User obj)
-    {
-        boolean isSuccess = false;
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.merge(obj);
-            entityManager.getTransaction().commit();
-            isSuccess = true;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            if (entityManager != null)
-                entityManager.getTransaction().rollback();
-        }
-//        finally {
-//            entityManager.close();
-//        }
-        return isSuccess;
-    }
-
     public static void initialize()
     {
         entityManagerFactory = RepositoryManager.getEntityManager();
@@ -127,7 +32,37 @@ public class MySQL_DB implements RepositoryDB
 
     public static void close()
     {
-//        entityManagerFactory.close();
         entityManager = null;
+    }
+
+    @Override
+    public Optional<User> setMasterUser(User user)
+    {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+			if (entityManager != null)
+				entityManager.getTransaction().rollback();
+			}
+        return Optional.ofNullable(user);
+    }
+
+    public Optional<User> merge(User user)
+    {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(user);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            if (entityManager != null)
+                entityManager.getTransaction().rollback();
+        }
+        return Optional.ofNullable(user);
     }
 }

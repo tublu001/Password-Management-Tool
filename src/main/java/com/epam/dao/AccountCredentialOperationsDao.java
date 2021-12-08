@@ -1,7 +1,7 @@
 package com.epam.dao;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.epam.exceptions.UserException;
@@ -38,14 +38,16 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 		newAccount.setAccountGroup(userDetail.getGroupName());
 		newAccount.setUser(user);
 		allAccounts.add(newAccount);
-		isAccountStored = database.merge(user);
-		if(!isAccountStored)
+		Optional<User> returnedUser = database.merge(user);
+		if(returnedUser.isEmpty())
 			throw new UserException("Account not Added Successfully!!! Error storing to Database");
+		else
+			isAccountStored = true;
 		return isAccountStored;
 	}	
 	
 	@Override
-	public String retrivePassword(UserAccount account) 
+	public String retrievePassword(UserAccount account)
 	{
 		return operate.decryptPassword(account.getPassword());
 	}
@@ -53,16 +55,17 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 	@Override
 	public boolean remove(User user, UserAccount account) throws UserException
 	{
-		boolean isDeleted = false;
+		boolean isDeleted;
 		if(user.getAccounts().remove(account))
 		{
-			isDeleted = database.merge(user);
-			if(!isDeleted)
+			Optional<User> returnedUser = database.merge(user);
+			isDeleted = true;
+			if(returnedUser.isEmpty())
 				throw new UserException("Account cannot be removed!!! Error accessing to Database");
 		}
 		else
 		{
-			throw new UserException("Some Error Occured");
+			throw new UserException("Some Error Occurred");
 		}
 		
 		return isDeleted;

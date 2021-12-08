@@ -17,8 +17,7 @@ public class GroupOperationsDao
 	public boolean isGroupAvailable(User user, String groupName) throws UserException
 	{
 		List<String> matchedGroups = user.getGroups().stream().filter(i->i.equals(groupName)).collect(Collectors.toList());
-		boolean isGroupAvailable = (!matchedGroups.isEmpty());
-		return isGroupAvailable;
+		return (!matchedGroups.isEmpty());
 	}
 	
 	public String addGroupName(User user, String groupName) throws UserException
@@ -43,9 +42,10 @@ public class GroupOperationsDao
 	
 	public String getGroup(User user, int index) throws UserException
 	{
-		if(user.equals(null) || (index > user.getGroups().size() || index < 0))
+		if(isGroupIndex(user, index))
+			return user.getGroups().get(index);
+		else
 			throw new UserException("Invalid selection!!! Group not available in this index");
-		return user.getGroups().get(index);
 	}
 	
 	public boolean updateGroupName(User user, int index, String newGroupName) throws UserException
@@ -93,7 +93,7 @@ public class GroupOperationsDao
 
 	public boolean isGroupIndex(User user, int index) throws UserException
 	{
-		if(index > user.getGroups().size() || index < 0)
+		if(index > user.getGroups().size()-1 || index < 0)
 			throw new UserException("Invalid selection!!! Group not available in this index");
 		else
 			return true;

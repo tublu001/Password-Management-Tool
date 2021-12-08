@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -32,8 +34,8 @@ class MasterUsersOperationsDaoTest {
         @Test
         void addMasterUserTest() throws UserException
         {
-            when(database.setMasterUser(new User())).thenReturn(true);
-            assertTrue(MasterUsersOperationsDao.add(USER_NAME, PASSWORD));
+            when(database.setMasterUser(new User())).thenReturn(Optional.empty());
+            assertFalse(MasterUsersOperationsDao.add(USER_NAME, PASSWORD).isPresent());
         }
 
         @BeforeEach
