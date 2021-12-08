@@ -1,17 +1,11 @@
 package com.epam.user_interface;
 
-import java.util.Optional;
-import java.util.Scanner;
-
-import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.exceptions.UserException;
-import com.epam.model.User;
-import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PasswordOperationsImpl;
-
 import com.epam.repository.MySQL_DB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Scanner;
 
 public class HomeMenu 
 {
@@ -46,9 +40,7 @@ public class HomeMenu
 				switch (selection)
 				{
 					case "1":
-						Optional<User> user = op.loginMaster();
-						if (user.isPresent())
-							AccountMenuCRUD.showCrudMenu(user.get());
+						op.loginMaster();
 						break;
 					case "2":
 						op.createMaster();
@@ -65,7 +57,7 @@ public class HomeMenu
 						break;
 				}
 			}
-			catch (UserException e)
+			catch (Exception e)
 			{
 				e.printStackTrace();
 			}

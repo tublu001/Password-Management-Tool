@@ -52,6 +52,11 @@ public class MasterOperations implements MasterCrudMenu
 	{
 		UserLoginValidation uv = new UserLoginValidationImpl();
 		Optional<User> user = uv.validateMaster();
+
+		if (user.isEmpty())
+			throw new UserException("User not Found!!!");
+
+		AccountMenuCRUD.showCrudMenu(user.get());
 		return user;
 	}
 
