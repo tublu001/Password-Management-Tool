@@ -2,6 +2,7 @@ package com.epam.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.epam.model.User;
 
@@ -15,8 +16,8 @@ public class MasterUsersDB implements RepositoryDB
 	}
 
 	@Override
-	public boolean setMasterUser(User obj) {
-		return false;
+	public Optional<User> setMasterUser(User obj) {
+		return Optional.empty();
 	}
 
 //	@Override
@@ -25,8 +26,8 @@ public class MasterUsersDB implements RepositoryDB
 	}
 
 	@Override
-	public boolean merge(User obj) {
-		return false;
+	public Optional<User> merge(User obj) {
+		return Optional.empty();
 	}
 }
 

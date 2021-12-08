@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -38,7 +40,7 @@ class AccountCredentialOperationsDaoTest {
             User user = new User();
             userDetail = new UserData(user, "a", "vsgvsgvs", "qwerty", "grp1");
             userDetail1 = new UserData(user, "b", "vsgvsgvs", "qwerty", "grp1");
-            when(database.merge(user)).thenReturn(true);
+            when(database.merge(user)).thenReturn(Optional.empty());
             Assertions.assertTrue(underTest.store(userDetail));
             Assertions.assertTrue(underTest.store(userDetail1));
             Assertions.assertEquals(2, user.getAccounts().size());
@@ -85,7 +87,7 @@ class AccountCredentialOperationsDaoTest {
             account2 = new UserAccount("b", "vsgvsgvs", "qwerty", "grp1", user);
             user.getAccounts().add(account1);
             user.getAccounts().add(account2);
-            when(database.merge(user)).thenReturn(true);
+            when(database.merge(user)).thenReturn(Optional.empty());
             underTest.remove(user, account1);
             Assertions.assertEquals(1, user.getAccounts().size());
             user.getAccounts().forEach(System.out::println);
