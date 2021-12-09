@@ -1,12 +1,12 @@
 package com.epam.service;
 
-import java.util.Optional;
-
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 
+import java.util.Optional;
+
 @FunctionalInterface
-public interface UserAccountCrudOperation 
+public interface UserAccountCrudOperation
 {
-	Optional<User> execute(User user) throws UserException;
+    Optional<User> execute(User user) throws UserException;
 }

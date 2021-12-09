@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface UserLoginValidation
 {
     Optional<User> validateMaster() throws UserException;
+
     boolean validateUserName(String userName) throws UserException;
+
     boolean validatePassword(User user, String password) throws UserException;
 }

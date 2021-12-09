@@ -1,14 +1,17 @@
 package com.epam.user_interface;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 import com.epam.dao.GroupOperationsDao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+@Service
 public class GroupCrudOperations implements AccountCrudGroup
 {
     private static final Logger LOGGER = LogManager.getLogger(GroupCrudOperations.class);
@@ -18,7 +21,9 @@ public class GroupCrudOperations implements AccountCrudGroup
     }
 
     Scanner input = new Scanner(System.in);
-    GroupOperationsDao groupOperationsDao = new GroupOperationsDao();
+
+    @Autowired
+    GroupOperationsDao groupOperationsDao;
 
     @Override
     public String createGroup(User user) throws UserException

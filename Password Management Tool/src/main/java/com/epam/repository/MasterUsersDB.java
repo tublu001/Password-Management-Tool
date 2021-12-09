@@ -1,10 +1,10 @@
 package com.epam.repository;
 
+import com.epam.model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.epam.model.User;
 
 public class MasterUsersDB implements RepositoryDB
 {

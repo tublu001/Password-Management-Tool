@@ -14,11 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MasterUsersOperationsDaoTest {
+class MasterUsersOperationsDaoTest
+{
 
     @InjectMocks
     private MasterUsersOperationsDao underTest;
@@ -27,7 +28,8 @@ class MasterUsersOperationsDaoTest {
     private RepositoryDB database = new MySQL_DB();
 
     @Nested
-    class WhenAdding {
+    class WhenAdding
+    {
         private final String USER_NAME = "USER_NAME";
         private final String PASSWORD = "PASSWORD";
 
@@ -39,32 +41,39 @@ class MasterUsersOperationsDaoTest {
         }
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenShowingUsers {
+    class WhenShowingUsers
+    {
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenGettingUser {
+    class WhenGettingUser
+    {
         private final String USER_NAME = "USER_NAME";
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenCheckingIfIsMasterPresent {
+    class WhenCheckingIfIsMasterPresent
+    {
         private final String USER_NAME = "USER_NAME";
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 }

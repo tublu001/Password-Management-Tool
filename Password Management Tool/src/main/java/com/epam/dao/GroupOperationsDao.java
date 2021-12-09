@@ -4,15 +4,20 @@ import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+@Service
 public class GroupOperationsDao
 {
     private static final Logger LOGGER = LogManager.getLogger(GroupOperationsDao.class);
+
+    @Autowired
+    MasterUserOperationsDao masterUserOperationsDao;
 
     public boolean isGroupAvailable(User user, String groupName) throws UserException
     {
@@ -23,7 +28,7 @@ public class GroupOperationsDao
     public String addGroupName(User user, String groupName) throws UserException
     {
         String addedGroupName = null;
-        if (MasterUserOperationsDao.addGroup(user, groupName))
+        if (masterUserOperationsDao.addGroup(user, groupName))
         {
             addedGroupName = groupName;
         } else
@@ -44,8 +49,7 @@ public class GroupOperationsDao
         if (isGroupIndex(user, index))
         {
             return user.getGroups().get(index);
-        }
-        else
+        } else
         {
             throw new UserException("Invalid selection!!! Group not available in this index");
         }
@@ -57,8 +61,7 @@ public class GroupOperationsDao
         if (user.equals(null) || (index > user.getGroups().size() || index < 0))
         {
             throw new UserException("Invalid selection!!! Group not available in this index");
-        }
-        else
+        } else
         {
             groupUpdated = true;
         }
@@ -103,8 +106,7 @@ public class GroupOperationsDao
         if (index > user.getGroups().size() - 1 || index < 0)
         {
             throw new UserException("Invalid selection!!! Group not available in this index");
-        }
-        else
+        } else
         {
             return true;
         }

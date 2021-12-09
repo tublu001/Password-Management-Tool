@@ -3,8 +3,9 @@ package com.epam.user_interface;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 
-public interface AccountCrudGroup 
+public interface AccountCrudGroup
 {
-	String createGroup(User user) throws UserException;
-	String storeInExistingGroup(User user) throws UserException;
+    String createGroup(User user) throws UserException;
+
+    String storeInExistingGroup(User user) throws UserException;
 }

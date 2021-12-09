@@ -1,16 +1,5 @@
 package com.epam;
 
-import com.epam.dao.GroupOperationsDao;
-import com.epam.dao.MasterUserOperationsDao;
-import com.epam.dao.MasterUsersOperationsDao;
-import com.epam.model.User;
-import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PasswordOperationsImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 public class GroupOperationsDaoTest
 {
 //    @BeforeEach

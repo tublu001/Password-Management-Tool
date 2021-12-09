@@ -1,12 +1,14 @@
 package com.epam.user_interface;
 
-import com.epam.exceptions.UserException;
 import com.epam.repository.MySQL_DB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class HomeMenu
 {
     private static final Logger LOGGER = LogManager.getLogger(HomeMenu.class);
@@ -15,10 +17,12 @@ public class HomeMenu
     {
     }
 
-    @SuppressWarnings(value = {"all"})
-    public static void showHomeUI()
-    {
+    @Autowired
+    private MasterCrudMenu masterOperations;
 
+    @SuppressWarnings(value = {"all"})
+    public void showHomeUI()
+    {
         boolean repeatLoop = true;
         final Scanner input = new Scanner(System.in);
 
@@ -35,7 +39,6 @@ public class HomeMenu
             selection = input.next();
 
 
-            MasterCrudMenu masterOperations = new MasterOperations();
             try
             {
                 switch (selection)

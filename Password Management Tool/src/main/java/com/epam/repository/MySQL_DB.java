@@ -1,14 +1,16 @@
 package com.epam.repository;
 
-import java.util.List;
-import java.util.Optional;
+import com.epam.model.User;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.util.List;
+import java.util.Optional;
 
-import com.epam.model.User;
-
+@Repository
+@Primary
 public class MySQL_DB implements RepositoryDB
 {
     static EntityManager entityManager;

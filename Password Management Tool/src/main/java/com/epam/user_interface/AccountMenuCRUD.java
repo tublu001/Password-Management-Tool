@@ -1,15 +1,17 @@
 package com.epam.user_interface;
 
-import java.util.Scanner;
-
-import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.repository.MySQL_DB;
 import com.epam.service.AccountCrudFactory;
 import com.epam.service.UserAccountCrudOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Scanner;
+
+@Service
 public class AccountMenuCRUD
 {
 
@@ -19,8 +21,11 @@ public class AccountMenuCRUD
 
     private static final Logger LOGGER = LogManager.getLogger(AccountMenuCRUD.class);
 
+    @Autowired
+    AccountCrudFactory accountCrudFactory;
+
     @SuppressWarnings(value = {"all"})
-    public static void showCrudMenu(User user)
+    public void showCrudMenu(User user)
     {
         boolean repeatLoop = true;
         final Scanner input = new Scanner(System.in);
@@ -42,7 +47,7 @@ public class AccountMenuCRUD
 
             try
             {
-                UserAccountCrudOperation operations = new AccountCrudFactory().getOperation(selection);
+                UserAccountCrudOperation operations = accountCrudFactory.getOperation(selection);
                 if (operations != null)
                 {
                     operations.execute(user);

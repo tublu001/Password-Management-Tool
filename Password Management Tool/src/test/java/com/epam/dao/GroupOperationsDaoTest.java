@@ -12,17 +12,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
-class GroupOperationsDaoTest {
+class GroupOperationsDaoTest
+{
 
     @InjectMocks
     private GroupOperationsDao underTest;
 
     @Nested
-    class WhenCheckingIfIsGroupAvailable {
+    class WhenCheckingIfIsGroupAvailable
+    {
         private final String GROUP_NAME = "GROUP_NAME";
         @Mock
         private User user;
@@ -46,95 +45,112 @@ class GroupOperationsDaoTest {
         }
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenAddingGroupName {
+    class WhenAddingGroupName
+    {
         private final String GROUP_NAME = "GROUP_NAME";
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenShowingGroups {
+    class WhenShowingGroups
+    {
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenGettingGroup {
+    class WhenGettingGroup
+    {
         private final int INDEX = 95;
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenUpdatingGroupName {
+    class WhenUpdatingGroupName
+    {
         private final int INDEX = 0;
         private final String NEW_GROUP_NAME = "NEW_GROUP_NAME";
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenGettingGroupWiseAccounts {
+    class WhenGettingGroupWiseAccounts
+    {
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenGettingGroupAccounts {
+    class WhenGettingGroupAccounts
+    {
         private final String GROUP_NAME = "GROUP_NAME";
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenCheckingIfIsGroupIndex {
+    class WhenCheckingIfIsGroupIndex
+    {
         private final int INDEX = 65;
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenUpdatingAccountGroupName {
+    class WhenUpdatingAccountGroupName
+    {
         private final String OLD_GROUP_NAME = "OLD_GROUP_NAME";
         private final String NEW_GROUP_NAME = "NEW_GROUP_NAME";
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 }

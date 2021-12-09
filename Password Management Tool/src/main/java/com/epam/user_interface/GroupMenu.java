@@ -1,13 +1,16 @@
 package com.epam.user_interface;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+@Service
 public class GroupMenu
 {
     private static final Logger LOGGER = LogManager.getLogger(GroupMenu.class);
@@ -16,9 +19,11 @@ public class GroupMenu
     {
     }
 
+    @Autowired
+    AccountCrudGroup accountCrudGroup;
 
     @SuppressWarnings(value = {"all"})
-    public static String showGroupUI(User user)
+    public String showGroupUI(User user)
     {
         boolean repeatLoop = true;
         String groupName = "Undefined";
@@ -34,7 +39,6 @@ public class GroupMenu
             selection = input.next().charAt(0);
 
 
-            AccountCrudGroup accountCrudGroup = new GroupCrudOperations();
             try
             {
                 switch (selection)

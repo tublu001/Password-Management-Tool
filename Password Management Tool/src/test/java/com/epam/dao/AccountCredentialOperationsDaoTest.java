@@ -17,11 +17,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AccountCredentialOperationsDaoTest {
+class AccountCredentialOperationsDaoTest
+{
 
     @Mock
     private PasswordOperations operate;
@@ -31,7 +33,8 @@ class AccountCredentialOperationsDaoTest {
     private AccountCredentialOperationsDao underTest;
 
     @Nested
-    class WhenStoring {
+    class WhenStoring
+    {
         @Mock
         private UserData userDetail, userDetail1;
 
@@ -49,17 +52,20 @@ class AccountCredentialOperationsDaoTest {
         }
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenRetrivingPassword {
+    class WhenRetrivingPassword
+    {
         @Mock
         private UserAccount account;
 
         @Test
-        void retrivePassword() {
+        void retrivePassword()
+        {
             User user = new User();
             account = new UserAccount("a", "vsgvsgvs", "IECQGzreFylRp0dpPcAHXA==", "grp1", user);
             when(operate.decryptPassword(account.getPassword())).thenReturn("qwerty");
@@ -67,14 +73,16 @@ class AccountCredentialOperationsDaoTest {
         }
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
 
 //            Assertions.assertTrue(underTest.store(userDetail));
         }
     }
 
     @Nested
-    class WhenRemoving {
+    class WhenRemoving
+    {
         @Mock
         private User user;
         @Mock
@@ -96,13 +104,15 @@ class AccountCredentialOperationsDaoTest {
         }
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
 
         }
     }
 
     @Nested
-    class WhenCheckingIfIsAppName {
+    class WhenCheckingIfIsAppName
+    {
         private final String APP_NAME = "APP_NAME";
         @Mock
         private UserAccount account1;
@@ -110,7 +120,8 @@ class AccountCredentialOperationsDaoTest {
         private UserAccount account2;
 
         @Test
-        void checkAppName() {
+        void checkAppName()
+        {
             User user = new User();
             account1 = new UserAccount("a", "vsgvsgvs", "qwerty", "grp1", user);
             account2 = new UserAccount("b", "vsgvsgvs", "qwerty", "grp1", user);
@@ -121,22 +132,26 @@ class AccountCredentialOperationsDaoTest {
         }
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenShowingAccount {
+    class WhenShowingAccount
+    {
         @Mock
         private UserAccount account;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenCheckingIfIsAppPresent {
+    class WhenCheckingIfIsAppPresent
+    {
         private final String APP_NAME = "APP_NAME";
         @Mock
         private User user;
@@ -159,7 +174,8 @@ class AccountCredentialOperationsDaoTest {
         }
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 }

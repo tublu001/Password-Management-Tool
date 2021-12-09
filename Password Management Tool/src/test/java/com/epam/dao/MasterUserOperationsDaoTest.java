@@ -8,33 +8,35 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
-class MasterUserOperationsDaoTest {
+class MasterUserOperationsDaoTest
+{
 
     @InjectMocks
     private MasterUserOperationsDao underTest;
 
     @Nested
-    class WhenAddingGroup {
+    class WhenAddingGroup
+    {
         private final String GROUP_NAME = "GROUP_NAME";
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 
     @Nested
-    class WhenShowingAccounts {
+    class WhenShowingAccounts
+    {
         @Mock
         private User user;
 
         @BeforeEach
-        void setup() {
+        void setup()
+        {
         }
     }
 }

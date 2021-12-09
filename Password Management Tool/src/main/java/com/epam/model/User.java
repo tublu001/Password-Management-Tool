@@ -1,108 +1,122 @@
 /**
- * 
+ *
  */
 package com.epam.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.epam.passwordOperations.PreferredPassword;
 
 import javax.persistence.*;
-
-import com.epam.passwordOperations.PreferredPassword;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.GenericGenerator;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Manash_Rauta
  *
  */
 @Entity
-@Table(name="Master_Users")
+@Table(name = "Master_Users")
 public class User
 {
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	@Column(name = "id")
-	private Long user_Id = 0L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long user_Id = 0L;
 
-	private String userName;
-	private String password;
-	
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<UserAccount> accounts = new ArrayList<>();
-	
-	@ElementCollection
-	@Column(name = "groupName")
-	private List<String> groups = new ArrayList<>();
-	
-	@Embedded
-	private PreferredPassword prefPass = new PreferredPassword();
+    private String userName;
+    private String password;
 
-	public Long getUser_Id() {
-		return user_Id;
-	}
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<UserAccount> accounts = new ArrayList<>();
 
-	public void setUser_Id(Long user_Id) {
-		this.user_Id = user_Id;
-	}
+    @ElementCollection
+    @Column(name = "groupName")
+    private List<String> groups = new ArrayList<>();
 
-	public String getUserName() {
-		return userName;
-	}
+    @Embedded
+    private PreferredPassword prefPass = new PreferredPassword();
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public Long getUser_Id()
+    {
+        return user_Id;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUser_Id(Long user_Id)
+    {
+        this.user_Id = user_Id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getUserName()
+    {
+        return userName;
+    }
 
-	public List<String> getGroups() {
-		return groups;
-	}
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
 
-	public void setGroups(List<String> groups) {
-		this.groups = groups;
-	}
+    public String getPassword()
+    {
+        return password;
+    }
 
-	public PreferredPassword getPrefPass() {
-		return prefPass;
-	}
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
 
-	public void setPrefPass(PreferredPassword prefPass) {
-		this.prefPass = prefPass;
-	}
+    public List<String> getGroups()
+    {
+        return groups;
+    }
 
-	public void setAccounts(List<UserAccount> accounts) {
-		this.accounts = accounts;
-	}
+    public void setGroups(List<String> groups)
+    {
+        this.groups = groups;
+    }
 
-	public void setAccount(UserAccount account) {
-		this.accounts.add(account);
-	}
+    public PreferredPassword getPrefPass()
+    {
+        return prefPass;
+    }
 
-	@Override
-	public String toString() {
-		return "MasterUsers [userName=" + userName + ", password=" + password + "]";
-	}
+    public void setPrefPass(PreferredPassword prefPass)
+    {
+        this.prefPass = prefPass;
+    }
 
-	public List<UserAccount> getAccounts() {
-		return accounts;
-	}
+    public void setAccounts(List<UserAccount> accounts)
+    {
+        this.accounts = accounts;
+    }
 
-	public User(String userName, String password, List<UserAccount> accounts, List<String> groups, PreferredPassword prefPass) {
-		this.userName = userName;
-		this.password = password;
-		this.accounts = accounts;
-		this.groups = groups;
-		this.prefPass = prefPass;
-	}
+    public void setAccount(UserAccount account)
+    {
+        this.accounts.add(account);
+    }
 
-	public User(){}
+    @Override
+    public String toString()
+    {
+        return "MasterUsers [userName=" + userName + ", password=" + password + "]";
+    }
+
+    public List<UserAccount> getAccounts()
+    {
+        return accounts;
+    }
+
+    public User(String userName, String password, List<UserAccount> accounts, List<String> groups, PreferredPassword prefPass)
+    {
+        this.userName = userName;
+        this.password = password;
+        this.accounts = accounts;
+        this.groups = groups;
+        this.prefPass = prefPass;
+    }
+
+    public User()
+    {
+    }
 
 }

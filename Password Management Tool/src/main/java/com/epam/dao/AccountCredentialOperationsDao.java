@@ -1,22 +1,21 @@
 package com.epam.dao;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.model.UserData;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PasswordOperationsImpl;
-
-
-import com.epam.repository.MySQL_DB;
 import com.epam.repository.RepositoryDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
 public class AccountCredentialOperationsDao implements AccountsControllerDao
 {
     public AccountCredentialOperationsDao()
@@ -24,8 +23,12 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     }
 
     private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
-    PasswordOperations operate = new PasswordOperationsImpl();
-    RepositoryDB database = new MySQL_DB();
+
+    @Autowired
+    PasswordOperations operate;
+
+    @Autowired
+    RepositoryDB database;
 
     @Override
     public boolean store(UserData userDetail) throws UserException
