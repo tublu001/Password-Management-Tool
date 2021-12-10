@@ -7,23 +7,25 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
-@ComponentScan(basePackages = "com.epam")
-public class Application implements ApplicationRunner
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@ComponentScan(basePackages = "main")
+//public class Application implements ApplicationRunner
+public class Application
 {
-    @Autowired
-    HomeMenu homeMenu;
+//    @Autowired
+//    HomeMenu homeMenu;
 
     public static void main(String[] args)
     {
         SpringApplication.run(Application.class, args);
     }
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception
-    {
-        homeMenu.showHomeUI();
-    }
+//    @Override
+//    public void run(ApplicationArguments args) throws Exception
+//    {
+////        homeMenu.showHomeUI();
+//    }
 }
