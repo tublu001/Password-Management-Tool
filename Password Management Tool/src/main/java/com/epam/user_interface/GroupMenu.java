@@ -20,7 +20,7 @@ public class GroupMenu
     }
 
     @Autowired
-    AccountCrudGroup accountCrudGroup;
+    private AccountCrudGroup accountCrudGroup;
 
     @SuppressWarnings(value = {"all"})
     public String showGroupUI(User user)

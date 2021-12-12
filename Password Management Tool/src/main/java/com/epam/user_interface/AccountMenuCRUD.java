@@ -22,7 +22,7 @@ public class AccountMenuCRUD
     private static final Logger LOGGER = LogManager.getLogger(AccountMenuCRUD.class);
 
     @Autowired
-    AccountCrudFactory accountCrudFactory;
+    private AccountCrudFactory accountCrudFactory;
 
     @SuppressWarnings(value = {"all"})
     public void showCrudMenu(User user)

@@ -55,7 +55,9 @@ public class MySQL_DB implements RepositoryDB
         {
             e.printStackTrace();
             if (entityManager != null)
+            {
                 entityManager.getTransaction().rollback();
+            }
         }
         return Optional.ofNullable(user);
     }
@@ -71,7 +73,9 @@ public class MySQL_DB implements RepositoryDB
         {
             e.printStackTrace();
             if (entityManager != null)
+            {
                 entityManager.getTransaction().rollback();
+            }
         }
         return Optional.ofNullable(user);
     }

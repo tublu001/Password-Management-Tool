@@ -10,11 +10,11 @@ import java.util.Scanner;
 public class PreferredPassword extends Generator
 {
     private static final Logger LOGGER = LogManager.getLogger(PreferredPassword.class);
-    private boolean includeUpper = true;
-    private boolean includeLower = true;
-    private boolean includeNum = true;
-    private boolean includeSym = true;
-    private int length = 10;
+    private boolean includeUpperLetters = true;
+    private boolean includeLowerLetters = true;
+    private boolean includeNumbers = true;
+    private boolean includeSymbols = true;
+    private int preferredPasswordLength = 10;
 
 
     //	@Override
@@ -22,7 +22,7 @@ public class PreferredPassword extends Generator
     public void setPrefferdPassword()
     {
         String input;
-        Scanner in = new Scanner(System.in);
+        Scanner scannerInput = new Scanner(System.in);
 
         LOGGER.info("\nHello, welcome to the Password Generator :) answer"
                 + " the following questions by Yes or No \n");
@@ -31,14 +31,14 @@ public class PreferredPassword extends Generator
         while (true)
         {
             LOGGER.info("Do you want Lowercase letters \"abcd...\" to be used? ");
-            input = in.nextLine();
+            input = scannerInput.nextLine();
 
             if (input.equals("YES") || input.equals("Yes") || input.equals("yes"))
             {
-                setIncludeLower(true);
+                setIncludeLowerLetters(true);
             } else
             {
-                setIncludeLower(false);
+                setIncludeLowerLetters(false);
                 if (!(input.equals("NO")) && (!input.equals("No")) && (!input.equals("no")))
                 {
                     PasswordRequestError();
@@ -47,14 +47,14 @@ public class PreferredPassword extends Generator
             }
 
             LOGGER.info("Do you want Uppercase letters \"ABCD...\" to be used? ");
-            input = in.nextLine();
+            input = scannerInput.nextLine();
 
             if (input.equals("YES") || input.equals("Yes") || input.equals("yes"))
             {
-                setIncludeUpper(true);
+                setIncludeUpperLetters(true);
             } else
             {
-                setIncludeUpper(false);
+                setIncludeUpperLetters(false);
                 if (!(input.equals("NO")) && (!input.equals("No")) && (!input.equals("no")))
                 {
                     PasswordRequestError();
@@ -63,14 +63,14 @@ public class PreferredPassword extends Generator
             }
 
             LOGGER.info("Do you want Numbers \"1234...\" to be used? ");
-            input = in.nextLine();
+            input = scannerInput.nextLine();
 
             if (input.equals("YES") || input.equals("Yes") || input.equals("yes"))
             {
-                setIncludeNum(true);
+                setIncludeNumbers(true);
             } else
             {
-                setIncludeNum(false);
+                setIncludeNumbers(false);
                 if ((input.equals("NO") == false) && (input.equals("No") == false) && (input.equals("no") == false))
                 {
                     PasswordRequestError();
@@ -79,14 +79,14 @@ public class PreferredPassword extends Generator
             }
 
             LOGGER.info("Do you want Symbols \"!@#$...\" to be used? ");
-            input = in.nextLine();
+            input = scannerInput.nextLine();
 
             if (input.equals("YES") || input.equals("Yes") || input.equals("yes"))
             {
-                setIncludeSym(true);
+                setIncludeSymbols(true);
             } else
             {
-                setIncludeSym(false);
+                setIncludeSymbols(false);
                 if ((input.equals("NO") == false) && (input.equals("No") == false) && (input.equals("no") == false))
                 {
                     PasswordRequestError();
@@ -95,16 +95,16 @@ public class PreferredPassword extends Generator
             }
 
             //No Pool Selected
-            if (!includeUpper && !includeLower && !includeNum && !includeSym)
+            if (!includeUpperLetters && !includeLowerLetters && !includeNumbers && !includeSymbols)
             {
                 LOGGER.info("You have selected no characters to generate your password at least one of your answers should be Yes");
                 break;
             }
 
             LOGGER.info("Great! Now enter the length of the password");
-            int val = in.nextInt();
-            setLength(val);
-            in.nextLine();
+            int val = scannerInput.nextInt();
+            setPreferredPasswordLength(val);
+            scannerInput.nextLine();
             break;
         }
 
@@ -114,68 +114,68 @@ public class PreferredPassword extends Generator
     @Override
     public String toString()
     {
-        return "PreferredPassword [IncludeUpper=" + includeUpper + ", IncludeLower=" + includeLower + ", IncludeNum="
-                + includeNum + ", IncludeSym=" + includeSym + ", length=" + length + "]";
+        return "PreferredPassword [IncludeUpper=" + includeUpperLetters + ", IncludeLower=" + includeLowerLetters + ", IncludeNum="
+                + includeNumbers + ", IncludeSym=" + includeSymbols + ", length=" + preferredPasswordLength + "]";
     }
 
 
-    public boolean isIncludeUpper()
+    public boolean isIncludeUpperLetters()
     {
-        return includeUpper;
+        return includeUpperLetters;
     }
 
 
-    public void setIncludeUpper(boolean includeUpper)
+    public void setIncludeUpperLetters(boolean includeUpperLetters)
     {
-        this.includeUpper = includeUpper;
+        this.includeUpperLetters = includeUpperLetters;
     }
 
 
-    public boolean isIncludeLower()
+    public boolean isIncludeLowerLetters()
     {
-        return includeLower;
+        return includeLowerLetters;
     }
 
 
-    public void setIncludeLower(boolean includeLower)
+    public void setIncludeLowerLetters(boolean includeLowerLetters)
     {
-        this.includeLower = includeLower;
+        this.includeLowerLetters = includeLowerLetters;
     }
 
 
-    public boolean isIncludeNum()
+    public boolean isIncludeNumbers()
     {
-        return includeNum;
+        return includeNumbers;
     }
 
 
-    public void setIncludeNum(boolean includeNum)
+    public void setIncludeNumbers(boolean includeNumbers)
     {
-        this.includeNum = includeNum;
+        this.includeNumbers = includeNumbers;
     }
 
 
-    public boolean isIncludeSym()
+    public boolean isIncludeSymbols()
     {
-        return includeSym;
+        return includeSymbols;
     }
 
 
-    public void setIncludeSym(boolean includeSym)
+    public void setIncludeSymbols(boolean includeSymbols)
     {
-        this.includeSym = includeSym;
+        this.includeSymbols = includeSymbols;
     }
 
 
-    public int getLength()
+    public int getPreferredPasswordLength()
     {
-        return length;
+        return preferredPasswordLength;
     }
 
 
-    public void setLength(int length)
+    public void setPreferredPasswordLength(int preferredPasswordLength)
     {
-        this.length = length;
+        this.preferredPasswordLength = preferredPasswordLength;
     }
 
 

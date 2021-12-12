@@ -20,7 +20,7 @@ public class User
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long user_Id = 0L;
+    private Long userId = 0L;
 
     private String userName;
     private String password;
@@ -33,16 +33,16 @@ public class User
     private List<String> groups = new ArrayList<>();
 
     @Embedded
-    private PreferredPassword prefPass = new PreferredPassword();
+    private PreferredPassword preferredPassword = new PreferredPassword();
 
-    public Long getUser_Id()
+    public Long getUserId()
     {
-        return user_Id;
+        return userId;
     }
 
-    public void setUser_Id(Long user_Id)
+    public void setUserId(Long userId)
     {
-        this.user_Id = user_Id;
+        this.userId = userId;
     }
 
     public String getUserName()
@@ -75,14 +75,14 @@ public class User
         this.groups = groups;
     }
 
-    public PreferredPassword getPrefPass()
+    public PreferredPassword getPreferredPassword()
     {
-        return prefPass;
+        return preferredPassword;
     }
 
-    public void setPrefPass(PreferredPassword prefPass)
+    public void setPreferredPassword(PreferredPassword preferredPassword)
     {
-        this.prefPass = prefPass;
+        this.preferredPassword = preferredPassword;
     }
 
     public void setAccounts(List<UserAccount> accounts)
@@ -106,13 +106,13 @@ public class User
         return accounts;
     }
 
-    public User(String userName, String password, List<UserAccount> accounts, List<String> groups, PreferredPassword prefPass)
+    public User(String userName, String password, List<UserAccount> accounts, List<String> groups, PreferredPassword preferredPassword)
     {
         this.userName = userName;
         this.password = password;
         this.accounts = accounts;
         this.groups = groups;
-        this.prefPass = prefPass;
+        this.preferredPassword = preferredPassword;
     }
 
     public User()

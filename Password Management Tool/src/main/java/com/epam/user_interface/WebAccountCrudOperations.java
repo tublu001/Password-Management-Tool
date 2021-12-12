@@ -20,7 +20,7 @@ import static com.epam.user_interface.WebController.globalUser;
 public class WebAccountCrudOperations
 {
     @Autowired
-    MasterUserOperationsDao masterUserOperationsDao;
+    private MasterUserOperationsDao masterUserOperationsDao;
 
 
     private static final Logger LOGGER = LogManager.getLogger(WebAccountCrudOperations.class);

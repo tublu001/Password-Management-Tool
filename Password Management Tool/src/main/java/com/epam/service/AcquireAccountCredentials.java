@@ -22,13 +22,13 @@ public class AcquireAccountCredentials
     Scanner input = new Scanner(System.in);
 
     @Autowired
-    AccountsControllerDao accountsControllerDao;
+    private AccountsControllerDao accountsControllerDao;
 
     @Autowired
-    PasswordOperations passwordOperations;
+    private PasswordOperations passwordOperations;
 
     @Autowired
-    MasterUserOperationsDao masterUserOperationsDao;
+    private MasterUserOperationsDao masterUserOperationsDao;
 
     public boolean addAccount(UserData userDetail) throws UserException
     {
@@ -48,17 +48,19 @@ public class AcquireAccountCredentials
         }
 
         //Password generation and encryption
-        String pwd = passwordOperations.generatePassword(user);
-        String encPwd = passwordOperations.encryptPassword(pwd);
+        String generatedPassword = passwordOperations.generatePassword(user);
+        String encryptedPassword = passwordOperations.encryptPassword(generatedPassword);
 
-        LOGGER.info("\n\nPassword generated as per your preference. Copy this password and use it in your application:\n" + pwd);
+        LOGGER.info("\n\nPassword generated as per your preference. Copy this password and use it in your application:\n" + generatedPassword);
 
 //        String groupName = groupMenu.showGroupUI(user);
         masterUserOperationsDao.addGroup(user, groupName);
-        userDetail.setPassword(encPwd);
+        userDetail.setPassword(encryptedPassword);
         boolean isStored = accountsControllerDao.store(userDetail);
         if (!isStored)
+        {
             throw new UserException("Something went wrong... Cannot able to store data in Database!!!");
+        }
         return isStored;
     }
 

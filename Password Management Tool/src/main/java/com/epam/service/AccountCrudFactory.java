@@ -16,7 +16,7 @@ public class AccountCrudFactory
     private static final Logger LOGGER = LogManager.getLogger(AccountCrudFactory.class);
 
     @Autowired
-    ApplicationContext context;
+    private ApplicationContext context;
 
     public UserAccountCrudOperation getOperation(String selection) throws UserException
     {

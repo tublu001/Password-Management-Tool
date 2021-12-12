@@ -31,7 +31,9 @@ public class MasterUsersOperationsDao
         newUser.getGroups().add("Undefined");
         user = database.setMasterUser(newUser);
         if (user.isEmpty())
-            throw new UserException("Some Errors occurred... Cannot add User to the Database!!!");
+        {
+            throw new UserException("Some Error occurred... Cannot add User to the Database!!!");
+        }
         return user;
     }
 
@@ -45,11 +47,10 @@ public class MasterUsersOperationsDao
     public static Optional<User> getUser(String userName)
     {
         users = database.getMasterUsers();
-        User master = null;
-        for (User user : users)
-            if (userName.equals(user.getUserName()))
-                master = user;
-        return Optional.ofNullable(master);
+        List<User> matchedUsers = users.stream()
+                .filter(user -> userName.equals(user.getUserName()))
+                .collect(Collectors.toList());
+        return Optional.ofNullable(matchedUsers.get(0));
     }
 
     public static boolean isMasterPresent(String userName) throws UserException

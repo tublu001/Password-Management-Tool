@@ -12,12 +12,12 @@ import java.util.Optional;
 public class SetPasswordPreference implements UserAccountCrudOperation
 {
     @Autowired
-    RepositoryDB database;
+    private RepositoryDB database;
 
     @Override
     public Optional<User> execute(User user)
     {
-        PreferredPassword pp = user.getPrefPass();
+        PreferredPassword pp = user.getPreferredPassword();
         pp.setPrefferdPassword();
         return database.merge(user);
     }

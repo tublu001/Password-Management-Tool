@@ -15,7 +15,7 @@ public class RetrieveAllAccounts implements UserAccountCrudOperation
     private static final Logger LOGGER = LogManager.getLogger(RetrieveAllAccounts.class);
 
     @Autowired
-    MasterUserOperationsDao masterUserOperationsDao;
+    private MasterUserOperationsDao masterUserOperationsDao;
 
     @Override
     public Optional<User> execute(User user)

@@ -22,19 +22,19 @@ public class DeleteAccountCredential
     private static final Logger LOGGER = LogManager.getLogger(DeleteAccountCredential.class);
 
     @Autowired
-    RepositoryDB database;
+    private RepositoryDB database;
 
     @Autowired
-    AccountsControllerDao accountCredentialOperationsDao;
+    private AccountsControllerDao accountCredentialOperationsDao;
 
     @Autowired
-    UserLoginValidation userLoginValidation;
+    private UserLoginValidation userLoginValidation;
 
     @Autowired
-    PasswordOperations passwordOperations;
+    private PasswordOperations passwordOperations;
 
     @Autowired
-    GroupOperationsDao groupOperationsDao;
+    private GroupOperationsDao groupOperationsDao;
 
     public boolean deleteAccount(User user, String appName, String password) throws UserException
     {
@@ -69,7 +69,9 @@ public class DeleteAccountCredential
             }
         }
         if (!isApp)
+        {
             LOGGER.info("App not found...\n");
+        }
 
         return true;
     }

@@ -19,10 +19,10 @@ public class RenameGroupName
     Scanner input = new Scanner(System.in);
 
     @Autowired
-    GroupOperationsDao groupOperations;
+    private GroupOperationsDao groupOperations;
 
     @Autowired
-    RepositoryDB database;
+    private RepositoryDB database;
 
     public boolean renameGroup(User user, String oldGroupName, String newGroupName) throws UserException
     {

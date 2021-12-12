@@ -20,13 +20,13 @@ import static com.epam.user_interface.WebController.globalUser;
 public class WebAccountCrudRequestHandler
 {
     @Autowired
-    AcquireAccountCredentials acquireAccountCredentials;
+    private AcquireAccountCredentials acquireAccountCredentials;
     @Autowired
-    RetrieveAccountPassword retrieveAccountPassword;
+    private RetrieveAccountPassword retrieveAccountPassword;
     @Autowired
-    RenameGroupName renameGroupName;
+    private RenameGroupName renameGroupName;
     @Autowired
-    DeleteAccountCredential deleteAccountCredential;
+    private DeleteAccountCredential deleteAccountCredential;
 
     ModelAndView mv = new ModelAndView();
 
@@ -37,7 +37,9 @@ public class WebAccountCrudRequestHandler
         try
         {
             if(acquireAccountCredentials.addAccount(userDetail))
+            {
                 return "accountCrudMenu";
+            }
         } catch (UserException e)
         {
             e.printStackTrace();

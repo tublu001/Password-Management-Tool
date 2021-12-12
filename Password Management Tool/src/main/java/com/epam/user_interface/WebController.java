@@ -29,7 +29,7 @@ public class WebController
     static User globalUser;
 
     @Autowired
-    UserLoginValidation userLoginValidation;
+    private UserLoginValidation userLoginValidation;
 
 
     private static final Logger LOGGER = LogManager.getLogger(WebController.class);

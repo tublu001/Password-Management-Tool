@@ -19,13 +19,13 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
     private static final Logger LOGGER = LogManager.getLogger(MasterCrudMenuImpl.class);
 
     @Autowired
-    PasswordOperations operate;
+    private PasswordOperations operate;
 
     @Autowired
-    UserLoginValidation userLoginValidation;
+    private UserLoginValidation userLoginValidation;
 
     @Autowired
-    AccountMenuCRUD accountMenuCRUD;
+    private AccountMenuCRUD accountMenuCRUD;
 
     Scanner input = new Scanner(System.in);
 
@@ -61,7 +61,9 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
 //        Optional<User> user = userLoginValidation.validateMaster();
 
         if (user.isEmpty())
+        {
             throw new UserException("User not Found!!!");
+        }
 
         accountMenuCRUD.showCrudMenu(user.get());
         return user;

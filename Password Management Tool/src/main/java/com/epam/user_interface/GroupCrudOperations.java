@@ -23,7 +23,7 @@ public class GroupCrudOperations implements AccountCrudGroup
     Scanner input = new Scanner(System.in);
 
     @Autowired
-    GroupOperationsDao groupOperationsDao;
+    private GroupOperationsDao groupOperationsDao;
 
     @Override
     public String createGroup(User user) throws UserException

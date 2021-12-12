@@ -19,7 +19,7 @@ public class RetrieveAccountPassword
     Scanner input = new Scanner(System.in);
 
     @Autowired
-    AccountsControllerDao accountCredentialOperationsDao;
+    private AccountsControllerDao accountCredentialOperationsDao;
 
     public String retrievePassword(User user, String appName) throws UserException
     {
