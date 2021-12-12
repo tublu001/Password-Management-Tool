@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserLoginValidation
 {
-    Optional<User> validateMaster() throws UserException;
+    Optional<User> validateMaster(String userName, String Password) throws UserException;
 
     boolean validateUserName(String userName) throws UserException;
 

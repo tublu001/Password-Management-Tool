@@ -37,7 +37,6 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         List<UserAccount> allAccounts = user.getAccounts();
         UserAccount newAccount = new UserAccount();
         boolean isAccountStored;
-
         newAccount.setAppName(userDetail.getAppName());
         newAccount.setUrl(userDetail.getUrl());
         newAccount.setPassword(userDetail.getPassword());

@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Service
-public class RenameGroupName implements UserAccountCrudOperation
+public class RenameGroupName
 {
     private static final Logger LOGGER = LogManager.getLogger(RenameGroupName.class);
     Scanner input = new Scanner(System.in);
@@ -24,22 +24,14 @@ public class RenameGroupName implements UserAccountCrudOperation
     @Autowired
     RepositoryDB database;
 
-    @Override
-    public Optional<User> execute(User user) throws UserException
+    public boolean renameGroup(User user, String oldGroupName, String newGroupName) throws UserException
     {
-        LOGGER.info("\n\n|------------Rename Group--------------|\n");
         groupOperations.showGroups(user);
-        LOGGER.info("\nChoose any group you want to rename: ");
-        int groupNum = input.nextInt();
-        input.nextLine();    //consume new line character
-        if (groupOperations.isGroupIndex(user, groupNum - 1))
+        if (groupOperations.isGroupAvailable(user, oldGroupName) && !groupOperations.isGroupAvailable(user, newGroupName))
         {
-            String oldGroupName = groupOperations.getGroup(user, groupNum - 1);
-            LOGGER.info("Give a new Group name: ");
-            String newGroupName = input.nextLine();
             try
             {
-                groupOperations.updateGroupName(user, groupNum - 1, newGroupName);
+                groupOperations.updateGroupName(user, oldGroupName, newGroupName);
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -52,7 +44,7 @@ public class RenameGroupName implements UserAccountCrudOperation
         {
             throw new UserException("Invalid Selection..\n\n");
         }
-        return Optional.ofNullable(user);
+        return true;
     }
 
 }

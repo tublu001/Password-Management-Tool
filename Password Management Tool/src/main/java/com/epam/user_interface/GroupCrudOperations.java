@@ -30,13 +30,11 @@ public class GroupCrudOperations implements AccountCrudGroup
     {
         LOGGER.info("Enter a new Group Name: ");
         String groupName = input.nextLine();
-        if (!groupOperationsDao.isGroupAvailable(user, groupName))
-        {
-            groupOperationsDao.addGroupName(user, groupName);
-        } else
+        if (groupOperationsDao.isGroupAvailable(user, groupName))
         {
             throw new UserException("Group already exists in Database!!!");
         }
+
 
         return groupName;
     }

@@ -4,11 +4,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Password Management Tool</title>
 </head>
 <body>
 
-<a href="add" >Add Student</a> <br>
-<a href="display" >Display Students</a>
+<h2>Success Page</h2>
+
+
+<br>
+<a href="/PMT/" >Login Menu</a>
+
 </body>
 </html>

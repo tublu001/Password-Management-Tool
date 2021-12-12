@@ -18,13 +18,21 @@ public class MasterUserOperationsDao
     @Autowired
     AccountsControllerDao accountsControllerDao;
 
+    @Autowired
+    GroupOperationsDao groupOperationsDao;
+
     public boolean addGroup(User user, String groupName) throws UserException
     {
+        boolean isAdded = false;
         if (user.equals(null) || groupName.equals(null) || groupName.equals(""))
         {
             throw new UserException("Give proper Group Name");
         }
-        boolean isAdded = user.getGroups().add(groupName);
+        if (!groupOperationsDao.isGroupAvailable(user, groupName))
+        {
+            isAdded = user.getGroups().add(groupName);
+        }
+
 
         return isAdded;
     }

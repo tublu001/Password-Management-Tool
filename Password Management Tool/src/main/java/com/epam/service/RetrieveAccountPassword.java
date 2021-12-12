@@ -13,35 +13,27 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Service
-public class RetriveAccountPassword implements UserAccountCrudOperation
+public class RetrieveAccountPassword
 {
-    private static final Logger LOGGER = LogManager.getLogger(RetriveAccountPassword.class);
+    private static final Logger LOGGER = LogManager.getLogger(RetrieveAccountPassword.class);
     Scanner input = new Scanner(System.in);
 
     @Autowired
     AccountsControllerDao accountCredentialOperationsDao;
 
-    @Override
-    public Optional<User> execute(User user) throws UserException
+    public String retrievePassword(User user, String appName) throws UserException
     {
-        LOGGER.info("\n\nRetrieve Account password\n\nEnter App Name: ");
-        String appName = input.nextLine();
-
-        boolean isApp = false;
-
+        String password = "";
         for (UserAccount account : user.getAccounts())
         {
             if (accountCredentialOperationsDao.isAppName(account, appName))
             {
-                isApp = true;
-                LOGGER.info("Account password is: " + accountCredentialOperationsDao.retrievePassword(account));
+                password = accountCredentialOperationsDao.retrievePassword(account);
+                LOGGER.info("Account password is: " + password);
                 break;
             }
         }
-        if (!isApp)
-            throw new UserException("App not found...");
-
-        return Optional.of(user);
+        return password;
     }
 
 }

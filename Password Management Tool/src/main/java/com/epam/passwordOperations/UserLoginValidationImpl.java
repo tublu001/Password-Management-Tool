@@ -20,20 +20,15 @@ public class UserLoginValidationImpl implements UserLoginValidation
     PasswordOperations passwordOperations;
 
     @Override
-    public Optional<User> validateMaster() throws UserException
+    public Optional<User> validateMaster(String userName, String password) throws UserException
     {
         Optional<User> user = Optional.empty();
-        LOGGER.info("\nEnter Your MASTER Account credentials - \n\nUser Name: ");
-        String userName = input.nextLine();
-
         if (validateUserName(userName))
         {
             user = MasterUsersOperationsDao.getUser(userName);
         }
         if (user.isPresent())
         {
-            LOGGER.info("\n\nEnter your (Master) password: ");
-            String password = input.nextLine();
             if (validatePassword(user.get(), password))
             {
                 LOGGER.info("\nLogging you in");

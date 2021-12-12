@@ -2,6 +2,7 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
+import com.epam.model.UserAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +17,11 @@ public class GroupOperationsDao
 {
     private static final Logger LOGGER = LogManager.getLogger(GroupOperationsDao.class);
 
-    @Autowired
-    MasterUserOperationsDao masterUserOperationsDao;
 
     public boolean isGroupAvailable(User user, String groupName) throws UserException
     {
         List<String> matchedGroups = user.getGroups().stream().filter(i -> i.equals(groupName)).collect(Collectors.toList());
         return (!matchedGroups.isEmpty());
-    }
-
-    public String addGroupName(User user, String groupName) throws UserException
-    {
-        String addedGroupName = null;
-        if (masterUserOperationsDao.addGroup(user, groupName))
-        {
-            addedGroupName = groupName;
-        } else
-        {
-            throw new UserException("Error in adding group to the Database!!!");
-        }
-        return addedGroupName;
     }
 
     public void showGroups(User user)
@@ -55,17 +41,28 @@ public class GroupOperationsDao
         }
     }
 
-    public boolean updateGroupName(User user, int index, String newGroupName) throws UserException
+    public boolean updateGroupName(User user, String oldGroupName, String newGroupName) throws UserException
     {
         boolean groupUpdated = false;
-        if (user.equals(null) || (index > user.getGroups().size() || index < 0))
+        AtomicInteger count = new AtomicInteger();
+        count.set(0);
+        if (user.equals(null))
         {
             throw new UserException("Invalid selection!!! Group not available in this index");
         } else
         {
             groupUpdated = true;
+            int index = 0;
+            for(String groupName : user.getGroups())
+            {
+                index++;
+                if (groupName.equals(oldGroupName))
+                {
+                    break;
+                }
+            }
+            user.getGroups().set(index-1, newGroupName);
         }
-        user.getGroups().set(index, newGroupName);
         return groupUpdated;
     }
 
@@ -122,6 +119,17 @@ public class GroupOperationsDao
                     account.setAccountGroup(newGroupName);
                 }
             });
+    }
+
+
+    public boolean remove(User user, String groupName) throws UserException
+    {
+        boolean isDeleted = false;
+        if (user.getGroups().remove(groupName))
+        {
+            isDeleted = true;
+        }
+        return isDeleted;
     }
 
 

@@ -57,7 +57,8 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
     @Override
     public Optional<User> loginMaster() throws UserException
     {
-        Optional<User> user = userLoginValidation.validateMaster();
+        Optional<User> user = Optional.empty();
+//        Optional<User> user = userLoginValidation.validateMaster();
 
         if (user.isEmpty())
             throw new UserException("User not Found!!!");
