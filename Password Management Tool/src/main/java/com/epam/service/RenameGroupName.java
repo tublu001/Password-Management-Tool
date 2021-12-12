@@ -19,10 +19,10 @@ public class RenameGroupName implements UserAccountCrudOperation
     Scanner input = new Scanner(System.in);
 
     @Autowired
-    GroupOperationsDao groupOperations;
+    private GroupOperationsDao groupOperations;
 
     @Autowired
-    RepositoryDB database;
+    private RepositoryDB database;
 
     @Override
     public Optional<User> execute(User user) throws UserException

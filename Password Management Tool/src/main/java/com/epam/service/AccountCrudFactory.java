@@ -16,17 +16,23 @@ public class AccountCrudFactory
     private static final Logger LOGGER = LogManager.getLogger(AccountCrudFactory.class);
 
     @Autowired
-    ApplicationContext context;
+    private ApplicationContext context;
 
     public UserAccountCrudOperation getOperation(String selection) throws UserException
     {
         UserAccountCrudOperation tempObj = null;
         if (getObject(selection) != null)
+        {
             tempObj = getObject(selection);
+        }
         else if (selection.equals("0"))
+        {
             LOGGER.info("Thank you... Signing Out...");
+        }
         else
+        {
             throw new UserException("Invalid Input! Try again...");
+        }
 
         return tempObj;
     }

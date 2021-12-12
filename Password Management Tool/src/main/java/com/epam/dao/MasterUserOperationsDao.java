@@ -16,7 +16,7 @@ public class MasterUserOperationsDao
     private static final Logger LOGGER = LogManager.getLogger(MasterUserOperationsDao.class);
 
     @Autowired
-    AccountsControllerDao accountsControllerDao;
+    private AccountsControllerDao accountsControllerDao;
 
     public boolean addGroup(User user, String groupName) throws UserException
     {

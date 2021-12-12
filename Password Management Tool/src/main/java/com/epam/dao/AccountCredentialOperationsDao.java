@@ -25,10 +25,10 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
 
     @Autowired
-    PasswordOperations operate;
+    private PasswordOperations operate;
 
     @Autowired
-    RepositoryDB database;
+    private RepositoryDB database;
 
     @Override
     public boolean store(UserData userDetail) throws UserException
@@ -46,9 +46,13 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         allAccounts.add(newAccount);
         Optional<User> returnedUser = database.merge(user);
         if (returnedUser.isEmpty())
+        {
             throw new UserException("Account not Added Successfully!!! Error storing to Database");
+        }
         else
+        {
             isAccountStored = true;
+        }
         return isAccountStored;
     }
 
@@ -67,10 +71,12 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
             Optional<User> returnedUser = database.merge(user);
             isDeleted = true;
             if (returnedUser.isEmpty())
+            {
                 throw new UserException("Account cannot be removed!!! Error accessing to Database");
+            }
         } else
         {
-            throw new UserException("Some Error Occurred");
+            throw new UserException("Account cannot be removed!!! Error accessing to Database");
         }
 
         return isDeleted;
@@ -95,7 +101,9 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         List<UserAccount> matchedAccounts = user.getAccounts().stream().filter(account -> isAppName(account, appName)).collect(Collectors.toList());
         boolean isAppPresent = (!matchedAccounts.isEmpty());
         if (isAppPresent)
+        {
             throw new UserException("App already present in Database");
+        }
         return isAppPresent;
     }
 }

@@ -21,13 +21,13 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
     Scanner input = new Scanner(System.in);
 
     @Autowired
-    AccountsControllerDao accountsControllerDao;
+    private AccountsControllerDao accountsControllerDao;
 
     @Autowired
-    PasswordOperations passwordOperations;
+    private PasswordOperations passwordOperations;
 
     @Autowired
-    GroupMenu groupMenu;
+    private GroupMenu groupMenu;
 
     @Override
     public Optional<User> execute(User user) throws UserException
@@ -48,17 +48,19 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
         input.nextLine();
 
         //Password generation and encryption
-        String pwd = passwordOperations.generatePassword(user);
-        String encPwd = passwordOperations.encryptPassword(pwd);
+        String generatedPassword = passwordOperations.generatePassword(user);
+        String encryptedPassword = passwordOperations.encryptPassword(generatedPassword);
 
-        LOGGER.info("\n\nPassword generated as per your preference. Copy this password and use it in your application:\n" + pwd);
+        LOGGER.info("\n\nPassword generated as per your preference. Copy this password and use it in your application:\n" + generatedPassword);
         LOGGER.info("\nPress enter for setting up Group\n");
         input.nextLine();
         String groupName = groupMenu.showGroupUI(user);
-        UserData userDetail = new UserData(user, appName, url, encPwd, groupName);
+        UserData userDetail = new UserData(user, appName, url, encryptedPassword, groupName);
         boolean isStored = accountsControllerDao.store(userDetail);
         if (!isStored)
+        {
             throw new UserException("Something went wrong... Cannot able to store data in Database!!!");
+        }
         return Optional.ofNullable(user);
     }
 

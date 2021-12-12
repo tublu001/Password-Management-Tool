@@ -19,7 +19,7 @@ public class RetriveAccountPassword implements UserAccountCrudOperation
     Scanner input = new Scanner(System.in);
 
     @Autowired
-    AccountsControllerDao accountCredentialOperationsDao;
+    private AccountsControllerDao accountCredentialOperationsDao;
 
     @Override
     public Optional<User> execute(User user) throws UserException
@@ -39,7 +39,9 @@ public class RetriveAccountPassword implements UserAccountCrudOperation
             }
         }
         if (!isApp)
+        {
             throw new UserException("App not found...");
+        }
 
         return Optional.of(user);
     }

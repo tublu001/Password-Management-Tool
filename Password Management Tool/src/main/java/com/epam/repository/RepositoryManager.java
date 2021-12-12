@@ -14,7 +14,9 @@ public class RepositoryManager
     public static EntityManagerFactory getEntityManager()
     {
         if (emf == null)
+        {
             emf = Persistence.createEntityManagerFactory("PMT_DataBase");
+        }
         return emf;
     }
 }

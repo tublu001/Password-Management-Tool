@@ -6,7 +6,7 @@ public interface PasswordOperations
 {
     String generatePassword(User user);
 
-    String encryptPassword(String strToEncrypt);
+    String encryptPassword(String stringToEncrypt);
 
-    String decryptPassword(String strToDecrypt);
+    String decryptPassword(String stringToDecrypt);
 }

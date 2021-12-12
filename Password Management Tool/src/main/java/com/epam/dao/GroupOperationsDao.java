@@ -17,12 +17,11 @@ public class GroupOperationsDao
     private static final Logger LOGGER = LogManager.getLogger(GroupOperationsDao.class);
 
     @Autowired
-    MasterUserOperationsDao masterUserOperationsDao;
+    private MasterUserOperationsDao masterUserOperationsDao;
 
     public boolean isGroupAvailable(User user, String groupName) throws UserException
     {
-        List<String> matchedGroups = user.getGroups().stream().filter(i -> i.equals(groupName)).collect(Collectors.toList());
-        return (!matchedGroups.isEmpty());
+        return user.getGroups().stream().anyMatch(i -> i.equals(groupName));
     }
 
     public String addGroupName(User user, String groupName) throws UserException
@@ -33,7 +32,7 @@ public class GroupOperationsDao
             addedGroupName = groupName;
         } else
         {
-            throw new UserException("Error in adding group to the Database!!!");
+            throw new UserException("Error in adding Group name!!! Error accessing to Database!!!");
         }
         return addedGroupName;
     }
@@ -106,15 +105,14 @@ public class GroupOperationsDao
         if (index > user.getGroups().size() - 1 || index < 0)
         {
             throw new UserException("Invalid selection!!! Group not available in this index");
-        } else
-        {
-            return true;
         }
+        return true;
     }
 
     public void updateAccountGroupName(User user, String oldGroupName, String newGroupName)
     {
         if (user != null)
+        {
             user.getAccounts().forEach(account ->
             {
                 if (oldGroupName.equals(account.getAccountGroup()))
@@ -122,6 +120,7 @@ public class GroupOperationsDao
                     account.setAccountGroup(newGroupName);
                 }
             });
+        }
     }
 
 

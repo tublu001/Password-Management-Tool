@@ -3,16 +3,16 @@ package com.epam.passwordOperations;
 
 public class Generator
 {
-    public String generatePassword(PreferredPassword prefPass)
+    public String generatePassword(PreferredPassword preferredPassword)
     {
-        boolean includeUpper = prefPass.isIncludeUpper();
-        boolean includeLower = prefPass.isIncludeLower();
-        boolean includeNum = prefPass.isIncludeNum();
-        boolean includeSym = prefPass.isIncludeSym();
-        int length = prefPass.getLength();
+        boolean includeUpperLetters = preferredPassword.isIncludeUpperLetters();
+        boolean includeLowerLetters = preferredPassword.isIncludeLowerLetters();
+        boolean includeNumbers = preferredPassword.isIncludeNumbers();
+        boolean includeSymbols = preferredPassword.isIncludeSymbols();
+        int prefferedPasswordLength = preferredPassword.getPrefferedPasswordLength();
         Alphabet alphabet;
 
-        alphabet = new Alphabet(includeUpper, includeLower, includeNum, includeSym);
+        alphabet = new Alphabet(includeUpperLetters, includeLowerLetters, includeNumbers, includeSymbols);
 
         final StringBuilder pass = new StringBuilder();
 
@@ -23,7 +23,7 @@ public class Generator
         int range = max - min + 1;
 
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < prefferedPasswordLength; i++)
         {
 
             int index = (int) (Math.random() * range) + min;

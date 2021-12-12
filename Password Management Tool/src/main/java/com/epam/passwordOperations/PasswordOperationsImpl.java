@@ -29,13 +29,13 @@ public class PasswordOperationsImpl implements PasswordOperations
     @Override
     public String generatePassword(User user)
     {
-        PreferredPassword prefPass = user.getPrefPass();
-        return prefPass.generatePassword(prefPass);
+        PreferredPassword preferredPassword = user.getPreferredPassword();
+        return preferredPassword.generatePassword(preferredPassword);
     }
 
 
     @Override
-    public String encryptPassword(String strToEncrypt)
+    public String encryptPassword(String stringToEncrypt)
     {
         try
         {
@@ -50,7 +50,7 @@ public class PasswordOperationsImpl implements PasswordOperations
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
             return Base64.getEncoder()
-                    .encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
+                    .encodeToString(cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception e)
         {
             LOGGER.info("Error while encrypting: " + e);
@@ -59,7 +59,7 @@ public class PasswordOperationsImpl implements PasswordOperations
     }
 
     @Override
-    public String decryptPassword(String strToDecrypt)
+    public String decryptPassword(String stringToDecrypt)
     {
         try
         {
@@ -73,7 +73,7 @@ public class PasswordOperationsImpl implements PasswordOperations
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+            return new String(cipher.doFinal(Base64.getDecoder().decode(stringToDecrypt)));
         } catch (Exception e)
         {
             LOGGER.info("Error while decrypting: " + e);

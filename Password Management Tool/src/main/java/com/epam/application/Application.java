@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class Application implements ApplicationRunner
 {
     @Autowired
-    HomeMenu homeMenu;
+    private HomeMenu homeMenu;
 
     public static void main(String[] args)
     {

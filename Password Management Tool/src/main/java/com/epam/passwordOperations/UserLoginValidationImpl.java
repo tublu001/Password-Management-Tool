@@ -17,7 +17,7 @@ public class UserLoginValidationImpl implements UserLoginValidation
     private static final Logger LOGGER = LogManager.getLogger(UserLoginValidationImpl.class);
     Scanner input = new Scanner(System.in);
     @Autowired
-    PasswordOperations passwordOperations;
+    private PasswordOperations passwordOperations;
 
     @Override
     public Optional<User> validateMaster() throws UserException

@@ -21,13 +21,13 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
     Scanner input = new Scanner(System.in);
 
     @Autowired
-    RepositoryDB database;
+    private RepositoryDB database;
 
     @Autowired
-    AccountsControllerDao accountCredentialOperationsDao;
+    private AccountsControllerDao accountCredentialOperationsDao;
 
     @Autowired
-    UserLoginValidation userLoginValidation;
+    private UserLoginValidation userLoginValidation;
 
     @Override
     public Optional<User> execute(User user) throws UserException
@@ -58,7 +58,9 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
             }
         }
         if (!isApp)
+        {
             LOGGER.info("App not found...\n");
+        }
 
         return Optional.ofNullable(user);
     }

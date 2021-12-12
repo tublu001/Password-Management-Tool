@@ -11,7 +11,7 @@ import java.util.Optional;
 public class RetrieveGroupWiseAllAccounts implements UserAccountCrudOperation
 {
     @Autowired
-    GroupOperationsDao groupOperations;
+    private GroupOperationsDao groupOperations;
 
     @Override
     public Optional<User> execute(User user)
