@@ -19,13 +19,16 @@ public class UserLoginValidationImpl implements UserLoginValidation
     @Autowired
     private PasswordOperations passwordOperations;
 
+    @Autowired
+    private MasterUsersOperationsDao masterUsersOperationsDao;
+
     @Override
     public Optional<User> validateMaster(String userName, String password) throws UserException
     {
         Optional<User> user = Optional.empty();
         if (validateUserName(userName))
         {
-            user = MasterUsersOperationsDao.getUser(userName);
+            user = masterUsersOperationsDao.getUser(userName);
         }
         if (user.isPresent())
         {
@@ -44,7 +47,7 @@ public class UserLoginValidationImpl implements UserLoginValidation
     public boolean validateUserName(String userName) throws UserException
     {
         boolean isUserName = false;
-        if (MasterUsersOperationsDao.isMasterPresent(userName))
+        if (masterUsersOperationsDao.isMasterPresent(userName))
         {
             isUserName = true;
         } else

@@ -36,20 +36,19 @@ public class WebAccountCrudOperations
         if(selection.equals("storeNewAccount"))
         {
             mv.setViewName("storeNewAccount");
+            mv.addObject("user", globalUser);
             return mv;
         }
 
         else if(selection.equals("retrieveAllAccounts"))
         {
-//            masterUserOperationsDao.showAccounts(globalUser);
             mv.setViewName("retrieveAllAccounts");
-            mv.addObject("accounts", globalUser.getAccounts());
+            mv.addObject("user", globalUser);
             return mv;
         }
 
         else if(selection.equals("retrieveGroupWiseAccounts"))
         {
-//            masterUserOperationsDao.showAccounts(globalUser);
             mv.setViewName("retrieveGroupWiseAccounts");
             mv.addObject("user", globalUser);
             return mv;
@@ -57,7 +56,6 @@ public class WebAccountCrudOperations
 
         else if(selection.equals("retrieveAccountPassword"))
         {
-//            masterUserOperationsDao.showAccounts(globalUser);
             mv.setViewName("retrieveAccountPassword");
             mv.addObject("user", globalUser);
             return mv;
@@ -65,18 +63,20 @@ public class WebAccountCrudOperations
 
         else if(selection.equals("renameGroupName"))
         {
-//            masterUserOperationsDao.showAccounts(globalUser);
             mv.setViewName("renameGroupName");
             mv.addObject("user", globalUser);
             return mv;
         }
-//        else if(selection.equals("deleteAccountCredential"))
-//        {
-////            masterUserOperationsDao.showAccounts(globalUser);
-//            mv.setViewName("renameGroupName");
-//            mv.addObject("user", globalUser);
-//            return mv;
-//        }
+        else if(selection.equals("setPasswordPreference"))
+        {
+            mv.setViewName("setPasswordPreference");
+            mv.addObject("user", globalUser);
+            return mv;
+        }
+        else
+        {
+
+        }
         return mv;
     }
 

@@ -55,6 +55,7 @@ button {
 </style>
 </head>
 <body align="center">
+<%@ include file="header.jsp" %>
     <center> <h1> Retrieve Password Accounts </h1> </center>
     <form name="fetchPassword" action="retrieveAccountPassword" method="post">
         <div class="container">

@@ -27,19 +27,22 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
     @Autowired
     private AccountMenuCRUD accountMenuCRUD;
 
+    @Autowired
+    private MasterUsersOperationsDao masterUsersOperationsDao;
+
     Scanner input = new Scanner(System.in);
 
     @Override
     public Optional<User> createMaster() throws UserException
     {
-        Optional<User> user;
+        Optional<User> user = Optional.empty();
         LOGGER.info("\n\nCreate a new Master Account\n\nUser Name: ");
         String userName = input.nextLine();
-        if (!MasterUsersOperationsDao.isMasterPresent(userName))
+        if (!masterUsersOperationsDao.isMasterPresent(userName))
         {
             LOGGER.info("Enter a New Password: ");
             String password = input.nextLine();
-            user = MasterUsersOperationsDao.add(userName, operate.encryptPassword(password));
+            masterUsersOperationsDao.addMasterUser(userName, operate.encryptPassword(password));
             LOGGER.info("\nMaster User created");
         } else
         {
@@ -51,7 +54,7 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
     @Override
     public void showAllMasters()
     {
-        MasterUsersOperationsDao.showUsers();
+        masterUsersOperationsDao.showUsers();
     }
 
     @Override

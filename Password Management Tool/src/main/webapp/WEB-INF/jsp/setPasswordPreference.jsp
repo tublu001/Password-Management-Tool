@@ -50,22 +50,33 @@ button {
         background-color: lightblue;
     }
 </style>
-<%@ include file="header.jsp" %>
 </head>
-
 <body align="center">
-    <center> <h1> Store New Account Credential </h1> </center>
-    <form name="MasterUser" action="storeAccount" method="post">
+<%@ include file="header.jsp" %>
+    <center> <h1> Set your password preference </h1> </center>
+    <form name="passwordPreference" action="passwordPreference" method="post">
         <div class="container">
         <b>
-            <label>Enter App Name : </label>
-            <input type="text" placeholder="Enter App Name" name="appName" required>
-            <label>Enter URL : </label>
-            <input type="text" placeholder="Enter URL" name="url" required>
-            <label>Enter password : </label>
-            <input type="password" placeholder="Enter password" name="password" required>
-            <label>Enter Group Name : </label>
-            <input type="text" placeholder="Enter Group Name" name="accountGroup" required>
+            <input type="checkbox" name="includeUpperLetters" value="yes"> includeUpperLetters<BR>
+            <input type="checkbox" name="includeLowerLetters" value="yes"> includeLowerLetters<BR>
+            <input type="checkbox" name="includeNumbers" value="yes"> includeNumbers<BR>
+            <input type="checkbox" name="includeSymbols" value="yes"> includeSymbols<BR>
+
+            <select name="preferredPasswordLength" id="preferredPasswordLength">
+                <optgroup label="Weak">
+                  <option value="5">5</option>
+                  <option value="8">8</option>
+                </optgroup>
+                <optgroup label="Medium">
+                  <option value="12">12</option>
+                  <option value="15">15</option>
+                </optgroup>
+                <optgroup label="Strong">
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                </optgroup>
+            </select>
+              <br><br>
 
             <button type="reset" class="cancelbtn"><b>Clear</b></button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             <button type="submit"><b>Store</b></button><br>

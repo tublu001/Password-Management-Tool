@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,6 +51,7 @@ button {
     }
 </style>
 </head>
+
 <body align="center">
     <center> <h1> Master Login Form </h1> </center>
     <form name="MasterUser" action="loginMaster" method="post">
@@ -63,7 +65,7 @@ button {
             <button type="reset" class="cancelbtn"><b>Clear</b></button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             <button type="submit"><b>Login</b></button><br>
             <div style="width: 20%"/>
-            <a href="masterRegistration" >Click here </a> to SignUp...
+            <a href="masterSignUp" >Click here </a> to SignUp...
         </b>
         </div>
     </form>

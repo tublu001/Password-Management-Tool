@@ -33,7 +33,7 @@ public class AccountCredentialOperationsDaoTest
     {
 
         GroupOperationsDao groupOperate = new GroupOperationsDao();
-        User user = MasterUsersOperationsDao.getUser("Manash").get();
+//        User user = MasterUsersOperationsDao.getUser("Manash").get();
 //        Assertions.assertTrue(MasterUserOperationsDao.addGroup(user, "Group 1"));
 //        Assertions.assertTrue(accountOperate.store(new UserData(user,"a", "url", "password", "Group 1")));
 //        Assertions.assertTrue("Group 1".equals(groupOperate.getGroup(user, 1)));
@@ -46,7 +46,7 @@ public class AccountCredentialOperationsDaoTest
     void checkAppPresentOrNotTest2() throws UserException
     {
         GroupOperationsDao groupOperate = new GroupOperationsDao();
-        User user = MasterUsersOperationsDao.getUser("Manash").get();
+//        User user = MasterUsersOperationsDao.getUser("Manash").get();
 //        Assertions.assertTrue(MasterUserOperationsDao.addGroup(user, "Group 1"));
 //        Assertions.assertTrue(accountOperate.store(new UserData(user,"a", "url", "password", "Group 1")));
 //        Assertions.assertTrue("Group 1".equals(groupOperate.getGroup(user, 1)));

@@ -2,49 +2,65 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
+import com.epam.passwordOperations.PasswordOperations;
+import com.epam.passwordOperations.PreferredPassword;
 import com.epam.repository.MySQL_DB;
 import com.epam.repository.RepositoryDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class MasterUsersOperationsDao
 {
     private static final Logger LOGGER = LogManager.getLogger(MasterUsersOperationsDao.class);
-    static RepositoryDB database = new MySQL_DB();
+
+    @Autowired
+    RepositoryDB database;
+
+    @Autowired
+    PasswordOperations passwordOperations;
+
     static List<User> users;
 
 
-    public static Optional<User> add(String userName, String password) throws UserException
+    public boolean addMasterUser(String userName, String password) throws UserException
     {
         Optional<User> user;
         if (userName.equals(null) || password.equals(null) || userName.equals("") || password.equals(""))
         {
             throw new UserException("Invalid User Name provided!!!");
         }
-        User newUser = new User();
-        newUser.setUserName(userName);
-        newUser.setPassword(password);
-        newUser.getGroups().add("Undefined");
-        user = database.setMasterUser(newUser);
-        if (user.isEmpty())
+        if (isMasterPresent(userName))
         {
-            throw new UserException("Some Error occurred... Cannot add User to the Database!!!");
+            throw new UserException("User already present in Database!!!");
         }
-        return user;
+            User newUser = new User();
+            newUser.setUserName(userName);
+            newUser.setPassword(passwordOperations.encryptPassword(password));
+            newUser.getGroups().add("Undefined");
+            user = database.setMasterUser(newUser);
+            if (user.isEmpty())
+            {
+                throw new UserException("Some Error occurred... Cannot add User to the Database!!!");
+            }
+
+        return true;
     }
 
-    public static void showUsers()
+    public void showUsers()
     {
         users = database.getMasterUsers();
         users.forEach(LOGGER::info);
     }
 
 
-    public static Optional<User> getUser(String userName)
+    public Optional<User> getUser(String userName)
     {
         users = database.getMasterUsers();
         List<User> matchedUsers = users.stream()
@@ -53,7 +69,7 @@ public class MasterUsersOperationsDao
         return Optional.ofNullable(matchedUsers.get(0));
     }
 
-    public static boolean isMasterPresent(String userName) throws UserException
+    public boolean isMasterPresent(String userName) throws UserException
     {
         if (userName.equals(null) || userName.equals(""))
         {

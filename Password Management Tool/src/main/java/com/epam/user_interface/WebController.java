@@ -2,6 +2,7 @@ package com.epam.user_interface;
 
 import com.epam.dao.AccountsControllerDao;
 import com.epam.dao.MasterUserOperationsDao;
+import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserData;
@@ -31,21 +32,34 @@ public class WebController
     @Autowired
     private UserLoginValidation userLoginValidation;
 
+    @Autowired
+    private MasterUsersOperationsDao masterUsersOperationsDao;
 
     private static final Logger LOGGER = LogManager.getLogger(WebController.class);
 
-
+    ModelAndView modelAndView = new ModelAndView();
 
     @RequestMapping
     public String masterHomeMenu()
     {
-        return "masterHomeMenu";
+        return "masterLogin";
+    }
+
+    @RequestMapping("masterSignUp")
+    public String masterSignUp()
+    {
+        return "masterSignUp";
+    }
+
+    @RequestMapping("masterLogin")
+    public String masterLogin()
+    {
+        return "masterLogin";
     }
 
     @PostMapping("loginMaster")
     public String loginMaster(String username, String password)
     {
-        MySQL_DB.initialize();
         LOGGER.debug("executing......");
         try
         {
@@ -62,6 +76,22 @@ public class WebController
         return "error";
     }
 
+    @PostMapping("registerUser")
+    public String signUpMaster(String userName, String password)
+    {
+        boolean success = false;
+        try
+        {
+            success = masterUsersOperationsDao.addMasterUser(userName, password);
+        } catch (UserException e)
+        {
+            e.printStackTrace();
+        }
+        if(success)
+            return "masterLogin";
+        else
+            return "masterSignUp";
+    }
 
 
 

@@ -19,7 +19,7 @@ public class PreferredPassword extends Generator
 
     //	@Override
     @SuppressWarnings(value = {"all"})
-    public void setPrefferdPassword()
+    public void setPreferredPassword()
     {
         String input;
         Scanner scannerInput = new Scanner(System.in);
@@ -108,6 +108,15 @@ public class PreferredPassword extends Generator
             break;
         }
 
+    }
+
+    public void setPreferredPasswordByInstance(PreferredPassword preferredPasswordObject)
+    {
+        this.includeUpperLetters = preferredPasswordObject.isIncludeUpperLetters();
+        this.includeLowerLetters = preferredPasswordObject.isIncludeLowerLetters();
+        this.includeNumbers = preferredPasswordObject.isIncludeNumbers();
+        this.includeSymbols = preferredPasswordObject.isIncludeSymbols();
+        this.preferredPasswordLength = preferredPasswordObject.getPreferredPasswordLength();
     }
 
 

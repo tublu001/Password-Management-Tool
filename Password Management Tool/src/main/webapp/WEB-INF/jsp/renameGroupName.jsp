@@ -55,6 +55,7 @@ button {
 </style>
 </head>
 <body align="center">
+<%@ include file="header.jsp" %>
     <center> <h1> Rename Group Name </h1> </center>
     <form name="renameGroupName" action="renameGroupName" method="post">
         <div class="container">

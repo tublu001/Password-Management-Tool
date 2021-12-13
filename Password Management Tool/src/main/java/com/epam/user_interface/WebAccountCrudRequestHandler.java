@@ -1,11 +1,11 @@
 package com.epam.user_interface;
 
 import com.epam.exceptions.UserException;
+import com.epam.model.PreferredPasswordObject;
 import com.epam.model.UserData;
-import com.epam.service.AcquireAccountCredentials;
-import com.epam.service.DeleteAccountCredential;
-import com.epam.service.RenameGroupName;
-import com.epam.service.RetrieveAccountPassword;
+import com.epam.service.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +19,7 @@ import static com.epam.user_interface.WebController.globalUser;
 @RequestMapping("PMT")
 public class WebAccountCrudRequestHandler
 {
+    private static final Logger LOGGER = LogManager.getLogger(WebAccountCrudRequestHandler.class);
     @Autowired
     private AcquireAccountCredentials acquireAccountCredentials;
     @Autowired
@@ -27,54 +28,62 @@ public class WebAccountCrudRequestHandler
     private RenameGroupName renameGroupName;
     @Autowired
     private DeleteAccountCredential deleteAccountCredential;
+    @Autowired
+    private SetPasswordPreference setPasswordPreference;
 
     ModelAndView mv = new ModelAndView();
 
     @PostMapping("storeAccount")
-    public String storeAccountDetails(String appName, String url, String password, String accountGroup)
+    public ModelAndView storeAccountDetails(String appName, String url, String password, String accountGroup)
     {
         UserData userDetail = new UserData(globalUser, appName, url, password, accountGroup);
         try
         {
+            mv.addObject("user", globalUser);
+            mv.setViewName("error");
             if(acquireAccountCredentials.addAccount(userDetail))
             {
-                return "accountCrudMenu";
+                mv.setViewName("accountCrudMenu");
             }
         } catch (UserException e)
         {
             e.printStackTrace();
         }
-        return "error";
+        return mv;
     }
 
     @PostMapping("retrieveAccountPassword")
-    public String retrievePassword(String appName)
+    public ModelAndView retrievePassword(String appName)
     {
         try
         {
-            return retrieveAccountPassword.retrievePassword(globalUser, appName);
+            mv.addObject("user", globalUser);
+            mv.setViewName("error");
+            retrieveAccountPassword.retrievePassword(globalUser, appName);
+            mv.setViewName("accountCrudMenu");
         } catch (UserException e)
         {
             e.printStackTrace();
         }
-        return "error";
+        return mv;
     }
 
     @PostMapping("renameGroupName")
-    public String renameGroupName(String oldGroupName, String newGroupName)
+    public ModelAndView renameGroupName(String oldGroupName, String newGroupName)
     {
         boolean isRenamed=false;
         try
         {
+            mv.addObject("user", globalUser);
+            mv.setViewName("error");
             isRenamed = renameGroupName.renameGroup(globalUser, oldGroupName, newGroupName);
         } catch (UserException e)
         {
             e.printStackTrace();
         }
         if(isRenamed)
-            return "success";
-        else
-            return "error";
+            mv.setViewName("accountCrudMenu");
+        return mv;
     }
 
     @GetMapping("deleteAccountCredential")
@@ -88,7 +97,20 @@ public class WebAccountCrudRequestHandler
             e.printStackTrace();
         }
         mv.setViewName("retrieveAllAccounts");
-        mv.addObject("accounts", globalUser.getAccounts());
+        mv.addObject("user", globalUser);
+        return mv;
+    }
+
+    @PostMapping("passwordPreference")
+    public ModelAndView setPreferredPassword(PreferredPasswordObject preferredPasswordObject)
+    {
+        mv.addObject("user", globalUser);
+        mv.setViewName("error");
+        boolean success = setPasswordPreference.setPreferredPassword(globalUser, preferredPasswordObject.getPreferredPasswordObject());
+        if(success)
+        {
+            mv.setViewName("accountCrudMenu");
+        }
         return mv;
     }
 

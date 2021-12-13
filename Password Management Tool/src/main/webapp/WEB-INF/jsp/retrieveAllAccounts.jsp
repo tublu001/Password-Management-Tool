@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 
 <!DOCTYPE html>
 <html>
@@ -54,7 +52,9 @@ button {
     }
 </style>
 </head>
+
 <body align="center">
+<%@ include file="header.jsp" %>
     <center> <h1> All Accounts </h1> </center>
     <form name="MasterUser" action="loginMaster" method="post">
         <div class="container">
@@ -66,7 +66,7 @@ button {
                  <th>Action</th>
                 </tr>
 
-                 <c:forEach items="${accounts}" var="account">
+                 <c:forEach items="${user.getAccounts()}" var="account">
                     <tr>
                      <td> <c:out value="${account.appName}" ></c:out> </td>
                      <td> <c:out value="${account.url}" ></c:out> </td>

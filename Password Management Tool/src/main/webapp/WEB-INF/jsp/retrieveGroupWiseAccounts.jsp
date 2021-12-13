@@ -54,6 +54,7 @@ button {
 </style>
 </head>
 <body align="center">
+<%@ include file="header.jsp" %>
     <center> <h1>Group Wise All Accounts </h1> </center>
     <form name="MasterUser" action="loginMaster" method="post">
         <div class="container">

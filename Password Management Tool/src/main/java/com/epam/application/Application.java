@@ -1,6 +1,7 @@
 package com.epam.application;
 
 
+import com.epam.repository.MySQL_DB;
 import com.epam.user_interface.HomeMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -20,6 +21,7 @@ public class Application
 
     public static void main(String[] args)
     {
+        MySQL_DB.initialize();
         SpringApplication.run(Application.class, args);
     }
 
