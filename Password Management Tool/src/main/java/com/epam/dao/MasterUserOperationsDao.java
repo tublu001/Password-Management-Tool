@@ -2,6 +2,9 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
+import com.epam.passwordOperations.PreferredPassword;
+import com.epam.repository.RepositoryDB;
+import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +19,21 @@ public class MasterUserOperationsDao
     private static final Logger LOGGER = LogManager.getLogger(MasterUserOperationsDao.class);
 
     @Autowired
+    private RepositoryDB database;
+
+    @Autowired
     private AccountsControllerDao accountsControllerDao;
 
     @Autowired
-    private GroupOperationsDao groupOperationsDao;
+    private Utility utility;
 
     public boolean addGroup(User user, String groupName) throws UserException
     {
-        boolean isAdded = false;
-        if (user.equals(null) || groupName.equals(null) || groupName.equals(""))
+        if (user.equals(null) || !utility.isValidString(groupName))
         {
             throw new UserException("Give proper Group Name");
         }
-        if (!groupOperationsDao.isGroupAvailable(user, groupName))
-        {
-            isAdded = user.getGroups().add(groupName);
-        }
-
+        boolean isAdded = user.getGroups().add(groupName);
 
         return isAdded;
     }
@@ -47,5 +48,17 @@ public class MasterUserOperationsDao
             accountsControllerDao.showAccount(account);
         });
         return Optional.ofNullable(user);
+    }
+
+    public boolean setPreferredPassword(User user, PreferredPassword preferredPassword) throws UserException
+    {
+        boolean isSet = false;
+        if (user == null)
+        {
+            throw new UserException("User not present");
+        }
+        user.setPreferredPassword(preferredPassword);
+        isSet = database.merge(user).isPresent();
+        return isSet;
     }
 }

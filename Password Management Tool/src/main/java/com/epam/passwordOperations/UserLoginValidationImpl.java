@@ -3,6 +3,7 @@ package com.epam.passwordOperations;
 import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
+import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,12 @@ public class UserLoginValidationImpl implements UserLoginValidation
 
     @Autowired
     private MasterUsersOperationsDao masterUsersOperationsDao;
+
+    @Autowired
+    private PasswordOperations operate;
+
+    @Autowired
+    private Utility utility;
 
     @Override
     public Optional<User> validateMaster(String userName, String password) throws UserException
@@ -60,11 +67,11 @@ public class UserLoginValidationImpl implements UserLoginValidation
     @Override
     public boolean validatePassword(User user, String password) throws UserException
     {
-        if (password.equals(null) || password.equals(""))
+        if (!utility.isValidString(password))
         {
             throw new UserException("Invalid password provided!!!");
         }
-        boolean isPassword = passwordOperations.encryptPassword(password).equals(user.getPassword());
+        boolean isPassword = operate.encryptPassword(password).equals(user.getPassword());
 
         if (!isPassword)
         {

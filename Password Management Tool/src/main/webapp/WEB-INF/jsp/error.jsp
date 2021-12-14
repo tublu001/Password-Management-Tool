@@ -14,7 +14,6 @@
 
 <br>
 <a href="javascript:window.history.back()"> Go Back</a><br>
-<a href="/PMT/" >Login Menu</a>
+<a href="crudMenu" >Dashboard</a>
 
-</body>
-</html>
+<%@ include file="footer.jsp" %>

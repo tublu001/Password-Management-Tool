@@ -1,12 +1,12 @@
 package com.epam.service;
 
 import com.epam.dao.AccountsControllerDao;
-import com.epam.dao.MasterUserOperationsDao;
+import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.model.UserData;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.user_interface.GroupMenu;
+import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Service
-public class AcquireAccountCredentials
+public class AcquireAccountCredentials implements UserAccountCrudOperation
 {
     private static final Logger LOGGER = LogManager.getLogger(AcquireAccountCredentials.class);
     Scanner input = new Scanner(System.in);
@@ -28,17 +28,17 @@ public class AcquireAccountCredentials
     private PasswordOperations passwordOperations;
 
     @Autowired
-    private MasterUserOperationsDao masterUserOperationsDao;
+    private GroupMenu groupMenu;
 
-    public boolean addAccount(UserData userDetail) throws UserException
+    @Autowired
+    private Utility utility;
+
+    @Override
+    public Optional<User> execute(User user) throws UserException
     {
-        User user = userDetail.getUser();
-        String appName = userDetail.getAppName();
-        String url = userDetail.getUrl();
-        String password = userDetail.getPassword();
-        String groupName = userDetail.getGroupName();
-
-        if (appName.equals(null) || appName.equals(""))
+        LOGGER.info("\n\nStore Account credentials\n\nEnter App Name: ");
+        String appName = input.nextLine();
+        if (!utility.isValidString(appName))
         {
             throw new UserException("Invalid App Name");
         }
@@ -46,22 +46,25 @@ public class AcquireAccountCredentials
         {
             throw new UserException("App already present in Database");
         }
+        LOGGER.info("Enter URL: ");
+        String url = input.nextLine();
+        LOGGER.info("Press enter to generate a new password for (" + appName + ")..  ");
+        input.nextLine();
 
         //Password generation and encryption
-        String generatedPassword = passwordOperations.generatePassword(user);
-        String encryptedPassword = passwordOperations.encryptPassword(generatedPassword);
+        String pwd = passwordOperations.generatePassword(user);
 
-        LOGGER.info("\n\nPassword generated as per your preference. Copy this password and use it in your application:\n" + generatedPassword);
-
-//        String groupName = groupMenu.showGroupUI(user);
-        masterUserOperationsDao.addGroup(user, groupName);
-        userDetail.setPassword(encryptedPassword);
+        LOGGER.info("\n\nPassword generated as per your preference. Copy this password and use it in your application:\n" + pwd);
+        LOGGER.info("\nPress enter for setting up Group\n");
+        input.nextLine();
+        String groupName = groupMenu.showGroupUI(user);
+        UserAccountDTO userDetail = new UserAccountDTO(user, appName, url, pwd, groupName);
         boolean isStored = accountsControllerDao.store(userDetail);
         if (!isStored)
         {
-            throw new UserException("Something went wrong... Cannot able to store data in Database!!!");
+            throw new UserException("Error storing in database... Cannot able to store data in Database!!!");
         }
-        return isStored;
+        return Optional.ofNullable(user);
     }
 
 }

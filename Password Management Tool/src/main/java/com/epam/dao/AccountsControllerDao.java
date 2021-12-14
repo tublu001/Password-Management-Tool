@@ -1,21 +1,25 @@
 package com.epam.dao;
 
+import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.model.UserData;
+
+import java.util.Optional;
 
 public interface AccountsControllerDao
 {
-    boolean store(UserData userDetail) throws UserException;
+    boolean store(UserAccountDTO userDetail) throws UserException;
 
-    String retrievePassword(UserAccount account);
+    String retrievePassword(User user, String appName) throws UserException;
 
     void showAccount(UserAccount account);
 
-    boolean remove(User user, UserAccount account) throws UserException;
+    boolean remove(User user, String appName, String masterPassword) throws UserException;
 
-    boolean isAppName(UserAccount account, String appName);
+    Optional<UserAccount> getAccountByAppName(User user, String appName) throws UserException;
+
+    boolean isAppName(User user, String appName);
 
     boolean isAppPresent(User user, String appName) throws UserException;
 }

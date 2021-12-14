@@ -1,29 +1,25 @@
-package com.epam.user_interface;
+package com.epam.controller;
 
-import com.epam.dao.AccountsControllerDao;
 import com.epam.dao.MasterUserOperationsDao;
-import com.epam.exceptions.UserException;
-import com.epam.model.UserData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import static com.epam.user_interface.WebController.globalUser;
+import static com.epam.controller.WebMasterController.globalUser;
 
 @Controller
 @RequestMapping("PMT")
-public class WebAccountCrudOperations
+public class WebAccountCrudFactory
 {
     @Autowired
     private MasterUserOperationsDao masterUserOperationsDao;
 
 
-    private static final Logger LOGGER = LogManager.getLogger(WebAccountCrudOperations.class);
+    private static final Logger LOGGER = LogManager.getLogger(WebAccountCrudFactory.class);
 
     @PostMapping("UserCrudForm")
     public ModelAndView UserCrudMaster(String selection)
@@ -33,59 +29,42 @@ public class WebAccountCrudOperations
         String result = "success";
         LOGGER.info(selection);
 
-        if(selection.equals("storeNewAccount"))
+        if (selection.equals("storeNewAccount"))
         {
             mv.setViewName("storeNewAccount");
             mv.addObject("user", globalUser);
             return mv;
-        }
-
-        else if(selection.equals("retrieveAllAccounts"))
+        } else if (selection.equals("retrieveAllAccounts"))
         {
             mv.setViewName("retrieveAllAccounts");
             mv.addObject("user", globalUser);
             return mv;
-        }
-
-        else if(selection.equals("retrieveGroupWiseAccounts"))
+        } else if (selection.equals("retrieveGroupWiseAccounts"))
         {
             mv.setViewName("retrieveGroupWiseAccounts");
             mv.addObject("user", globalUser);
             return mv;
-        }
-
-        else if(selection.equals("retrieveAccountPassword"))
+        } else if (selection.equals("retrieveAccountPassword"))
         {
             mv.setViewName("retrieveAccountPassword");
             mv.addObject("user", globalUser);
             return mv;
-        }
-
-        else if(selection.equals("renameGroupName"))
+        } else if (selection.equals("renameGroupName"))
         {
             mv.setViewName("renameGroupName");
             mv.addObject("user", globalUser);
             return mv;
-        }
-        else if(selection.equals("setPasswordPreference"))
+        } else if (selection.equals("setPasswordPreference"))
         {
             mv.setViewName("setPasswordPreference");
             mv.addObject("user", globalUser);
             return mv;
-        }
-        else
+        } else
         {
 
         }
         return mv;
     }
-
-
-
-
-
-
-
 
 
 }

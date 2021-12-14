@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Service
-public class RenameGroupName
+public class RenameGroupName implements UserAccountCrudOperation
 {
     private static final Logger LOGGER = LogManager.getLogger(RenameGroupName.class);
     Scanner input = new Scanner(System.in);
@@ -24,27 +24,35 @@ public class RenameGroupName
     @Autowired
     private RepositoryDB database;
 
-    public boolean renameGroup(User user, String oldGroupName, String newGroupName) throws UserException
+    @Override
+    public Optional<User> execute(User user) throws UserException
     {
+        LOGGER.info("\n\n|------------Rename Group--------------|\n");
         groupOperations.showGroups(user);
-        if (groupOperations.isGroupAvailable(user, oldGroupName) && !groupOperations.isGroupAvailable(user, newGroupName))
+        LOGGER.info("\nChoose any group you want to rename: ");
+        int groupNum = input.nextInt();
+        input.nextLine();    //consume new line character
+        if (groupOperations.isGroupIndex(user, groupNum - 1))
         {
+            String oldGroupName = groupOperations.getGroup(user, groupNum - 1);
+            LOGGER.info("Give a new Group name: ");
+            String newGroupName = input.nextLine();
             try
             {
                 groupOperations.updateGroupName(user, oldGroupName, newGroupName);
+                database.merge(user);
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
 
-            groupOperations.updateAccountGroupName(user, oldGroupName, newGroupName);
-            database.merge(user);
+
             LOGGER.info("Group Name Updated Successfully.. (" + oldGroupName + " ----> " + newGroupName + ")");
         } else
         {
             throw new UserException("Invalid Selection..\n\n");
         }
-        return true;
+        return Optional.ofNullable(user);
     }
 
 }

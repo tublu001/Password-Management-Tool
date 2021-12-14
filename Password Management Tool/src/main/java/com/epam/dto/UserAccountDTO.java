@@ -1,6 +1,8 @@
-package com.epam.model;
+package com.epam.dto;
 
-public class UserData
+import com.epam.model.User;
+
+public class UserAccountDTO
 {
     private User user;
     private String appName;
@@ -8,7 +10,7 @@ public class UserData
     private String password;
     private String groupName;
 
-    public UserData(User user, String appName, String url, String password, String groupName)
+    public UserAccountDTO(User user, String appName, String url, String password, String groupName)
     {
         this.user = user;
         this.appName = appName;

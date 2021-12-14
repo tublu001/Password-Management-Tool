@@ -6,19 +6,20 @@ import com.epam.repository.RepositoryDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class SetPasswordPreference
+public class SetPasswordPreference implements UserAccountCrudOperation
 {
     @Autowired
     private RepositoryDB database;
 
-    public boolean setPreferredPassword(User user, PreferredPassword preferredPasswordObject)
+    @Override
+    public Optional<User> execute(User user)
     {
-//        PreferredPassword pp = user.getPreferredPassword();
-//        pp.setPreferredPasswordByInstance(preferredPasswordObject);
-        user.setPreferredPassword(preferredPasswordObject);
-        database.merge(user);
-        return true;
+        PreferredPassword pp = user.getPreferredPassword();
+        pp.setPreferredPassword();
+        return database.merge(user);
     }
 
 }

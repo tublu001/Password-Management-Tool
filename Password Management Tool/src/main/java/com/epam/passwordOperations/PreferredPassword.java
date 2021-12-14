@@ -16,8 +16,6 @@ public class PreferredPassword extends Generator
     private boolean includeSymbols = true;
     private int preferredPasswordLength = 10;
 
-
-    //	@Override
     @SuppressWarnings(value = {"all"})
     public void setPreferredPassword()
     {
@@ -94,7 +92,6 @@ public class PreferredPassword extends Generator
                 }
             }
 
-            //No Pool Selected
             if (!includeUpperLetters && !includeLowerLetters && !includeNumbers && !includeSymbols)
             {
                 LOGGER.info("You have selected no characters to generate your password at least one of your answers should be Yes");

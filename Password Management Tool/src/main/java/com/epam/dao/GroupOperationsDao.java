@@ -2,25 +2,38 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.model.UserAccount;
+import com.epam.repository.RepositoryDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Service
 public class GroupOperationsDao
 {
     private static final Logger LOGGER = LogManager.getLogger(GroupOperationsDao.class);
 
+    @Autowired
+    private RepositoryDB database;
 
     public boolean isGroupAvailable(User user, String groupName) throws UserException
     {
         return user.getGroups().stream().anyMatch(i -> i.equals(groupName));
+    }
+
+    public String addGroupName(User user, String groupName) throws UserException
+    {
+        String addedGroupName = null;
+        if (user.getGroups().add(groupName))
+        {
+            addedGroupName = groupName;
+        } else
+        {
+            throw new UserException("Error in adding group to the Database!!!");
+        }
+        return addedGroupName;
     }
 
     public void showGroups(User user)
@@ -40,31 +53,53 @@ public class GroupOperationsDao
         }
     }
 
-    public boolean updateGroupName(User user, String oldGroupName, String newGroupName) throws UserException
+    public boolean updateGroupName(User user, int index, String newGroupName) throws UserException
     {
         boolean groupUpdated = false;
-        AtomicInteger count = new AtomicInteger();
-        count.set(0);
-        if (user.equals(null))
+        if (!isGroupIndex(user, index))
         {
-            throw new UserException("Invalid selection!!! Group not available in this index");
+            throw new UserException("Invalid Group!!! Group not available in this index");
         } else
         {
             groupUpdated = true;
-            int index = 0;
-            for(String groupName : user.getGroups())
-            {
-                index++;
-                if (groupName.equals(oldGroupName))
-                {
-                    break;
-                }
-            }
-            user.getGroups().set(index-1, newGroupName);
         }
+        user.getGroups().set(index, newGroupName);
         return groupUpdated;
     }
 
+    public boolean updateGroupName(User user, String oldGroupName, String newGroupName) throws UserException
+    {
+        boolean groupUpdated = false;
+        if (!isGroupAvailable(user, oldGroupName))
+        {
+            throw new UserException("Invalid selection!!! Group not available in database");
+        }
+        if (isGroupAvailable(user, newGroupName))
+        {
+            throw new UserException("New group name already exists in database");
+        }
+        int index = getGroupIndex(user, oldGroupName);
+        user.getGroups().set(index, newGroupName);
+        updateAccountGroupName(user, oldGroupName, newGroupName);
+        database.merge(user);
+        groupUpdated = true;
+
+        return groupUpdated;
+    }
+
+    public int getGroupIndex(User user, String groupName)
+    {
+        int index = 0;
+        for (String databaseGroupName : user.getGroups())
+        {
+            index++;
+            if (databaseGroupName.equals(groupName))
+            {
+                break;
+            }
+        }
+        return index - 1;
+    }
 
     public void getGroupWiseAccounts(User user)
     {
@@ -102,8 +137,10 @@ public class GroupOperationsDao
         if (index > user.getGroups().size() - 1 || index < 0)
         {
             throw new UserException("Invalid selection!!! Group not available in this index");
+        } else
+        {
+            return true;
         }
-        return true;
     }
 
     public void updateAccountGroupName(User user, String oldGroupName, String newGroupName)
@@ -120,14 +157,9 @@ public class GroupOperationsDao
         }
     }
 
-
     public boolean remove(User user, String groupName) throws UserException
     {
-        boolean isDeleted = false;
-        if (user.getGroups().remove(groupName))
-        {
-            isDeleted = true;
-        }
+        boolean isDeleted = user.getGroups().remove(groupName);
         return isDeleted;
     }
 

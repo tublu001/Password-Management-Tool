@@ -1,12 +1,8 @@
 package com.epam.service;
 
 import com.epam.dao.AccountsControllerDao;
-import com.epam.dao.GroupOperationsDao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.model.UserAccount;
-import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.UserLoginValidation;
 import com.epam.repository.RepositoryDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,9 +13,10 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Service
-public class DeleteAccountCredential
+public class DeleteAccountCredential implements UserAccountCrudOperation
 {
     private static final Logger LOGGER = LogManager.getLogger(DeleteAccountCredential.class);
+    Scanner input = new Scanner(System.in);
 
     @Autowired
     private RepositoryDB database;
@@ -27,53 +24,20 @@ public class DeleteAccountCredential
     @Autowired
     private AccountsControllerDao accountCredentialOperationsDao;
 
-    @Autowired
-    private UserLoginValidation userLoginValidation;
-
-    @Autowired
-    private PasswordOperations passwordOperations;
-
-    @Autowired
-    private GroupOperationsDao groupOperationsDao;
-
-    public boolean deleteAccount(User user, String appName, String password) throws UserException
+    @Override
+    public Optional<User> execute(User user) throws UserException
     {
-        boolean isApp = false;
-
-        for (UserAccount account : user.getAccounts())
+        LOGGER.info("\n\nDelete Account credential\n\nEnter App Name: ");
+        String appName = input.nextLine();
+        if (!accountCredentialOperationsDao.isAppName(user, appName))
         {
-            if (accountCredentialOperationsDao.isAppName(account, appName))
-            {
-                isApp = true;
-                LOGGER.info("Application Found : " + appName);
-                if (userLoginValidation.validatePassword(user, passwordOperations.decryptPassword(password)))
-                {
-
-                    String groupToBeDeleted = account.getAccountGroup();
-                    accountCredentialOperationsDao.remove(user, account);
-
-                    long numberOfAccountInGroup = user.getAccounts()
-                            .stream()
-                            .filter(dbAccountGroup -> dbAccountGroup.getAccountGroup().equals(groupToBeDeleted))
-                            .count();
-                    if(numberOfAccountInGroup < 1L)
-                    {
-                        groupOperationsDao.remove(user, groupToBeDeleted);
-                    }
-                    database.merge(user);
-                } else
-                {
-                    throw new UserException("Incorrect Password...");
-                }
-                break;
-            }
+            throw new UserException("Invalid AppName");
         }
-        if (!isApp)
-        {
-            LOGGER.info("App not found...\n");
-        }
-
-        return true;
+        LOGGER.info("Application Found : " + appName);
+        LOGGER.info("\n\nEnter your (Master) password: ");
+        String masterPassword = input.nextLine();
+        accountCredentialOperationsDao.remove(user, appName, masterPassword);
+        return database.merge(user);
     }
 
 }

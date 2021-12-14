@@ -19,8 +19,9 @@ public class RetrieveGroupWiseAllAccounts implements UserAccountCrudOperation
         if (user != null)
         {
             groupOperations.getGroupWiseAccounts(user);
-        }
-        return Optional.ofNullable(user);
+            return Optional.ofNullable(user);
+        } else
+            return Optional.empty();
     }
 
 }

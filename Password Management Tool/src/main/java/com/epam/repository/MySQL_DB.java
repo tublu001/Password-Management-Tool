@@ -1,7 +1,6 @@
 package com.epam.repository;
 
 import com.epam.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -16,8 +15,6 @@ public class MySQL_DB implements RepositoryDB
 {
     static EntityManager entityManager;
     static EntityManagerFactory entityManagerFactory;
-//    @Autowired
-//    EntityManager entityManager;
 
     @Override
     @SuppressWarnings(value = "Unchecked")

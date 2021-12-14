@@ -85,11 +85,6 @@ public class User
         this.preferredPassword = preferredPassword;
     }
 
-//    public void setPreferredPasswordByInstance(PreferredPassword preferredPassword)
-//    {
-//        this.preferredPassword = preferredPassword;
-//    }
-
     public void setAccounts(List<UserAccount> accounts)
     {
         this.accounts = accounts;

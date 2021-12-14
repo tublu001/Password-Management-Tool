@@ -2,9 +2,7 @@ package com.epam;
 
 import com.epam.dao.AccountCredentialOperationsDao;
 import com.epam.dao.GroupOperationsDao;
-import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.exceptions.UserException;
-import com.epam.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

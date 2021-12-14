@@ -3,14 +3,14 @@ package com.epam.dao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PreferredPassword;
-import com.epam.repository.MySQL_DB;
 import com.epam.repository.RepositoryDB;
+import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,38 +21,42 @@ public class MasterUsersOperationsDao
     private static final Logger LOGGER = LogManager.getLogger(MasterUsersOperationsDao.class);
 
     @Autowired
-    RepositoryDB database;
+    private RepositoryDB database;
 
     @Autowired
-    PasswordOperations passwordOperations;
+    private PasswordOperations operate;
+
+    @Autowired
+    private Utility utility;
 
     static List<User> users;
 
 
-    public boolean addMasterUser(String userName, String password) throws UserException
+    @Transactional
+    public Optional<User> addMasterUser(String userName, String password) throws UserException
     {
         Optional<User> user;
-        if (userName.equals(null) || password.equals(null) || userName.equals("") || password.equals(""))
+        if (!utility.isValidString(userName) || !utility.isValidString(password))
         {
             throw new UserException("Invalid User Name provided!!!");
         }
         if (isMasterPresent(userName))
         {
-            throw new UserException("User already present in Database!!!");
+            throw new UserException("User already exists in database!!!");
         }
-            User newUser = new User();
-            newUser.setUserName(userName);
-            newUser.setPassword(passwordOperations.encryptPassword(password));
-            newUser.getGroups().add("Undefined");
-            user = database.setMasterUser(newUser);
-            if (user.isEmpty())
-            {
-                throw new UserException("Some Error occurred... Cannot add User to the Database!!!");
-            }
-
-        return true;
+        User newUser = new User();
+        newUser.setUserName(userName);
+        newUser.setPassword(operate.encryptPassword(password));
+        newUser.getGroups().add("Undefined");
+        user = database.setMasterUser(newUser);
+        if (user.isEmpty())
+        {
+            throw new UserException("Error accessing database. Cannot add User to the Database!!!");
+        }
+        return user;
     }
 
+    @Transactional
     public void showUsers()
     {
         users = database.getMasterUsers();
@@ -60,18 +64,25 @@ public class MasterUsersOperationsDao
     }
 
 
+    @Transactional
     public Optional<User> getUser(String userName)
     {
         users = database.getMasterUsers();
-        List<User> matchedUsers = users.stream()
-                .filter(user -> userName.equals(user.getUserName()))
-                .collect(Collectors.toList());
-        return Optional.ofNullable(matchedUsers.get(0));
+        User master = null;
+        for (User user : users)
+        {
+            if (userName.equals(user.getUserName()))
+            {
+                master = user;
+            }
+        }
+        return Optional.ofNullable(master);
     }
 
+    @Transactional
     public boolean isMasterPresent(String userName) throws UserException
     {
-        if (userName.equals(null) || userName.equals(""))
+        if (!utility.isValidString(userName))
         {
             throw new UserException("Invalid User Name provided!!!");
         }

@@ -1,9 +1,8 @@
-package com.epam.model;
+package com.epam.dto;
 
 import com.epam.passwordOperations.PreferredPassword;
-import org.springframework.stereotype.Component;
 
-public class PreferredPasswordObject
+public class PreferredPasswordDTO
 {
     private String includeUpperLetters = "NA";
     private String includeLowerLetters = "NA";
@@ -19,10 +18,6 @@ public class PreferredPasswordObject
         preferredPassword.setIncludeLowerLetters(this.includeLowerLetters.equals("yes"));
         preferredPassword.setIncludeNumbers(this.includeNumbers.equals("yes"));
         preferredPassword.setIncludeSymbols(this.includeSymbols.equals("yes"));
-//        preferredPassword.setIncludeUpperLetters(!this.includeUpperLetters.equals(null));
-//        preferredPassword.setIncludeLowerLetters(!this.includeLowerLetters.equals(null));
-//        preferredPassword.setIncludeNumbers(!this.includeNumbers.equals(null));
-//        preferredPassword.setIncludeSymbols(!this.includeSymbols.equals(null));
         preferredPassword.setPreferredPasswordLength(Integer.parseInt(this.preferredPasswordLength));
         return preferredPassword;
     }

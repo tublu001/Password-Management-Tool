@@ -34,8 +34,6 @@ public class GroupCrudOperations implements AccountCrudGroup
         {
             throw new UserException("Group already exists in Database!!!");
         }
-
-
         return groupName;
     }
 

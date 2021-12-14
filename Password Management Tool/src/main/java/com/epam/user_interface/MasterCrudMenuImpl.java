@@ -42,7 +42,7 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
         {
             LOGGER.info("Enter a New Password: ");
             String password = input.nextLine();
-            masterUsersOperationsDao.addMasterUser(userName, operate.encryptPassword(password));
+            masterUsersOperationsDao.addMasterUser(userName, password);
             LOGGER.info("\nMaster User created");
         } else
         {
@@ -61,14 +61,20 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
     public Optional<User> loginMaster() throws UserException
     {
         Optional<User> user = Optional.empty();
-//        Optional<User> user = userLoginValidation.validateMaster();
+        LOGGER.info("\nEnter Your MASTER Account credentials - \n\nUser Name: ");
+        String userName = input.nextLine();
 
-        if (user.isEmpty())
+        if (!masterUsersOperationsDao.isMasterPresent(userName))
         {
-            throw new UserException("User not Found!!!");
+            throw new UserException("User Not Present");
         }
-
-        accountMenuCRUD.showCrudMenu(user.get());
+        LOGGER.info("\n\nEnter your (Master) password: ");
+        String password = input.nextLine();
+        user = userLoginValidation.validateMaster(userName, password);
+        if (user.isPresent())
+        {
+            accountMenuCRUD.showCrudMenu(user.get());
+        }
         return user;
     }
 
