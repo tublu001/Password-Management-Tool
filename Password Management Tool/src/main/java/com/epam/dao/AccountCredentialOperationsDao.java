@@ -27,9 +27,6 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
 
     @Autowired
-    private PasswordOperations operate;
-
-    @Autowired
     private RepositoryDB database;
 
     @Autowired
@@ -101,7 +98,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 
         if (accountByAppName.isPresent())
         {
-            password = operate.decryptPassword(accountByAppName.get().getPassword());
+            password = passwordOperations.decryptPassword(accountByAppName.get().getPassword());
         }
         if (!utility.isValidString(password))
         {
@@ -192,11 +189,6 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     public boolean isAppPresent(User user, String appName) throws UserException
     {
         List<UserAccount> matchedAccounts = user.getAccounts().stream().filter(account -> isAppName(user, appName)).collect(Collectors.toList());
-        boolean isAppPresent = (!matchedAccounts.isEmpty());
-        if (isAppPresent)
-        {
-            throw new UserException("App already present in Database");
-        }
-        return isAppPresent;
+        return (!matchedAccounts.isEmpty());
     }
 }
