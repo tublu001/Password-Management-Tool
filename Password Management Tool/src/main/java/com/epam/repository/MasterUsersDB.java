@@ -11,7 +11,7 @@ public class MasterUsersDB implements RepositoryDB
     private final ArrayList<User> users = new ArrayList<>();
 
     @Override
-    public List<User> getMasterUsers()
+    public List<User> findAll()
     {
         return users;
     }

@@ -3,9 +3,11 @@ package com.epam.controller;
 import com.epam.dao.AccountsControllerDao;
 import com.epam.dao.GroupOperationsDao;
 import com.epam.dao.MasterUserOperationsDao;
+import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.dto.PreferredPasswordDTO;
 import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
+import com.epam.passwordOperations.PasswordOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import static com.epam.controller.WebMasterController.globalUser;
+import static com.epam.controller.WebMasterController.userId;
 
 @Controller
 @RequestMapping("PMT")
@@ -30,17 +32,22 @@ public class WebAccountCrudRequestHandler
     private AccountsControllerDao accountCredentialOperationsDao;
     @Autowired
     private MasterUserOperationsDao masterUserOperationsDao;
+    @Autowired
+    private PasswordOperations passwordOperations;
+    @Autowired
+    private MasterUsersOperationsDao masterUsersOperationsDao;
 
     @PostMapping("storeAccount")
-    public ModelAndView storeAccountDetails(String appName, String url, String password, String accountGroup)
+    public ModelAndView storeAccountDetails(UserAccountDTO userAccountDTO) throws UserException
     {
         ModelAndView modelAndView = new ModelAndView();
-        UserAccountDTO userDetail = new UserAccountDTO(globalUser, appName, url, password, accountGroup);
+//        UserAccountDTO userAccountDTO = new UserAccountDTO(globalUser, appName, url, password, accountGroup);
         try
         {
-            modelAndView.addObject("user", globalUser);
+            userAccountDTO.setUser(masterUsersOperationsDao.getUser(userId).orElseThrow(()->new UserException("Can't find the user!!!")));
+            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
             modelAndView.setViewName("error");
-            if (accountsControllerDao.store(userDetail))
+            if (accountsControllerDao.store(userAccountDTO))
             {
                 modelAndView.addObject("successMessage", "Account Added successfully...");
                 modelAndView.setViewName("storeNewAccount");
@@ -60,9 +67,9 @@ public class WebAccountCrudRequestHandler
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            modelAndView.addObject("user", globalUser);
+            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
             modelAndView.setViewName("error");
-            String retrievedPassword = accountsControllerDao.retrievePassword(globalUser, appName);
+            String retrievedPassword = accountsControllerDao.retrievePassword(masterUsersOperationsDao.getUser(userId).get(), appName);
             modelAndView.addObject("successMessage", retrievedPassword);
             modelAndView.setViewName("retrieveAccountPassword");
         } catch (UserException e)
@@ -81,8 +88,8 @@ public class WebAccountCrudRequestHandler
         boolean isRenamed = false;
         try
         {
-            modelAndView.addObject("user", globalUser);
-            isRenamed = groupOperations.updateGroupName(globalUser, oldGroupName, newGroupName);
+            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+            isRenamed = groupOperations.updateGroupName(masterUsersOperationsDao.getUser(userId).get(), oldGroupName, newGroupName);
         } catch (UserException e)
         {
             e.printStackTrace();
@@ -103,14 +110,17 @@ public class WebAccountCrudRequestHandler
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            accountCredentialOperationsDao.remove(globalUser, appName, globalUser.getPassword());
+            accountCredentialOperationsDao.remove(masterUsersOperationsDao
+                    .getUser(userId).get(), appName, passwordOperations
+                    .decryptPassword(masterUsersOperationsDao
+                            .getUser(userId).get().getPassword()));
         } catch (UserException e)
         {
             e.printStackTrace();
         }
         modelAndView.setViewName("retrieveAllAccounts");
         modelAndView.addObject("successMessage", "App deleted successfully...");
-        modelAndView.addObject("user", globalUser);
+        modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
         return modelAndView;
     }
 
@@ -118,9 +128,9 @@ public class WebAccountCrudRequestHandler
     public ModelAndView setPreferredPassword(PreferredPasswordDTO preferredPasswordDTO) throws UserException
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", globalUser);
+        modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
         modelAndView.setViewName("error");
-        boolean success = masterUserOperationsDao.setPreferredPassword(globalUser, preferredPasswordDTO.getPreferredPasswordObject());
+        boolean success = masterUserOperationsDao.setPreferredPassword(masterUsersOperationsDao.getUser(userId).get(), preferredPasswordDTO.getPreferredPasswordObject());
         if (success)
         {
             modelAndView.addObject("successMessage", "You have successfully saved your Password Preference...");
@@ -134,7 +144,7 @@ public class WebAccountCrudRequestHandler
     public ModelAndView accountCrudMenu()
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", globalUser);
+        modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
         modelAndView.setViewName("accountCrudMenu");
         return modelAndView;
     }

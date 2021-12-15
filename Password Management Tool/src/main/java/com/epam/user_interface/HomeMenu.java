@@ -1,6 +1,5 @@
 package com.epam.user_interface;
 
-import com.epam.repository.MySQL_DB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class HomeMenu
 
         while (repeatLoop)
         {
-            MySQL_DB.initialize();
+//            MySQL_DB.initialize();
             LOGGER.info("\n\n*************** WELCOME TO PASSWORD MANAGEMENT TOOL ***************\n\n");
             LOGGER.info("1. Log In to your Master Account");
             LOGGER.info("2. Sign Up for a Master Account");

@@ -6,6 +6,7 @@ import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.UserLoginValidation;
+import com.epam.repository.AccountRepository;
 import com.epam.repository.RepositoryDB;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
@@ -39,47 +40,51 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     private PasswordOperations passwordOperations;
 
     @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
     private Utility utility;
 
     @Override
-    public boolean store(UserAccountDTO userDetail) throws UserException
+    public boolean store(UserAccountDTO userAccountDTO) throws UserException
     {
-        User user = userDetail.getUser();
-        if (!utility.isValidString(userDetail.getAppName()))
+        User user = userAccountDTO.getUser();
+        if (!utility.isValidString(userAccountDTO.getAppName()))
         {
             throw new UserException("Invalid app name");
         }
-        if (!utility.isValidString(userDetail.getUrl()))
+        if (!utility.isValidString(userAccountDTO.getUrl()))
         {
             throw new UserException("Invalid URL provided");
         }
-        if (!utility.isValidString(userDetail.getPassword()))
+        if (!utility.isValidString(userAccountDTO.getPassword()))
         {
             throw new UserException("Invalid password");
         }
-        if (!utility.isValidString(userDetail.getGroupName()))
+        if (!utility.isValidString(userAccountDTO.getGroupName()))
         {
             throw new UserException("Invalid group name");
         }
-        if (isAppPresent(user, userDetail.getAppName()))
+        if (isAppPresent(user, userAccountDTO.getAppName()))
         {
             throw new UserException("App already present in database...");
         }
         List<UserAccount> allAccounts = user.getAccounts();
         UserAccount newAccount = new UserAccount();
         boolean isAccountStored;
-        if (!groupOperationsDao.isGroupAvailable(user, userDetail.getGroupName()))
+
+        if (!groupOperationsDao.isGroupAvailable(user, userAccountDTO.getGroupName()))
         {
-            user.getGroups().add(userDetail.getGroupName());
+            user.getGroups().add(userAccountDTO.getGroupName());
         }
-        newAccount.setAppName(userDetail.getAppName());
-        newAccount.setUrl(userDetail.getUrl());
-        newAccount.setPassword(passwordOperations.encryptPassword(userDetail.getPassword()));
-        newAccount.setAccountGroup(userDetail.getGroupName());
+        newAccount.setAppName(userAccountDTO.getAppName());
+        newAccount.setUrl(userAccountDTO.getUrl());
+        newAccount.setPassword(passwordOperations.encryptPassword(userAccountDTO.getPassword()));
+        newAccount.setAccountGroup(userAccountDTO.getGroupName());
         newAccount.setUser(user);
         allAccounts.add(newAccount);
-        Optional<User> returnedUser = database.merge(user);
-        if (returnedUser.isEmpty())
+        Optional<User> databaseFetchedUser = database.merge(user);
+        if (databaseFetchedUser.isEmpty())
         {
             throw new UserException("Account not Added Successfully!!! Error storing to Database");
         } else

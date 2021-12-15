@@ -9,11 +9,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Scanner;
 
-@Component
+@Service
 public class MasterCrudMenuImpl implements MasterCrudMenu
 {
     private static final Logger LOGGER = LogManager.getLogger(MasterCrudMenuImpl.class);

@@ -1,7 +1,11 @@
-<h4><font color="green"> ${successMessage} </font></h4>
-<h4><font color="red"> ${userException} </font></h4>
+<c:if test = "${successMessage!=null}">
+    <h4><font color="green"> ${successMessage} </font></h4>
+</c:if>
+<c:if test = "${userException!=null}">
+    <h4><font color="red"> ${userException} </font></h4>
+</c:if>
 <br>
-<hr width="90%" align="left">
+<hr width="90%" align="center">
 <address>
  Password Management Tool<br>
  Version: V2.1<br>

@@ -25,10 +25,11 @@ public class User
     private String userName;
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<UserAccount> accounts = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @Column(name = "groupName")
     private List<String> groups = new ArrayList<>();
 
@@ -98,7 +99,14 @@ public class User
     @Override
     public String toString()
     {
-        return "MasterUsers [userName=" + userName + ", password=" + password + "]";
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", accounts=" + accounts +
+                ", groups=" + groups +
+                ", preferredPassword=" + preferredPassword +
+                '}';
     }
 
     public List<UserAccount> getAccounts()

@@ -1,9 +1,7 @@
 package com.epam.user_interface;
 
 import com.epam.model.User;
-import com.epam.repository.MySQL_DB;
 import com.epam.service.AccountCrudFactory;
-import com.epam.service.UserAccountCrudOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +57,7 @@ public class AccountMenuCRUD
 
             if (selection.equals("0"))
             {
-                MySQL_DB.close();
+//                MySQL_DB.close();
                 repeatLoop = false;
             }
         }

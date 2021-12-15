@@ -1,5 +1,7 @@
-package com.epam.dao;
+package com.epam.user_interface;
 
+import com.epam.dao.AccountsControllerDao;
+import com.epam.dao.GroupOperationsDao;
 import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
@@ -9,23 +11,25 @@ import com.epam.passwordOperations.PreferredPassword;
 import com.epam.passwordOperations.UserLoginValidation;
 import com.epam.repository.RepositoryDB;
 import com.epam.utility.Utility;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-class MasterUserOperationsDaoTest
+class AcquireAccountCredentialsTest
 {
-
+    @Mock
+    private AccountsControllerDao accountsControllerDao;
+    @Mock
+    private GroupMenu groupMenu;
     @Mock
     private PasswordOperations passwordOperations;
     @Mock
@@ -40,18 +44,17 @@ class MasterUserOperationsDaoTest
     private UserAccount account1, account2;
     @Mock
     private PreferredPassword preferredPassword;
-    @Mock
+    @MockBean
     private Utility utility;
     @Mock
     private GroupOperationsDao groupOperationsDao;
     @Mock
     private UserLoginValidation userLoginValidation;
 
-    @InjectMocks
-    private MasterUserOperationsDao underTest;
+    Scanner input = new Scanner(System.in);
 
     @BeforeEach
-    void setup()
+    void setUp()
     {
         user = new User("Manash", "qwerty", new ArrayList<>(), new ArrayList<>(), preferredPassword);
         account1 = new UserAccount("a", "vsgvsgvs", "qwerty", "grp1", user);
@@ -63,23 +66,17 @@ class MasterUserOperationsDaoTest
         user.getAccounts().add(account1);
         user.getAccounts().add(account2);
 
-        user.getGroups().add("grp1");
-        user.getGroups().add("grp2");
-    }
-
-
-    @Test
-    void WhenAddingGroup() throws UserException
-    {
-        when(utility.isValidString(anyString())).thenReturn(true);
-        Assertions.assertEquals(2, user.getGroups().size());
-        Assertions.assertTrue(underTest.addGroup(user, "newlyAdded"));
-        Assertions.assertEquals(3, user.getGroups().size());
     }
 
     @Test
-    void WhenShowingAccounts()
+    void execute() throws UserException
     {
-
+//        when(utility.isValidString(anyString())).thenReturn(true);
+//        when(accountsControllerDao.isAppPresent(user, anyString())).thenReturn(false);
+//        when(input.nextLine()).thenReturn("qwerty");
+//        when(passwordOperations.generatePassword(user)).thenReturn("1gey7fg378yb");
+//        when(groupMenu.showGroupUI(user)).thenReturn("G11");
+//        when(accountsControllerDao.store(userDetail)).thenReturn(true);
+        assertTrue(new AcquireAccountCredentials().execute(user).isPresent());
     }
 }

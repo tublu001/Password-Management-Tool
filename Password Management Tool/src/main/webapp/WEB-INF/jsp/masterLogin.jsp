@@ -1,6 +1,6 @@
 <%@ include file="header.jsp" %>
 <body align="center">
-    <center> <h1> Master Login Form </h1> </center>
+    <center> <h1> Master Login </h1> </center>
     <form name="MasterUser" action="loginMaster" method="post">
         <div class="container">
         <b>

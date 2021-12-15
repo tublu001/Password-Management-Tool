@@ -1,11 +1,10 @@
-package com.epam.service;
+package com.epam.user_interface;
 
 import com.epam.dao.AccountsControllerDao;
 import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.user_interface.GroupMenu;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

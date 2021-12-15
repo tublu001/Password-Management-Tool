@@ -11,7 +11,7 @@
             <label>Enter password : </label>
             <input type="password" placeholder="Enter password" name="password" required>
             <label>Enter Group Name : </label>
-            <input type="text" placeholder="Enter Group Name" name="accountGroup" required>
+            <input type="text" placeholder="Enter Group Name" name="groupName" required>
 
             <button type="reset" class="cancelbtn"><b>Clear</b></button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             <button type="submit"><b>Store</b></button><br>

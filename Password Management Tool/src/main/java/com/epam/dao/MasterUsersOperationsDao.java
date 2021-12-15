@@ -59,7 +59,7 @@ public class MasterUsersOperationsDao
     @Transactional
     public void showUsers()
     {
-        users = database.getMasterUsers();
+        users = database.findAll();
         users.forEach(LOGGER::info);
     }
 
@@ -67,11 +67,26 @@ public class MasterUsersOperationsDao
     @Transactional
     public Optional<User> getUser(String userName)
     {
-        users = database.getMasterUsers();
+        users = database.findAll();
         User master = null;
         for (User user : users)
         {
             if (userName.equals(user.getUserName()))
+            {
+                master = user;
+            }
+        }
+        return Optional.ofNullable(master);
+    }
+
+    @Transactional
+    public Optional<User> getUser(Long id)
+    {
+        users = database.findAll();
+        User master = null;
+        for (User user : users)
+        {
+            if (id.equals(user.getUserId()))
             {
                 master = user;
             }
@@ -86,7 +101,7 @@ public class MasterUsersOperationsDao
         {
             throw new UserException("Invalid User Name provided!!!");
         }
-        users = database.getMasterUsers();
+        users = database.findAll();
         boolean isMasterPresent = !(users.stream()
                 .filter(user -> userName.equals(user.getUserName()))
                 .collect(Collectors.toList())

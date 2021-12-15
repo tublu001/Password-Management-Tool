@@ -1,4 +1,4 @@
-package com.epam.service;
+package com.epam.user_interface;
 
 import com.epam.dao.GroupOperationsDao;
 import com.epam.model.User;

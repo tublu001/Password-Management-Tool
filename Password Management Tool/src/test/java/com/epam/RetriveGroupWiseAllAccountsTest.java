@@ -7,7 +7,7 @@
 //import com.epam.passwordOperations.PasswordOperations;
 //import com.epam.passwordOperations.PwdOperate;
 //import com.epam.service.RetriveGroupWiseAllAccounts;
-//import com.epam.service.UserAccountCrudOperation;
+//import com.epam.user_interface.UserAccountCrudOperation;
 //import org.junit.jupiter.api.Assertions;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.DisplayName;

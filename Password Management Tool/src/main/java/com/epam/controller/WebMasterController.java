@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +19,7 @@ import java.util.Optional;
 @RequestMapping("PMT")
 public class WebMasterController
 {
-    static User globalUser;
+    static Long userId;
 
     @Autowired
     private UserLoginValidation userLoginValidation;
@@ -53,12 +54,10 @@ public class WebMasterController
         try
         {
             Optional<User> userOptional = userLoginValidation.validateMaster(username, password);
-            if (userOptional.isPresent())
-            {
-                globalUser = userOptional.get();
-                modelAndView.addObject("user", globalUser);
-                modelAndView.setViewName("accountCrudMenu");
-            }
+            userOptional.orElseThrow(()->new UserException("User not present in database"));
+            userId = userOptional.get().getUserId();
+            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).orElseThrow(()->new UserException("User not found!!!")));
+            modelAndView.setViewName("accountCrudMenu");
         } catch (UserException e)
         {
             e.printStackTrace();
@@ -85,6 +84,21 @@ public class WebMasterController
             modelAndView.addObject("userException", e.getMessage());
             modelAndView.setViewName("masterSignUp");
         }
+        return modelAndView;
+    }
+
+    @RequestMapping("logout")
+    public ModelAndView logout()
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        String userName = null;
+        if(userId!=null)
+        {
+            userName = masterUsersOperationsDao.getUser(userId).get().getUserName();
+            modelAndView.addObject("successMessage", "Logged out of (" + userName + ")... ");
+        }
+        userId = null;
+        modelAndView.setViewName("masterLogin");
         return modelAndView;
     }
 }
