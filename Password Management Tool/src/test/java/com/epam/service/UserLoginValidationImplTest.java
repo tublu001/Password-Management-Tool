@@ -10,22 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import com.epam.application.Application;
-import com.epam.dao.MasterUsersOperationsDao;
-import com.epam.exceptions.UserException;
-import com.epam.service.UserLoginValidationImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -45,6 +29,7 @@ public class UserLoginValidationImplTest
         when(masterUsersOperationsDao.isMasterPresent(anyString())).thenReturn(true);
         Assertions.assertTrue(uV.validateUserName("Manash"));
     }
+
     //
     @Test
     @DisplayName(value = "Validating wrong Master User Name")
@@ -54,8 +39,7 @@ public class UserLoginValidationImplTest
         try
         {
             Assertions.assertFalse(uV.validateUserName(null));
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             receivedException = e.getClass().getSimpleName();
         }
@@ -70,8 +54,7 @@ public class UserLoginValidationImplTest
         try
         {
             Assertions.assertFalse(uV.validateUserName(""));
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             receivedException = e.getClass().getSimpleName();
         }
@@ -86,8 +69,7 @@ public class UserLoginValidationImplTest
         try
         {
             Assertions.assertFalse(uV.validateUserName("None"));
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             receivedException = e.getClass().getSimpleName();
         }
@@ -103,8 +85,7 @@ public class UserLoginValidationImplTest
         try
         {
             Assertions.assertFalse(uV.validateUserName("None"));
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             receivedException = e.getClass().getSimpleName();
         }

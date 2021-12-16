@@ -1,9 +1,6 @@
 package com.epam.repository;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class RepositoryManager
 {

@@ -1,8 +1,9 @@
 package com.epam.dto;
 
 import com.epam.model.User;
+import lombok.Data;
 
-public class UserAccountDTO
+public @Data class UserAccountDTO
 {
     private User user;
     private String appName;
@@ -16,56 +17,6 @@ public class UserAccountDTO
         this.appName = appName;
         this.url = url;
         this.password = password;
-        this.groupName = groupName;
-    }
-
-    public User getUser()
-    {
-        return user;
-    }
-
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
-
-    public String getAppName()
-    {
-        return appName;
-    }
-
-    public void setAppName(String appName)
-    {
-        this.appName = appName;
-    }
-
-    public String getUrl()
-    {
-        return url;
-    }
-
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public String getGroupName()
-    {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName)
-    {
         this.groupName = groupName;
     }
 }

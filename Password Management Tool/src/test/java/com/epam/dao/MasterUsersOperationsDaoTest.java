@@ -6,8 +6,8 @@ import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PreferredPassword;
-import com.epam.service.UserLoginValidation;
 import com.epam.repository.RepositoryDB;
+import com.epam.service.UserLoginValidation;
 import com.epam.utility.Utility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -113,8 +113,7 @@ class MasterUsersOperationsDaoTest
         try
         {
             assertFalse(underTest.getUser("asascx").isPresent());
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             assertTrue(e.getClass().getSimpleName().equals("IndexOutOfBoundsException"));
         }

@@ -5,8 +5,8 @@ import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.service.UserLoginValidation;
 import com.epam.repository.RepositoryDB;
+import com.epam.service.UserLoginValidation;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -148,7 +148,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
                 .count();
         if (numberOfAccountInGroup < 1L)
         {
-            if(!groupOperationsDao.remove(user, groupToBeDeleted))
+            if (!groupOperationsDao.remove(user, groupToBeDeleted))
             {
                 throw new UserException("Group Contains No Accounts!!! Error in deleting");
             }
@@ -227,7 +227,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
             throw new UserException("App not present in database...");
         }
 
-        UserAccount existingAccount = getAccountByAppName(user, userAccountDTO.getAppName()).orElseThrow(()-> new UserException("Account not found!!!"));
+        UserAccount existingAccount = getAccountByAppName(user, userAccountDTO.getAppName()).orElseThrow(() -> new UserException("Account not found!!!"));
 
         String existingGroup = existingAccount.getAccountGroup();
         ModelMapper mapper = new ModelMapper();

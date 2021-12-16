@@ -1,8 +1,10 @@
 package com.epam.dto;
 
 import com.epam.passwordOperations.PreferredPassword;
+import lombok.Data;
 
-public class PreferredPasswordDTO
+public @Data
+class PreferredPasswordDTO
 {
     private String includeUpperLetters = "NA";
     private String includeLowerLetters = "NA";
@@ -22,65 +24,4 @@ public class PreferredPasswordDTO
         return preferredPassword;
     }
 
-    public String getIncludeUpperLetters()
-    {
-        return includeUpperLetters;
-    }
-
-    public void setIncludeUpperLetters(String includeUpperLetters)
-    {
-        this.includeUpperLetters = includeUpperLetters;
-    }
-
-    public String getIncludeLowerLetters()
-    {
-        return includeLowerLetters;
-    }
-
-    public void setIncludeLowerLetters(String includeLowerLetters)
-    {
-        this.includeLowerLetters = includeLowerLetters;
-    }
-
-    public String getIncludeNumbers()
-    {
-        return includeNumbers;
-    }
-
-    public void setIncludeNumbers(String includeNumbers)
-    {
-        this.includeNumbers = includeNumbers;
-    }
-
-    public String getIncludeSymbols()
-    {
-        return includeSymbols;
-    }
-
-    public void setIncludeSymbols(String includeSymbols)
-    {
-        this.includeSymbols = includeSymbols;
-    }
-
-    public String getPreferredPasswordLength()
-    {
-        return preferredPasswordLength;
-    }
-
-    public void setPreferredPasswordLength(String preferredPasswordLength)
-    {
-        this.preferredPasswordLength = preferredPasswordLength;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "PreferredPasswordObject{" +
-                "includeUpperLetters='" + includeUpperLetters + '\'' +
-                ", includeLowerLetters='" + includeLowerLetters + '\'' +
-                ", includeNumbers='" + includeNumbers + '\'' +
-                ", includeSymbols='" + includeSymbols + '\'' +
-                ", preferredPasswordLength='" + preferredPasswordLength + '\'' +
-                '}';
-    }
 }

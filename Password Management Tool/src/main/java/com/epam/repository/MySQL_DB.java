@@ -1,7 +1,6 @@
 package com.epam.repository;
 
 import com.epam.model.User;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

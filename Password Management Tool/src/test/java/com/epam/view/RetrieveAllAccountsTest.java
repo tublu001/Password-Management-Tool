@@ -1,16 +1,10 @@
 package com.epam.view;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.epam.view.RetrieveAllAccounts;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.NoSuchElementException;
 
 public class RetrieveAllAccountsTest
 {
@@ -32,8 +26,7 @@ public class RetrieveAllAccountsTest
         try
         {
             retrieveAllAccounts.execute(null);
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             receivedException = e.getClass().getSimpleName();
         }
@@ -49,8 +42,7 @@ public class RetrieveAllAccountsTest
         try
         {
             retrieveAllAccounts.execute(null);
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             receivedException = e.getClass().getSimpleName();
         }

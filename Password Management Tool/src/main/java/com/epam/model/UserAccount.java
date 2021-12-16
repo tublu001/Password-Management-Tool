@@ -1,10 +1,12 @@
 package com.epam.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "User_Accounts")
-public class UserAccount
+public @Data class UserAccount
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,59 +35,4 @@ public class UserAccount
         this.user = user;
     }
 
-    public String getAppName()
-    {
-        return appName;
-    }
-
-    public void setAppName(String appName)
-    {
-        this.appName = appName;
-    }
-
-    public String getUrl()
-    {
-        return url;
-    }
-
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public String getAccountGroup()
-    {
-        return accountGroup;
-    }
-
-    public void setAccountGroup(String accountGroup)
-    {
-        this.accountGroup = accountGroup;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "appName: " + appName + ", url: " + url;
-    }
-
-    public User getUser()
-    {
-        return user;
-    }
-
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
 }

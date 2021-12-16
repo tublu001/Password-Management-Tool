@@ -9,10 +9,10 @@ import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PreferredPassword;
-import com.epam.service.UserLoginValidation;
 import com.epam.repository.RepositoryDB;
-import com.epam.view.GroupMenu;
+import com.epam.service.UserLoginValidation;
 import com.epam.utility.Utility;
+import com.epam.view.GroupMenu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,8 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = WebAccountCrudRequestHandler.class)
 //@ContextConfiguration(classes = WebAccountCrudRequestHandler.class)
