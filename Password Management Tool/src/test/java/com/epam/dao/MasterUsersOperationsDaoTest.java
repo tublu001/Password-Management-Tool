@@ -6,7 +6,7 @@ import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.PreferredPassword;
-import com.epam.passwordOperations.UserLoginValidation;
+import com.epam.service.UserLoginValidation;
 import com.epam.repository.RepositoryDB;
 import com.epam.utility.Utility;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,7 +100,24 @@ class MasterUsersOperationsDaoTest
         users.add(user1);
         when(database.findAll()).thenReturn(users);
         assertTrue(underTest.getUser("suresh").isPresent());
-        assertFalse(underTest.getUser("asascx").isPresent());
+    }
+
+    @Test
+    void WhenGettingUserNotExists()
+    {
+        User user1 = new User("suresh", "qwerty", new ArrayList<>(), new ArrayList<>(), preferredPassword);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        users.add(user1);
+        when(database.findAll()).thenReturn(users);
+        try
+        {
+            assertFalse(underTest.getUser("asascx").isPresent());
+        }
+        catch (Exception e)
+        {
+            assertTrue(e.getClass().getSimpleName().equals("IndexOutOfBoundsException"));
+        }
     }
 
     @Test

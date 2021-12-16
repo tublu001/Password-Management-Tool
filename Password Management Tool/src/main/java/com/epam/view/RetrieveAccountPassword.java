@@ -3,7 +3,6 @@ package com.epam.view;
 import com.epam.dao.AccountsControllerDao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.model.UserAccount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +26,10 @@ public class RetrieveAccountPassword implements UserAccountCrudOperation
         LOGGER.info("\n\nRetrieve Account password\n\nEnter App Name: ");
         String appName = input.nextLine();
 
-        boolean isApp = false;
-
-        for (UserAccount account : user.getAccounts())
+        if (accountCredentialOperationsDao.isAppName(user, appName))
         {
-            if (accountCredentialOperationsDao.isAppName(user, appName))
-            {
-                isApp = true;
-                LOGGER.info("Account password is: " + accountCredentialOperationsDao.retrievePassword(user, appName));
-                break;
-            }
-        }
-        if (!isApp)
+            LOGGER.info("Account password is: " + accountCredentialOperationsDao.retrievePassword(user, appName));
+        } else
         {
             throw new UserException("App not found...");
         }

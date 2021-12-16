@@ -1,4 +1,4 @@
-package com.epam.passwordOperations;
+package com.epam.service;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;

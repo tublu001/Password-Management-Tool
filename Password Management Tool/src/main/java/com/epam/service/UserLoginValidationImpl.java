@@ -1,8 +1,9 @@
-package com.epam.passwordOperations;
+package com.epam.service;
 
 import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
+import com.epam.passwordOperations.PasswordOperations;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

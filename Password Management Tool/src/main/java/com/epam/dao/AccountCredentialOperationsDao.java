@@ -5,7 +5,7 @@ import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.UserLoginValidation;
+import com.epam.service.UserLoginValidation;
 import com.epam.repository.RepositoryDB;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;

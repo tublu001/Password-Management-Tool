@@ -3,7 +3,7 @@ package com.epam.controller;
 import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.passwordOperations.UserLoginValidation;
+import com.epam.service.UserLoginValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

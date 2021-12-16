@@ -68,14 +68,10 @@ public class MasterUsersOperationsDao
     public Optional<User> getUser(String userName)
     {
         users = database.findAll();
-        User master = null;
-        for (User user : users)
-        {
-            if (userName.equals(user.getUserName()))
-            {
-                master = user;
-            }
-        }
+        User master = users.stream()
+                .filter(user -> user.getUserName().equals(userName))
+                .collect(Collectors.toList())
+                .get(0);
         return Optional.ofNullable(master);
     }
 
@@ -83,14 +79,10 @@ public class MasterUsersOperationsDao
     public Optional<User> getUser(Long id)
     {
         users = database.findAll();
-        User master = null;
-        for (User user : users)
-        {
-            if (id.equals(user.getUserId()))
-            {
-                master = user;
-            }
-        }
+        User master = users.stream()
+                .filter(user -> user.getUserId().equals(id))
+                .collect(Collectors.toList())
+                .get(0);
         return Optional.ofNullable(master);
     }
 
