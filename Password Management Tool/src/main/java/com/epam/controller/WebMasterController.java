@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,9 +53,9 @@ public class WebMasterController
         try
         {
             Optional<User> userOptional = userLoginValidation.validateMaster(username, password);
-            userOptional.orElseThrow(()->new UserException("User not present in database"));
+            userOptional.orElseThrow(() -> new UserException("User not present in database"));
             userId = userOptional.get().getUserId();
-            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).orElseThrow(()->new UserException("User not found!!!")));
+            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).orElseThrow(() -> new UserException("User not found!!!")));
             modelAndView.setViewName("accountCrudMenu");
         } catch (UserException e)
         {
@@ -92,7 +91,7 @@ public class WebMasterController
     {
         ModelAndView modelAndView = new ModelAndView();
         String userName = null;
-        if(userId!=null)
+        if (userId != null)
         {
             userName = masterUsersOperationsDao.getUser(userId).get().getUserName();
             modelAndView.addObject("successMessage", "Logged out of (" + userName + ")... ");

@@ -23,7 +23,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountCredentialOperationsDaoTest
@@ -81,7 +81,7 @@ public class AccountCredentialOperationsDaoTest
         when(passwordOperations.encryptPassword(userDetail.getPassword())).thenReturn("qwerty");
 
         when(database.merge(user)).thenReturn(Optional.ofNullable(user));
-        Assertions.assertTrue(underTest.store(userDetail));
+        Assertions.assertTrue(underTest.storeAccount(userDetail));
         Assertions.assertEquals(3, user.getAccounts().size());
     }
 

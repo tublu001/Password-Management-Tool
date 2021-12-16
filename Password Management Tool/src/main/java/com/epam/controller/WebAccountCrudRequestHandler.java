@@ -7,6 +7,8 @@ import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.dto.PreferredPasswordDTO;
 import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
+import com.epam.model.User;
+import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,13 +43,12 @@ public class WebAccountCrudRequestHandler
     public ModelAndView storeAccountDetails(UserAccountDTO userAccountDTO) throws UserException
     {
         ModelAndView modelAndView = new ModelAndView();
-//        UserAccountDTO userAccountDTO = new UserAccountDTO(globalUser, appName, url, password, accountGroup);
         try
         {
-            userAccountDTO.setUser(masterUsersOperationsDao.getUser(userId).orElseThrow(()->new UserException("Can't find the user!!!")));
+            userAccountDTO.setUser(masterUsersOperationsDao.getUser(userId).orElseThrow(() -> new UserException("Can't find the user!!!")));
             modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
             modelAndView.setViewName("error");
-            if (accountsControllerDao.store(userAccountDTO))
+            if (accountsControllerDao.storeAccount(userAccountDTO))
             {
                 modelAndView.addObject("successMessage", "Account Added successfully...");
                 modelAndView.setViewName("storeNewAccount");
@@ -70,7 +71,7 @@ public class WebAccountCrudRequestHandler
             modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
             modelAndView.setViewName("error");
             String retrievedPassword = accountsControllerDao.retrievePassword(masterUsersOperationsDao.getUser(userId).get(), appName);
-            modelAndView.addObject("successMessage", retrievedPassword);
+            modelAndView.addObject("successMessage", "password is: " + retrievedPassword);
             modelAndView.setViewName("retrieveAccountPassword");
         } catch (UserException e)
         {
@@ -110,10 +111,8 @@ public class WebAccountCrudRequestHandler
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            accountCredentialOperationsDao.remove(masterUsersOperationsDao
-                    .getUser(userId).get(), appName, passwordOperations
-                    .decryptPassword(masterUsersOperationsDao
-                            .getUser(userId).get().getPassword()));
+            User user = masterUsersOperationsDao.getUser(userId).get();
+            accountCredentialOperationsDao.remove(user, appName, passwordOperations.decryptPassword(user.getPassword()));
         } catch (UserException e)
         {
             e.printStackTrace();
@@ -148,4 +147,50 @@ public class WebAccountCrudRequestHandler
         modelAndView.setViewName("accountCrudMenu");
         return modelAndView;
     }
+
+
+    @GetMapping("editAccountCredential")
+    public ModelAndView editAccountCredential(String appName)
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        try
+        {
+            User user = masterUsersOperationsDao.getUser(userId).get();
+            UserAccount account = accountCredentialOperationsDao.getAccountByAppName(user, appName).orElseThrow(() -> new UserException("Can't find the application!!!"));
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("account", account);
+            modelAndView.setViewName("editAccountDetails");
+        } catch (UserException e)
+        {
+            e.printStackTrace();
+        }
+//        modelAndView.setViewName("retrieveAllAccounts");
+//        modelAndView.addObject("successMessage", "App deleted successfully...");
+//        modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+        return modelAndView;
+    }
+
+    @PostMapping("editAccount")
+    public ModelAndView editAccountCredential(UserAccountDTO userAccountDTO)
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        try
+        {
+            userAccountDTO.setUser(masterUsersOperationsDao.getUser(userId).orElseThrow(() -> new UserException("Can't find the user!!!")));
+            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+            modelAndView.setViewName("error");
+            if (accountsControllerDao.editAccount(userAccountDTO))
+            {
+                modelAndView.addObject("successMessage", "Account Updated successfully...");
+                modelAndView.setViewName("retrieveAllAccounts");
+            }
+        } catch (UserException e)
+        {
+            e.printStackTrace();
+            modelAndView.addObject("userException", e.getMessage());
+            modelAndView.setViewName("retrieveAllAccounts");
+        }
+        return modelAndView;
+    }
+
 }

@@ -6,11 +6,11 @@ import com.epam.model.User;
 import com.epam.model.UserAccount;
 import com.epam.passwordOperations.PasswordOperations;
 import com.epam.passwordOperations.UserLoginValidation;
-import com.epam.repository.AccountRepository;
 import com.epam.repository.RepositoryDB;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,13 +40,10 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     private PasswordOperations passwordOperations;
 
     @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
     private Utility utility;
 
     @Override
-    public boolean store(UserAccountDTO userAccountDTO) throws UserException
+    public boolean storeAccount(UserAccountDTO userAccountDTO) throws UserException
     {
         User user = userAccountDTO.getUser();
         if (!utility.isValidString(userAccountDTO.getAppName()))
@@ -77,12 +74,12 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         {
             user.getGroups().add(userAccountDTO.getGroupName());
         }
-        newAccount.setAppName(userAccountDTO.getAppName());
-        newAccount.setUrl(userAccountDTO.getUrl());
-        newAccount.setPassword(passwordOperations.encryptPassword(userAccountDTO.getPassword()));
-        newAccount.setAccountGroup(userAccountDTO.getGroupName());
+        ModelMapper mapper = new ModelMapper();
+        mapper.map(userAccountDTO, newAccount);
         newAccount.setUser(user);
+        newAccount.setPassword(passwordOperations.encryptPassword(userAccountDTO.getPassword()));
         allAccounts.add(newAccount);
+
         Optional<User> databaseFetchedUser = database.merge(user);
         if (databaseFetchedUser.isEmpty())
         {
@@ -129,14 +126,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         String groupToBeDeleted = account.getAccountGroup();
         if (user.getAccounts().remove(account))
         {
-            long numberOfAccountInGroup = user.getAccounts()
-                    .stream()
-                    .filter(dbAccountGroup -> dbAccountGroup.getAccountGroup().equals(groupToBeDeleted))
-                    .count();
-            if (numberOfAccountInGroup < 1L)
-            {
-                groupOperationsDao.remove(user, groupToBeDeleted);
-            }
+            deleteGroupIfContainsNoAccounts(user, groupToBeDeleted);
             if (database.merge(user).isEmpty())
             {
                 throw new UserException("Account cannot be removed!!! Error accessing to Database");
@@ -148,6 +138,21 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         }
 
         return isDeleted;
+    }
+
+    private void deleteGroupIfContainsNoAccounts(User user, String groupToBeDeleted) throws UserException
+    {
+        long numberOfAccountInGroup = user.getAccounts()
+                .stream()
+                .filter(dbAccountGroup -> dbAccountGroup.getAccountGroup().equals(groupToBeDeleted))
+                .count();
+        if (numberOfAccountInGroup < 1L)
+        {
+            if(!groupOperationsDao.remove(user, groupToBeDeleted))
+            {
+                throw new UserException("Group Contains No Accounts!!! Error in deleting");
+            }
+        }
     }
 
     @Override
@@ -195,5 +200,58 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     {
         List<UserAccount> matchedAccounts = user.getAccounts().stream().filter(account -> isAppName(user, appName)).collect(Collectors.toList());
         return (!matchedAccounts.isEmpty());
+    }
+
+    @Override
+    public boolean editAccount(UserAccountDTO userAccountDTO) throws UserException
+    {
+        User user = userAccountDTO.getUser();
+        if (!utility.isValidString(userAccountDTO.getAppName()))
+        {
+            throw new UserException("Invalid app name");
+        }
+        if (!utility.isValidString(userAccountDTO.getUrl()))
+        {
+            throw new UserException("Invalid URL provided");
+        }
+        if (!utility.isValidString(userAccountDTO.getPassword()))
+        {
+            throw new UserException("Invalid password");
+        }
+        if (!utility.isValidString(userAccountDTO.getGroupName()))
+        {
+            throw new UserException("Invalid group name");
+        }
+        if (!isAppPresent(user, userAccountDTO.getAppName()))
+        {
+            throw new UserException("App not present in database...");
+        }
+
+        UserAccount existingAccount = getAccountByAppName(user, userAccountDTO.getAppName()).orElseThrow(()-> new UserException("Account not found!!!"));
+
+        String existingGroup = existingAccount.getAccountGroup();
+        ModelMapper mapper = new ModelMapper();
+        mapper.map(userAccountDTO, existingAccount);
+        existingAccount.setUser(user);
+        existingAccount.setPassword(passwordOperations.encryptPassword(userAccountDTO.getPassword()));
+
+        boolean isAccountUpdated;
+
+        if (!groupOperationsDao.isGroupAvailable(user, userAccountDTO.getGroupName()))
+        {
+            user.getGroups().add(userAccountDTO.getGroupName());
+        }
+
+        deleteGroupIfContainsNoAccounts(user, existingGroup);
+
+        Optional<User> databaseFetchedUser = database.merge(user);
+        if (databaseFetchedUser.isEmpty())
+        {
+            throw new UserException("Account not updated Successfully!!! Error storing to Database");
+        } else
+        {
+            isAccountUpdated = true;
+        }
+        return isAccountUpdated;
     }
 }

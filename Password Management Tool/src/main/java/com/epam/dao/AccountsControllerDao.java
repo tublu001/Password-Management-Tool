@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface AccountsControllerDao
 {
-    boolean store(UserAccountDTO userDetail) throws UserException;
+    boolean storeAccount(UserAccountDTO userAccountDTO) throws UserException;
 
     String retrievePassword(User user, String appName) throws UserException;
 
@@ -22,4 +22,6 @@ public interface AccountsControllerDao
     boolean isAppName(User user, String appName);
 
     boolean isAppPresent(User user, String appName) throws UserException;
+
+    boolean editAccount(UserAccountDTO userAccountDTO) throws UserException;
 }

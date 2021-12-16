@@ -25,7 +25,7 @@ public class User
     private String userName;
     private String password;
 
-//    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
+    //    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<UserAccount> accounts = new ArrayList<>();
 

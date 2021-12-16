@@ -1,6 +1,5 @@
 package com.epam.controller;
 
-import com.epam.dao.MasterUserOperationsDao;
 import com.epam.dao.MasterUsersOperationsDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

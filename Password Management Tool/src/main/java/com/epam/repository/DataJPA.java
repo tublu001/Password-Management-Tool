@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +17,6 @@ public class DataJPA implements RepositoryDB
 {
     @Autowired
     private DataJPADB database;
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private EntityManager entityManager;
@@ -44,11 +40,7 @@ public class DataJPA implements RepositoryDB
     @Transactional
     public Optional<User> merge(User user)
     {
-//        User databaseFetchedUser = database.save(user);
-//        database.delete(user);
         User databaseFetchedUser = database.save(user);
-        database.findAll();
-        System.out.println(user.getAccounts().size());
         return Optional.ofNullable(databaseFetchedUser);
     }
 
