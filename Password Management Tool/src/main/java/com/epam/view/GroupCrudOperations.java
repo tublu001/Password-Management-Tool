@@ -16,10 +16,6 @@ public class GroupCrudOperations implements AccountCrudGroup
 {
     private static final Logger LOGGER = LogManager.getLogger(GroupCrudOperations.class);
 
-    public GroupCrudOperations()
-    {
-    }
-
     Scanner input = new Scanner(System.in);
 
     @Autowired

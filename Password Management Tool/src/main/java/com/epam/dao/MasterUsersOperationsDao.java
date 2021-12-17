@@ -2,7 +2,7 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.passwordOperations.PasswordOperations;
+import com.epam.service.passwordOperations.PasswordOperations;
 import com.epam.repository.RepositoryDB;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +29,7 @@ public class MasterUsersOperationsDao
     @Autowired
     private Utility utility;
 
-    static List<User> users;
+    private List<User> users;
 
 
     @Transactional
@@ -65,13 +65,17 @@ public class MasterUsersOperationsDao
 
 
     @Transactional
-    public Optional<User> getUser(String userName)
+    public Optional<User> getUser(String userName) throws UserException
     {
-        users = database.findAll();
-        User master = users.stream()
-                .filter(user -> user.getUserName().equals(userName))
-                .collect(Collectors.toList())
-                .get(0);
+        User master = null;
+        if(isMasterPresent(userName))
+        {
+            users = database.findAll();
+            master = users.stream()
+                    .filter(user -> user.getUserName().equals(userName))
+                    .collect(Collectors.toList())
+                    .get(0);
+        }
         return Optional.ofNullable(master);
     }
 

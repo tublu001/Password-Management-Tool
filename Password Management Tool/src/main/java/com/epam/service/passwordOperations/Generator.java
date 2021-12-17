@@ -1,4 +1,4 @@
-package com.epam.passwordOperations;
+package com.epam.service.passwordOperations;
 
 
 public class Generator

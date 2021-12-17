@@ -40,8 +40,7 @@ public class DataJPA implements RepositoryDB
     @Transactional
     public Optional<User> merge(User user)
     {
-        User databaseFetchedUser = database.save(user);
-        return Optional.ofNullable(databaseFetchedUser);
+        return setMasterUser(user);
     }
 
 }

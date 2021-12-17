@@ -4,7 +4,7 @@ import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.passwordOperations.PasswordOperations;
+import com.epam.service.passwordOperations.PasswordOperations;
 import com.epam.repository.RepositoryDB;
 import com.epam.service.UserLoginValidation;
 import com.epam.utility.Utility;
@@ -21,10 +21,6 @@ import java.util.stream.Collectors;
 @Service
 public class AccountCredentialOperationsDao implements AccountsControllerDao
 {
-    public AccountCredentialOperationsDao()
-    {
-    }
-
     private static final Logger LOGGER = LogManager.getLogger(AccountCredentialOperationsDao.class);
 
     @Autowired
@@ -146,12 +142,9 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
                 .stream()
                 .filter(dbAccountGroup -> dbAccountGroup.getAccountGroup().equals(groupToBeDeleted))
                 .count();
-        if (numberOfAccountInGroup < 1L)
+        if (numberOfAccountInGroup < 1L && !groupOperationsDao.remove(user, groupToBeDeleted))
         {
-            if (!groupOperationsDao.remove(user, groupToBeDeleted))
-            {
-                throw new UserException("Group Contains No Accounts!!! Error in deleting");
-            }
+            throw new UserException("Group Contains No Accounts!!! Error in deleting");
         }
     }
 

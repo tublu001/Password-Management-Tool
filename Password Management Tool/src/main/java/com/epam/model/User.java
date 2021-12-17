@@ -3,7 +3,7 @@
  */
 package com.epam.model;
 
-import com.epam.passwordOperations.PreferredPassword;
+import com.epam.service.passwordOperations.PreferredPassword;
 import lombok.Data;
 
 import javax.persistence.*;

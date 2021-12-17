@@ -12,10 +12,6 @@ public class HomeMenu
 {
     private static final Logger LOGGER = LogManager.getLogger(HomeMenu.class);
 
-    public HomeMenu()
-    {
-    }
-
     @Autowired
     private MasterCrudMenu masterOperations;
 
@@ -33,7 +29,7 @@ public class HomeMenu
             LOGGER.info("2. Sign Up for a Master Account");
             LOGGER.info("3. Retrive all Master user names");
             LOGGER.info("0. Exit..\n\n\nChoose Any: ");
-            String selection = "invalid";
+            String selection = "";
 
             selection = input.next();
 

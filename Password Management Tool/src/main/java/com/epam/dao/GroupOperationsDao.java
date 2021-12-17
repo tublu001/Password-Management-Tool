@@ -28,12 +28,9 @@ public class GroupOperationsDao
         String addedGroupName = null;
         if (user.getGroups().add(groupName))
         {
-            addedGroupName = groupName;
-        } else
-        {
-            throw new UserException("Error in adding group to the Database!!!");
+            return groupName;
         }
-        return addedGroupName;
+        throw new UserException("Error in adding group to the Database!!!");
     }
 
     public void showGroups(User user)
@@ -159,8 +156,7 @@ public class GroupOperationsDao
 
     public boolean remove(User user, String groupName) throws UserException
     {
-        boolean isDeleted = user.getGroups().remove(groupName);
-        return isDeleted;
+        return user.getGroups().remove(groupName);
     }
 
 

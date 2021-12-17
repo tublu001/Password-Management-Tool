@@ -12,8 +12,6 @@ import java.util.Optional;
 @Service
 public class RetrieveAllAccounts implements UserAccountCrudOperation
 {
-    private static final Logger LOGGER = LogManager.getLogger(RetrieveAllAccounts.class);
-
     @Autowired
     private MasterUserOperationsDao masterUserOperationsDao;
 

@@ -22,11 +22,6 @@ public class MasterUsersDB implements RepositoryDB
         return Optional.empty();
     }
 
-    public boolean setMasterUsers(List<User> obj)
-    {
-        return false;
-    }
-
     @Override
     public Optional<User> merge(User obj)
     {

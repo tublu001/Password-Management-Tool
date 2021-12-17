@@ -1,4 +1,4 @@
-package com.epam.passwordOperations;
+package com.epam.service.passwordOperations;
 
 import com.epam.model.User;
 

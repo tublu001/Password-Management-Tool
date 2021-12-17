@@ -12,11 +12,6 @@ import java.util.Scanner;
 @Service
 public class AccountMenuCRUD
 {
-
-    public AccountMenuCRUD()
-    {
-    }
-
     private static final Logger LOGGER = LogManager.getLogger(AccountMenuCRUD.class);
 
     @Autowired

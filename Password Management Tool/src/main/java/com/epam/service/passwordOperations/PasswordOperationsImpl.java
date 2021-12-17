@@ -1,4 +1,4 @@
-package com.epam.passwordOperations;
+package com.epam.service.passwordOperations;
 
 import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;
@@ -21,10 +21,6 @@ public class PasswordOperationsImpl implements PasswordOperations
     private static final Logger LOGGER = LogManager.getLogger(PasswordOperationsImpl.class);
     private static final String SECRET_KEY = "my_super_secret_key_yo_yo_yo";
     private static final String SALT = "ssshhhhhhhhhhh!!!!";
-
-    public PasswordOperationsImpl()
-    {
-    }
 
     @Override
     public String generatePassword(User user)

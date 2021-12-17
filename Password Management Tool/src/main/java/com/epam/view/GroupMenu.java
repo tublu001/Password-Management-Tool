@@ -15,10 +15,6 @@ public class GroupMenu
 {
     private static final Logger LOGGER = LogManager.getLogger(GroupMenu.class);
 
-    public GroupMenu()
-    {
-    }
-
     @Autowired
     private AccountCrudGroup accountCrudGroup;
 
@@ -34,7 +30,7 @@ public class GroupMenu
             LOGGER.info("1. Create a new group");
             LOGGER.info("2. Store in a existing group");
             LOGGER.info("0. Skip..(Ungrouped)\n\n\nChoose Any: ");
-            char selection = 'Z';
+            char selection = '\0';
 
             selection = input.next().charAt(0);
 

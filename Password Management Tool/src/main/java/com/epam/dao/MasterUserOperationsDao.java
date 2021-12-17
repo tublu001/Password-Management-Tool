@@ -2,7 +2,7 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.passwordOperations.PreferredPassword;
+import com.epam.service.passwordOperations.PreferredPassword;
 import com.epam.repository.RepositoryDB;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;

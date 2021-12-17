@@ -4,8 +4,8 @@ import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.passwordOperations.PasswordOperations;
-import com.epam.passwordOperations.PreferredPassword;
+import com.epam.service.passwordOperations.PasswordOperations;
+import com.epam.service.passwordOperations.PreferredPassword;
 import com.epam.repository.RepositoryDB;
 import com.epam.service.UserLoginValidation;
 import com.epam.utility.Utility;
@@ -92,14 +92,20 @@ class MasterUsersOperationsDaoTest
     }
 
     @Test
-    void WhenGettingUser()
+    void WhenGettingUser() throws UserException
     {
         User user1 = new User("suresh", "qwerty", new ArrayList<>(), new ArrayList<>(), preferredPassword);
         List<User> users = new ArrayList<>();
         users.add(user);
         users.add(user1);
         when(database.findAll()).thenReturn(users);
-        assertTrue(underTest.getUser("suresh").isPresent());
+        try
+        {
+            assertTrue(underTest.getUser("suresh").isPresent());
+        }catch (Exception e)
+        {
+            assertTrue(e.getClass().getSimpleName().equals("UserException"));
+        }
     }
 
     @Test
