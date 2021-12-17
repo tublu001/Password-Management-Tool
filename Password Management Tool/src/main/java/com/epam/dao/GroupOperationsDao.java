@@ -26,15 +26,11 @@ public class GroupOperationsDao
 
     public String addGroupName(User user, String groupName) throws UserException
     {
-        String addedGroupName = null;
         if (masterUserOperationsDao.addGroup(user, groupName))
         {
-            addedGroupName = groupName;
-        } else
-        {
-            throw new UserException("Error in adding Group name!!! Error accessing to Database!!!");
+            return groupName;
         }
-        return addedGroupName;
+        throw new UserException("Error in adding Group name!!! Error accessing to Database!!!");
     }
 
     public void showGroups(User user)

@@ -44,15 +44,18 @@ public class MasterUsersOperationsDao
     }
 
 
-    public static Optional<User> getUser(String userName)
+    public static Optional<User> getUser(String userName) throws UserException
     {
         users = database.getMasterUsers();
         User master = null;
-
-        List<User> matchedUser = users.stream()
-                .filter(user -> userName.equals(user.getUserName()))
-                .collect(Collectors.toList());
-        return Optional.ofNullable(matchedUser.get(0));
+        if(isMasterPresent(userName))
+        {
+            List<User> matchedUser = users.stream()
+                    .filter(user -> userName.equals(user.getUserName()))
+                    .collect(Collectors.toList());
+            master = matchedUser.get(0);
+        }
+        return Optional.ofNullable(master);
     }
 
     public static boolean isMasterPresent(String userName) throws UserException
