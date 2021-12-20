@@ -1,0 +1,18 @@
+
+m
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(ó¿‡şÿÿÿÿ
+=
+java:S1125H"'Remove the unnecessary boolean literal.(Ñ¸øƒ
+=
+java:S1125H"'Remove the unnecessary boolean literal.(Ñ¸øƒ
+=
+java:S1125H"'Remove the unnecessary boolean literal.(Ñ¸øƒ
+=
+java:S1125X"'Remove the unnecessary boolean literal.(Ñ¸øƒ
+=
+java:S1125X"'Remove the unnecessary boolean literal.(Ñ¸øƒ
+=
+java:S1125X"'Remove the unnecessary boolean literal.(Ñ¸øƒ
+i	java:S100¼"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶©‚ˆşÿÿÿÿ
+m	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(¤èÄ7
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ššî‘ùÿÿÿÿ

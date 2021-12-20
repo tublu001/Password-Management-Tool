@@ -1,0 +1,10 @@
+
+B
+java:S3329'"'Use a dynamically-generated, random IV.(¼¶¶ôúÿÿÿÿ
+8
+java:S2053*"Make this salt unpredictable.(…å“Îÿÿÿÿÿ
+B
+java:S3329?"'Use a dynamically-generated, random IV.(¼¶¶ôúÿÿÿÿ
+8
+java:S2053B"Make this salt unpredictable.(…å“Îÿÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ššî‘ùÿÿÿÿ

@@ -166,9 +166,6 @@ public class WebAccountCrudRequestHandler
         {
             e.printStackTrace();
         }
-//        modelAndView.setViewName("retrieveAllAccounts");
-//        modelAndView.addObject("successMessage", "App deleted successfully...");
-//        modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
         return modelAndView;
     }
 
