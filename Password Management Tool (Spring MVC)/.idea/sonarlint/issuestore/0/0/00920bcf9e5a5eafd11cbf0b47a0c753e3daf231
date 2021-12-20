@@ -1,0 +1,33 @@
+
+@
+java:S1068"*Remove this unused "LOGGER" private field.(ø½òþ
+i
+java:S1192;"NDefine a constant instead of duplicating this literal "userException" 4 times.(øó…ÿøÿÿÿÿ
+[
+java:S11922"FDefine a constant instead of duplicating this literal "error" 4 times.(ëÜà
+j
+java:S11925"ODefine a constant instead of duplicating this literal "successMessage" 6 times.(ðíçÔùÿÿÿÿ
+o
+java:S1192x"TDefine a constant instead of duplicating this literal "retrieveAllAccounts" 3 times.(ëçî…üÿÿÿÿ
+l
+java:S3655´"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(âžÂÆÿÿÿÿÿ
+l
+java:S3655‚"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(âžÂÆÿÿÿÿÿ
+k
+java:S3655\"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(âžÂÆÿÿÿÿÿ
+l
+java:S3655„"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ï¨†÷øÿÿÿÿ
+k
+java:S36551"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(âžÂÆÿÿÿÿÿ
+k
+java:S3655z"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(âžÂÆÿÿÿÿÿ
+e
+java:S3655]"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(â»º
+k
+java:S3655G"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(âžÂÆÿÿÿÿÿ
+k
+java:S3655r"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ôõøíúÿÿÿÿ
+l
+java:S3655’"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(âžÂÆÿÿÿÿÿ
+l
+java:S3655ž"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ôõøíúÿÿÿÿ

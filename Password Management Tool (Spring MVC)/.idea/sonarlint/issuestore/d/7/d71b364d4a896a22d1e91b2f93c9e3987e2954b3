@@ -1,0 +1,5 @@
+
+
+java:S1130“"zRemove the declaration of thrown exception 'com.epam.exceptions.UserException', as it cannot be thrown from method's body.(õƒ£Ûúÿÿÿÿ8œá©ÀÜ/
+f
+java:S2583V"DChange this condition so that it does not always evaluate to "false"(„»Êøÿÿÿÿ8¤á©ÀÜ/

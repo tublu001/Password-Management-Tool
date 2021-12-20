@@ -1,0 +1,19 @@
+
+c	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úæ´
+P
+java:S1854":Remove this useless assignment to local variable "result".(¦Œ¤õ
+A
+java:S1481"+Remove this unused "result" local variable.(¦Œ¤õ
+C	java:S108?")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+k
+java:S3655("PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Á·´ÿÿÿÿÿ
+k
+java:S36552"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Á·´ÿÿÿÿÿ
+k
+java:S3655#"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Á·´ÿÿÿÿÿ
+k
+java:S36557"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Á·´ÿÿÿÿÿ
+k
+java:S3655-"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Á·´ÿÿÿÿÿ
+k
+java:S3655<"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Á·´ÿÿÿÿÿ
