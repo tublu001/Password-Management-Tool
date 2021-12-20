@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -18,19 +19,9 @@ public class GroupOperationsDao
     @Autowired
     private RepositoryDB database;
 
-    public boolean isGroupAvailable(User user, String groupName) throws UserException
+    public boolean isGroupAvailable(Optional<User> user, String groupName)
     {
-        return user.getGroups().stream().anyMatch(i -> i.equals(groupName));
-    }
-
-    public String addGroupName(User user, String groupName) throws UserException
-    {
-        String addedGroupName = null;
-        if (user.getGroups().add(groupName))
-        {
-            return groupName;
-        }
-        throw new UserException("Error in adding group to the Database!!!");
+        return user.get().getGroups().stream().anyMatch(i -> i.equals(groupName));
     }
 
     public void showGroups(User user)
@@ -39,11 +30,12 @@ public class GroupOperationsDao
         user.getGroups().forEach(groupName -> LOGGER.info(count.incrementAndGet() + ". " + groupName));
     }
 
-    public String getGroup(User user, int index) throws UserException
+    public String getGroup(Optional<User> user, int index) throws UserException
     {
-        if (isGroupIndex(user, index))
+        user.orElseThrow(()->new UserException("User not present!!!"));
+        if (isGroupIndex(user.get(), index))
         {
-            return user.getGroups().get(index);
+            return user.get().getGroups().get(index);
         } else
         {
             throw new UserException("Invalid selection!!! Group not available in this index");
@@ -52,36 +44,28 @@ public class GroupOperationsDao
 
     public boolean updateGroupName(User user, int index, String newGroupName) throws UserException
     {
-        boolean groupUpdated = false;
         if (!isGroupIndex(user, index))
         {
             throw new UserException("Invalid Group!!! Group not available in this index");
-        } else
-        {
-            groupUpdated = true;
         }
         user.getGroups().set(index, newGroupName);
-        return groupUpdated;
+        return true;
     }
 
     public boolean updateGroupName(User user, String oldGroupName, String newGroupName) throws UserException
     {
-        boolean groupUpdated = false;
-        if (!isGroupAvailable(user, oldGroupName))
+        if (!isGroupAvailable(Optional.ofNullable(user), oldGroupName))
         {
             throw new UserException("Invalid selection!!! Group not available in database");
         }
-        if (isGroupAvailable(user, newGroupName))
+        if (isGroupAvailable(Optional.ofNullable(user), newGroupName))
         {
             throw new UserException("New group name already exists in database");
         }
         int index = getGroupIndex(user, oldGroupName);
         user.getGroups().set(index, newGroupName);
         updateAccountGroupName(user, oldGroupName, newGroupName);
-        database.merge(user);
-        groupUpdated = true;
-
-        return groupUpdated;
+        return database.merge(user).isPresent();
     }
 
     public int getGroupIndex(User user, String groupName)
@@ -98,35 +82,43 @@ public class GroupOperationsDao
         return index - 1;
     }
 
-    public void getGroupWiseAccounts(User user)
+    public void getGroupWiseAccounts(User user) throws UserException
     {
         LOGGER.info("\n\n|--------------Group Wise All Available Accounts--------------|\n");
-        if (!user.equals(null))
+        if (user.equals(null))
         {
-            user.getGroups().forEach(groupName ->
-            {
-                LOGGER.info("\n              " + groupName + "");
-                LOGGER.info("--------------------------------");
-                getGroupAccounts(user, groupName);
-            });
+            throw new UserException("User not available");
         }
+        user.getGroups().forEach(groupName ->
+        {
+            LOGGER.info("\n              " + groupName + "");
+            LOGGER.info("--------------------------------");
+            try
+            {
+                getGroupAccounts(user, groupName);
+            } catch (UserException e)
+            {
+                e.printStackTrace();
+            }
+        });
         LOGGER.info("\n");
     }
 
 
-    void getGroupAccounts(User user, String groupName)
+    void getGroupAccounts(User user, String groupName) throws UserException
     {
         AtomicInteger count = new AtomicInteger();
-        if (!user.equals(null))
+        if (user.equals(null))
         {
-            user.getAccounts().forEach(account ->
-            {
-                if (groupName.equals(account.getAccountGroup()))
-                {
-                    LOGGER.info(count.incrementAndGet() + ". " + account);
-                }
-            });
+            throw new UserException("User not available");
         }
+        user.getAccounts().forEach(account ->
+        {
+            if (groupName.equals(account.getAccountGroup()))
+            {
+                LOGGER.info(count.incrementAndGet() + ". " + account);
+            }
+        });
     }
 
     public boolean isGroupIndex(User user, int index) throws UserException

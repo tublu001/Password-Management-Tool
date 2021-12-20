@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = "com.epam")
 @EnableTransactionManagement
 @EntityScan(basePackages = "com.epam")
-
 public class Application
 {
     public static void main(String[] args)

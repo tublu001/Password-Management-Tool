@@ -1,6 +1,6 @@
 package com.epam.dto;
 
-import com.epam.service.passwordOperations.PreferredPassword;
+import com.epam.service.password_operations.PreferredPassword;
 import lombok.Data;
 
 public @Data

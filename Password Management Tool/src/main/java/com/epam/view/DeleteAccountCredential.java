@@ -29,14 +29,14 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
     {
         LOGGER.info("\n\nDelete Account credential\n\nEnter App Name: ");
         String appName = input.nextLine();
-        if (!accountCredentialOperationsDao.isAppName(user, appName))
+        if (!accountCredentialOperationsDao.isAppName(Optional.ofNullable(user), appName))
         {
             throw new UserException("Invalid AppName");
         }
         LOGGER.info("Application Found : " + appName);
         LOGGER.info("\n\nEnter your (Master) password: ");
         String masterPassword = input.nextLine();
-        accountCredentialOperationsDao.remove(user, appName, masterPassword);
+        accountCredentialOperationsDao.remove(Optional.ofNullable(user), appName, masterPassword);
         return database.merge(user);
     }
 

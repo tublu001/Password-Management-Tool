@@ -26,9 +26,9 @@ public class RetrieveAccountPassword implements UserAccountCrudOperation
         LOGGER.info("\n\nRetrieve Account password\n\nEnter App Name: ");
         String appName = input.nextLine();
 
-        if (accountCredentialOperationsDao.isAppName(user, appName))
+        if (accountCredentialOperationsDao.isAppName(Optional.ofNullable(user), appName))
         {
-            LOGGER.info("Account password is: " + accountCredentialOperationsDao.retrievePassword(user, appName));
+            LOGGER.info("Account password is: " + accountCredentialOperationsDao.retrievePassword(Optional.of(user), appName));
         } else
         {
             throw new UserException("App not found...");

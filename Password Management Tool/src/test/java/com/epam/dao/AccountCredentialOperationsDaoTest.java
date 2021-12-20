@@ -4,8 +4,8 @@ import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.service.passwordOperations.PasswordOperations;
-import com.epam.service.passwordOperations.PreferredPassword;
+import com.epam.service.password_operations.PasswordOperations;
+import com.epam.service.password_operations.PreferredPassword;
 import com.epam.repository.RepositoryDB;
 import com.epam.service.UserLoginValidation;
 import com.epam.utility.Utility;
@@ -77,7 +77,7 @@ public class AccountCredentialOperationsDaoTest
         when(utility.isValidString(anyString())).thenReturn(true);
         when(utility.isValidString(anyString())).thenReturn(true);
         when(utility.isValidString(anyString())).thenReturn(true);
-        when(groupOperationsDao.isGroupAvailable(user, userDetail.getGroupName())).thenReturn(true);
+        when(groupOperationsDao.isGroupAvailable(Optional.ofNullable(user), userDetail.getGroupName())).thenReturn(true);
         when(passwordOperations.encryptPassword(userDetail.getPassword())).thenReturn("qwerty");
 
         when(database.merge(user)).thenReturn(Optional.ofNullable(user));
@@ -91,7 +91,7 @@ public class AccountCredentialOperationsDaoTest
     {
         when(passwordOperations.decryptPassword(anyString())).thenReturn("qwerty");
         when(utility.isValidString(anyString())).thenReturn(true);
-        Assertions.assertEquals("qwerty", underTest.retrievePassword(user, "a"));
+        Assertions.assertEquals("qwerty", underTest.retrievePassword(Optional.of(user), "a"));
     }
 
 
@@ -113,22 +113,22 @@ public class AccountCredentialOperationsDaoTest
         account2 = new UserAccount("b", "vsgvsgvs", "qwerty", "grp1", user);
         user.getAccounts().add(account1);
         user.getAccounts().add(account2);
-        assertTrue(underTest.isAppName(user, "a"));
-        assertFalse(underTest.isAppName(user, "c"));
+        assertTrue(underTest.isAppName(Optional.ofNullable(user), "a"));
+        assertFalse(underTest.isAppName(Optional.ofNullable(user), "c"));
     }
 
 
     @Test
     void isAppPresentTest() throws UserException
     {
-        assertTrue(underTest.isAppPresent(user, "a"));
-        assertFalse(underTest.isAppPresent(user, "notPresent"));
+        assertTrue(underTest.isAppPresent(Optional.ofNullable(user), "a"));
+        assertFalse(underTest.isAppPresent(Optional.ofNullable(user), "notPresent"));
     }
 
     @Test
     void getAccountByAppNameTest() throws UserException
     {
-        assertTrue(underTest.getAccountByAppName(user, "a").isPresent());
+        assertTrue(underTest.getAccountByAppName(Optional.ofNullable(user), "a").isPresent());
     }
 
     @Test

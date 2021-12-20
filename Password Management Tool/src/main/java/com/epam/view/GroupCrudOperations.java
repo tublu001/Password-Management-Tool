@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.InputMismatchException;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
@@ -26,7 +27,7 @@ public class GroupCrudOperations implements AccountCrudGroup
     {
         LOGGER.info("Enter a new Group Name: ");
         String groupName = input.nextLine();
-        if (groupOperationsDao.isGroupAvailable(user, groupName))
+        if (groupOperationsDao.isGroupAvailable(Optional.ofNullable(user), groupName))
         {
             throw new UserException("Group already exists in Database!!!");
         }
@@ -43,8 +44,8 @@ public class GroupCrudOperations implements AccountCrudGroup
         String groupName = "Undefined";
         if (groupOperationsDao.isGroupIndex(user, selectedGroupIndex - 1))
         {
-            String repositoryGroupName = groupOperationsDao.getGroup(user, selectedGroupIndex - 1);
-            if (groupOperationsDao.isGroupAvailable(user, repositoryGroupName))
+            String repositoryGroupName = groupOperationsDao.getGroup(Optional.ofNullable(user), selectedGroupIndex - 1);
+            if (groupOperationsDao.isGroupAvailable(Optional.ofNullable(user), repositoryGroupName))
             {
                 groupName = repositoryGroupName;
             }

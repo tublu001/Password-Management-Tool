@@ -1,4 +1,4 @@
-package com.epam.service.passwordOperations;
+package com.epam.service.password_operations;
 
 import com.epam.model.User;
 import org.apache.logging.log4j.LogManager;

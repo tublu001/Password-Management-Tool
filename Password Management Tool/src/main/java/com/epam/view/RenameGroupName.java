@@ -34,7 +34,7 @@ public class RenameGroupName implements UserAccountCrudOperation
         input.nextLine();    //consume new line character
         if (groupOperations.isGroupIndex(user, groupNum - 1))
         {
-            String oldGroupName = groupOperations.getGroup(user, groupNum - 1);
+            String oldGroupName = groupOperations.getGroup(Optional.ofNullable(user), groupNum - 1);
             LOGGER.info("Give a new Group name: ");
             String newGroupName = input.nextLine();
             try

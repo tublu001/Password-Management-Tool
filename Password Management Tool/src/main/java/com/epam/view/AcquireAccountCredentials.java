@@ -4,7 +4,7 @@ import com.epam.dao.AccountsControllerDao;
 import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.service.passwordOperations.PasswordOperations;
+import com.epam.service.password_operations.PasswordOperations;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,7 +41,7 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
         {
             throw new UserException("Invalid App Name");
         }
-        if (accountsControllerDao.isAppPresent(user, appName))
+        if (accountsControllerDao.isAppPresent(Optional.ofNullable(user), appName))
         {
             throw new UserException("App already present in Database");
         }

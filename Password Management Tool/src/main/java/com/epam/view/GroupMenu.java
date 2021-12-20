@@ -30,7 +30,7 @@ public class GroupMenu
             LOGGER.info("1. Create a new group");
             LOGGER.info("2. Store in a existing group");
             LOGGER.info("0. Skip..(Ungrouped)\n\n\nChoose Any: ");
-            char selection = '\0';
+            char selection;
 
             selection = input.next().charAt(0);
 

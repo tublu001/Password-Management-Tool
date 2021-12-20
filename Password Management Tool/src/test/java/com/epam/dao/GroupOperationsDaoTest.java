@@ -4,8 +4,8 @@ import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.service.passwordOperations.PasswordOperations;
-import com.epam.service.passwordOperations.PreferredPassword;
+import com.epam.service.password_operations.PasswordOperations;
+import com.epam.service.password_operations.PreferredPassword;
 import com.epam.repository.RepositoryDB;
 import com.epam.service.UserLoginValidation;
 import com.epam.utility.Utility;
@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class GroupOperationsDaoTest
@@ -68,8 +69,8 @@ public class GroupOperationsDaoTest
     void getGroupNameTest1() throws UserException
     {
         System.out.println(user.getGroups().size());
-        System.out.println(underTest.getGroup(user, 1));
-        Assertions.assertTrue("grp2".equals(underTest.getGroup(user, 1)));
+        System.out.println(underTest.getGroup(Optional.ofNullable(user), 1));
+        Assertions.assertTrue("grp2".equals(underTest.getGroup(Optional.ofNullable(user), 1)));
     }
 
     @Test
@@ -77,24 +78,24 @@ public class GroupOperationsDaoTest
     void getGroupNameTest2() throws UserException
     {
         GroupOperationsDao underTest = new GroupOperationsDao();
-        Assertions.assertFalse("grp2".equals(underTest.getGroup(user, 0)));
+        Assertions.assertFalse("grp2".equals(underTest.getGroup(Optional.ofNullable(user), 0)));
     }
 
     @Test
     @DisplayName(value = "update group name of User")
     void updateGroupNameTest1() throws UserException
     {
-        Assertions.assertTrue("grp2".equals(underTest.getGroup(user, 1)));
+        Assertions.assertTrue("grp2".equals(underTest.getGroup(Optional.ofNullable(user), 1)));
         Assertions.assertTrue(underTest.updateGroupName(user, 1, "group2"));
-        Assertions.assertTrue("group2".equals(underTest.getGroup(user, 1)));
+        Assertions.assertTrue("group2".equals(underTest.getGroup(Optional.ofNullable(user), 1)));
     }
 
     @Test
     @DisplayName(value = "update group name of null User")
     void updateGroupNameTest2() throws UserException
     {
-        Assertions.assertTrue("grp2".equals(underTest.getGroup(user, 1)));
+        Assertions.assertTrue("grp2".equals(underTest.getGroup(Optional.ofNullable(user), 1)));
         Assertions.assertTrue(underTest.updateGroupName(user, 1, "new group"));
-        Assertions.assertFalse("new group".equals(underTest.getGroup(user, 0)));
+        Assertions.assertFalse("new group".equals(underTest.getGroup(Optional.ofNullable(user), 0)));
     }
 }

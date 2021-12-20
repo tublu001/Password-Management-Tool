@@ -2,7 +2,7 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.service.passwordOperations.PreferredPassword;
+import com.epam.service.password_operations.PreferredPassword;
 import com.epam.repository.RepositoryDB;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
@@ -26,17 +26,6 @@ public class MasterUserOperationsDao
 
     @Autowired
     private Utility utility;
-
-    public boolean addGroup(User user, String groupName) throws UserException
-    {
-        if (user.equals(null) || !utility.isValidString(groupName))
-        {
-            throw new UserException("Give proper Group Name");
-        }
-        boolean isAdded = user.getGroups().add(groupName);
-
-        return isAdded;
-    }
 
     public Optional<User> showAccounts(User user)
     {

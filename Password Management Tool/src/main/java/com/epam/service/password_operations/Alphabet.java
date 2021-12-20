@@ -1,4 +1,4 @@
-package com.epam.service.passwordOperations;
+package com.epam.service.password_operations;
 
 
 public class Alphabet

@@ -4,7 +4,7 @@ import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.service.passwordOperations.PasswordOperations;
+import com.epam.service.password_operations.PasswordOperations;
 import com.epam.repository.RepositoryDB;
 import com.epam.service.UserLoginValidation;
 import com.epam.utility.Utility;
@@ -58,7 +58,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         {
             throw new UserException("Invalid group name");
         }
-        if (isAppPresent(user, userAccountDTO.getAppName()))
+        if (isAppPresent(Optional.ofNullable(user), userAccountDTO.getAppName()))
         {
             throw new UserException("App already present in database...");
         }
@@ -66,7 +66,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         UserAccount newAccount = new UserAccount();
         boolean isAccountStored;
 
-        if (!groupOperationsDao.isGroupAvailable(user, userAccountDTO.getGroupName()))
+        if (!groupOperationsDao.isGroupAvailable(Optional.ofNullable(user), userAccountDTO.getGroupName()))
         {
             user.getGroups().add(userAccountDTO.getGroupName());
         }
@@ -88,10 +88,10 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     }
 
     @Override
-    public String retrievePassword(User user, String appName) throws UserException
+    public String retrievePassword(Optional<User> user, String appName) throws UserException
     {
         String password = "";
-
+        user.orElseThrow(()-> new UserException("User not found"));
         Optional<UserAccount> accountByAppName = getAccountByAppName(user, appName);
 
         if (accountByAppName.isPresent())
@@ -106,24 +106,25 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     }
 
     @Override
-    public boolean remove(User user, String appName, String masterPassword) throws UserException
+    public boolean remove(Optional<User> user, String appName, String masterPassword) throws UserException
     {
         boolean isDeleted;
-        if (!isAppName(user, appName))
+        user.orElseThrow(()-> new UserException("User not present!!!"));
+        if (!isAppName(Optional.ofNullable(user.get()), appName))
         {
             throw new UserException("Invalid AppName");
         }
-        if (!userLoginValidation.validatePassword(user, masterPassword))
+        if (!userLoginValidation.validatePassword(user.get(), masterPassword))
         {
             throw new UserException("Invalid master password");
         }
         Optional<UserAccount> optionalUserAccount = getAccountByAppName(user, appName);
         UserAccount account = optionalUserAccount.orElseThrow(() -> new UserException("Invalid Account detail"));
         String groupToBeDeleted = account.getAccountGroup();
-        if (user.getAccounts().remove(account))
+        if (user.get().getAccounts().remove(account))
         {
-            deleteGroupIfContainsNoAccounts(user, groupToBeDeleted);
-            if (database.merge(user).isEmpty())
+            deleteGroupIfContainsNoAccounts(user.get(), groupToBeDeleted);
+            if (database.merge(user.get()).isEmpty())
             {
                 throw new UserException("Account cannot be removed!!! Error accessing to Database");
             }
@@ -149,10 +150,10 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     }
 
     @Override
-    public Optional<UserAccount> getAccountByAppName(User user, String appName) throws UserException
+    public Optional<UserAccount> getAccountByAppName(Optional<User> user, String appName) throws UserException
     {
         UserAccount account = null;
-        for (UserAccount databaseAccount : user.getAccounts())
+        for (UserAccount databaseAccount : user.get().getAccounts())
         {
             if (databaseAccount.getAppName().equals(appName))
             {
@@ -168,10 +169,10 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 
 
     @Override
-    public boolean isAppName(User user, String appName)
+    public boolean isAppName(Optional<User> user, String appName)
     {
         boolean isAppName = false;
-        for (UserAccount account : user.getAccounts())
+        for (UserAccount account : user.get().getAccounts())
         {
             if (account.getAppName().equals(appName))
             {
@@ -189,9 +190,9 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     }
 
     @Override
-    public boolean isAppPresent(User user, String appName) throws UserException
+    public boolean isAppPresent(Optional<User> user, String appName) throws UserException
     {
-        List<UserAccount> matchedAccounts = user.getAccounts().stream().filter(account -> isAppName(user, appName)).collect(Collectors.toList());
+        List<UserAccount> matchedAccounts = user.get().getAccounts().stream().filter(account -> isAppName(user, appName)).collect(Collectors.toList());
         return (!matchedAccounts.isEmpty());
     }
 
@@ -215,12 +216,12 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         {
             throw new UserException("Invalid group name");
         }
-        if (!isAppPresent(user, userAccountDTO.getAppName()))
+        if (!isAppPresent(Optional.ofNullable(user), userAccountDTO.getAppName()))
         {
             throw new UserException("App not present in database...");
         }
 
-        UserAccount existingAccount = getAccountByAppName(user, userAccountDTO.getAppName()).orElseThrow(() -> new UserException("Account not found!!!"));
+        UserAccount existingAccount = getAccountByAppName(Optional.ofNullable(user), userAccountDTO.getAppName()).orElseThrow(() -> new UserException("Account not found!!!"));
 
         String existingGroup = existingAccount.getAccountGroup();
         ModelMapper mapper = new ModelMapper();
@@ -230,7 +231,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 
         boolean isAccountUpdated;
 
-        if (!groupOperationsDao.isGroupAvailable(user, userAccountDTO.getGroupName()))
+        if (!groupOperationsDao.isGroupAvailable(Optional.ofNullable(user), userAccountDTO.getGroupName()))
         {
             user.getGroups().add(userAccountDTO.getGroupName());
         }

@@ -11,17 +11,17 @@ public interface AccountsControllerDao
 {
     boolean storeAccount(UserAccountDTO userAccountDTO) throws UserException;
 
-    String retrievePassword(User user, String appName) throws UserException;
+    String retrievePassword(Optional<User> user, String appName) throws UserException;
 
     void showAccount(UserAccount account);
 
-    boolean remove(User user, String appName, String masterPassword) throws UserException;
+    boolean remove(Optional<User> user, String appName, String masterPassword) throws UserException;
 
-    Optional<UserAccount> getAccountByAppName(User user, String appName) throws UserException;
+    Optional<UserAccount> getAccountByAppName(Optional<User> user, String appName) throws UserException;
 
-    boolean isAppName(User user, String appName);
+    boolean isAppName(Optional<User> user, String appName);
 
-    boolean isAppPresent(User user, String appName) throws UserException;
+    boolean isAppPresent(Optional<User> user, String appName) throws UserException;
 
     boolean editAccount(UserAccountDTO userAccountDTO) throws UserException;
 }
