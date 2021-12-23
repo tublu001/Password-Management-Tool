@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static com.epam.utility.constants.*;
+
 @Service
 public class UserLoginValidationImpl implements UserLoginValidation
 {
@@ -60,7 +62,7 @@ public class UserLoginValidationImpl implements UserLoginValidation
             isUserName = true;
         } else
         {
-            throw new UserException("User not present in Database");
+            throw new UserException(MASTER_NOT_FOUND);
         }
         return isUserName;
     }
@@ -70,13 +72,13 @@ public class UserLoginValidationImpl implements UserLoginValidation
     {
         if (!utility.isValidString(password))
         {
-            throw new UserException("Invalid password provided!!!");
+            throw new UserException(INVALID_PASSWORD);
         }
         boolean isPassword = operate.encryptPassword(password).equals(user.getPassword());
 
         if (!isPassword)
         {
-            throw new UserException("Incorrect Password!!!");
+            throw new UserException(INCORRECT_PASSWORD);
         }
 
         return isPassword;

@@ -4,10 +4,10 @@ import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.service.password_operations.PasswordOperations;
-import com.epam.service.password_operations.PreferredPassword;
 import com.epam.repository.RepositoryDB;
 import com.epam.service.UserLoginValidation;
+import com.epam.service.password_operations.PasswordOperations;
+import com.epam.service.password_operations.PreferredPassword;
 import com.epam.utility.Utility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -102,7 +102,7 @@ class MasterUsersOperationsDaoTest
         try
         {
             assertTrue(underTest.getUser("suresh").isPresent());
-        }catch (Exception e)
+        } catch (Exception e)
         {
             assertTrue(e.getClass().getSimpleName().equals("UserException"));
         }

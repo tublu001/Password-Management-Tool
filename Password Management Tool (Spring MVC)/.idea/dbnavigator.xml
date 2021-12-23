@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="e9946a02-5e0d-4254-b438-618c39232e1e">
-        <schema name="pmtdb" object-types="table" />
+        <schema name="pmtdb" object-types="table, constraint, index, column, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
@@ -36,7 +36,11 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" object-ref="schemas/pmtdb/tables/user_accounts" />
+      <object connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" object-ref="schemas/pmtdb/tables/master_users" />
+      <object connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" object-ref="schemas/pmtdb/tables/user_groups" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="e9946a02-5e0d-4254-b438-618c39232e1e" />
@@ -45,6 +49,7 @@
     <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.user_accounts" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.master_users" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.user_groups" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.auth_user" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

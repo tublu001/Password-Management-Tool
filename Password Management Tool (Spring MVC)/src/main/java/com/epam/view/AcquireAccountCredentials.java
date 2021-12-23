@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static com.epam.utility.constants.*;
+
 @Service
 public class AcquireAccountCredentials implements UserAccountCrudOperation
 {
@@ -39,11 +41,11 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
         String appName = input.nextLine();
         if (!utility.isValidString(appName))
         {
-            throw new UserException("Invalid App Name");
+            throw new UserException(INVALID_APP);
         }
         if (accountsControllerDao.isAppPresent(Optional.ofNullable(user), appName))
         {
-            throw new UserException("App already present in Database");
+            throw new UserException(DUPLICATE_APP);
         }
         LOGGER.info("Enter URL: ");
         String url = input.nextLine();
@@ -61,7 +63,7 @@ public class AcquireAccountCredentials implements UserAccountCrudOperation
         boolean isStored = accountsControllerDao.storeAccount(userDetail);
         if (!isStored)
         {
-            throw new UserException("Error storing in database... Cannot able to store data in Database!!!");
+            throw new UserException(DB_ERROR);
         }
         return Optional.ofNullable(user);
     }

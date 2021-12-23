@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.epam.utility.constants.*;
+
 @Service
 public class GroupOperationsDao
 {
@@ -32,13 +34,13 @@ public class GroupOperationsDao
 
     public String getGroup(Optional<User> user, int index) throws UserException
     {
-        user.orElseThrow(()->new UserException("User not present!!!"));
+        user.orElseThrow(() -> new UserException(MASTER_NOT_FOUND));
         if (isGroupIndex(user.get(), index))
         {
             return user.get().getGroups().get(index);
         } else
         {
-            throw new UserException("Invalid selection!!! Group not available in this index");
+            throw new UserException(INVALID_SELECTION);
         }
     }
 
@@ -46,7 +48,7 @@ public class GroupOperationsDao
     {
         if (!isGroupIndex(user, index))
         {
-            throw new UserException("Invalid Group!!! Group not available in this index");
+            throw new UserException(INVALID_SELECTION);
         }
         user.getGroups().set(index, newGroupName);
         return true;
@@ -56,11 +58,11 @@ public class GroupOperationsDao
     {
         if (!isGroupAvailable(Optional.ofNullable(user), oldGroupName))
         {
-            throw new UserException("Invalid selection!!! Group not available in database");
+            throw new UserException(INVALID_SELECTION);
         }
         if (isGroupAvailable(Optional.ofNullable(user), newGroupName))
         {
-            throw new UserException("New group name already exists in database");
+            throw new UserException(DUPLICATE_GROUP);
         }
         int index = getGroupIndex(user, oldGroupName);
         user.getGroups().set(index, newGroupName);
@@ -87,7 +89,7 @@ public class GroupOperationsDao
         LOGGER.info("\n\n|--------------Group Wise All Available Accounts--------------|\n");
         if (user.equals(null))
         {
-            throw new UserException("User not available");
+            throw new UserException(MASTER_NOT_FOUND);
         }
         user.getGroups().forEach(groupName ->
         {
@@ -110,7 +112,7 @@ public class GroupOperationsDao
         AtomicInteger count = new AtomicInteger();
         if (user.equals(null))
         {
-            throw new UserException("User not available");
+            throw new UserException(MASTER_NOT_FOUND);
         }
         user.getAccounts().forEach(account ->
         {
@@ -125,7 +127,7 @@ public class GroupOperationsDao
     {
         if (index > user.getGroups().size() - 1 || index < 0)
         {
-            throw new UserException("Invalid selection!!! Group not available in this index");
+            throw new UserException(INVALID_SELECTION);
         } else
         {
             return true;

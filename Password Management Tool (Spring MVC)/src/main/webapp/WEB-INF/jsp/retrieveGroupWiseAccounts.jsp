@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                     <c:forEach items="${user.getAccounts()}" var="account">
-                        <c:if test = "${group.equals(account.accountGroup)}">
+                        <c:if test = "${group.equals(account.groupName)}">
                             <tr>
                              <td><b> <c:out value="${account.appName}" ></c:out> </b></td>
                              <td><b> <c:out value="${account.url}" ></c:out> </b></td>

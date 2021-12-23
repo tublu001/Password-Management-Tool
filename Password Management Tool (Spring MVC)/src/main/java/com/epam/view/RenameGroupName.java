@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static com.epam.utility.constants.INVALID_SELECTION;
+
 @Service
 public class RenameGroupName implements UserAccountCrudOperation
 {
@@ -50,7 +52,7 @@ public class RenameGroupName implements UserAccountCrudOperation
             LOGGER.info("Group Name Updated Successfully.. (" + oldGroupName + " ----> " + newGroupName + ")");
         } else
         {
-            throw new UserException("Invalid Selection..\n\n");
+            throw new UserException(INVALID_SELECTION);
         }
         return Optional.ofNullable(user);
     }

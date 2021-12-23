@@ -1,21 +1,14 @@
 package com.epam.controller;
 
-import com.epam.application.Application;
 import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.model.User;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.web.context.WebApplicationContext;
@@ -27,7 +20,6 @@ import java.util.Optional;
 import static com.epam.controller.WebMasterController.userId;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -60,11 +52,11 @@ class WebAccountCrudFactoryTest
     void whenValidInput_thenReturns200() throws Exception
     {
         List<String> requests = Arrays.asList(
-                "storeNewAccount", "retrieveAllAccounts","retrieveGroupWiseAccounts","retrieveAccountPassword","renameGroupName","renameGroupName", "setPasswordPreference");
+                "storeNewAccount", "retrieveAllAccounts", "retrieveGroupWiseAccounts", "retrieveAccountPassword", "renameGroupName", "renameGroupName", "setPasswordPreference");
 
         requests.forEach(request ->
         {
-            when( masterUsersOperationsDao.getUser(userId)).thenReturn(Optional.ofNullable(user));
+            when(masterUsersOperationsDao.getUser(userId)).thenReturn(Optional.ofNullable(user));
             try
             {
                 mockMvc.perform(post("/PMT/UserCrudForm?selection=" + request).with(csrf()))
@@ -81,7 +73,7 @@ class WebAccountCrudFactoryTest
     @Test
     void whenInvalidInput() throws Exception
     {
-        when( masterUsersOperationsDao.getUser(userId)).thenReturn(Optional.ofNullable(user));
+        when(masterUsersOperationsDao.getUser(userId)).thenReturn(Optional.ofNullable(user));
         mockMvc.perform(post("/PMT/UserCrudForm").with(csrf()))
                 .andExpect(status().isUnauthorized());
     }

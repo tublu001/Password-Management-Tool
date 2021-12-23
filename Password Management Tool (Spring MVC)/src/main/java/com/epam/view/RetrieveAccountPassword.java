@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static com.epam.utility.constants.APP_NOT_FOUND;
+
 @Service
 public class RetrieveAccountPassword implements UserAccountCrudOperation
 {
@@ -31,7 +33,7 @@ public class RetrieveAccountPassword implements UserAccountCrudOperation
             LOGGER.info("Account password is: " + accountCredentialOperationsDao.retrievePassword(Optional.of(user), appName));
         } else
         {
-            throw new UserException("App not found...");
+            throw new UserException(APP_NOT_FOUND);
         }
 
         return Optional.of(user);

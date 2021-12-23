@@ -4,9 +4,9 @@ import com.epam.dto.UserAccountDTO;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
 import com.epam.model.UserAccount;
-import com.epam.service.password_operations.PasswordOperations;
 import com.epam.repository.RepositoryDB;
 import com.epam.service.UserLoginValidation;
+import com.epam.service.password_operations.PasswordOperations;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.epam.utility.constants.*;
 
 @Service
 public class AccountCredentialOperationsDao implements AccountsControllerDao
@@ -44,23 +46,23 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         User user = userAccountDTO.getUser();
         if (!utility.isValidString(userAccountDTO.getAppName()))
         {
-            throw new UserException("Invalid app name");
+            throw new UserException(INVALID_APP);
         }
         if (!utility.isValidString(userAccountDTO.getUrl()))
         {
-            throw new UserException("Invalid URL provided");
+            throw new UserException(INVALID_URL);
         }
         if (!utility.isValidString(userAccountDTO.getPassword()))
         {
-            throw new UserException("Invalid password");
+            throw new UserException(INVALID_PASSWORD);
         }
         if (!utility.isValidString(userAccountDTO.getGroupName()))
         {
-            throw new UserException("Invalid group name");
+            throw new UserException(INVALID_GROUP);
         }
         if (isAppPresent(Optional.ofNullable(user), userAccountDTO.getAppName()))
         {
-            throw new UserException("App already present in database...");
+            throw new UserException(DUPLICATE_APP);
         }
         List<UserAccount> allAccounts = user.getAccounts();
         UserAccount newAccount = new UserAccount();
@@ -79,7 +81,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         Optional<User> databaseFetchedUser = database.merge(user);
         if (databaseFetchedUser.isEmpty())
         {
-            throw new UserException("Account not Added Successfully!!! Error storing to Database");
+            throw new UserException(DB_ERROR);
         } else
         {
             isAccountStored = true;
@@ -91,7 +93,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     public String retrievePassword(Optional<User> user, String appName) throws UserException
     {
         String password = "";
-        user.orElseThrow(()-> new UserException("User not found"));
+        user.orElseThrow(() -> new UserException(MASTER_NOT_FOUND));
         Optional<UserAccount> accountByAppName = getAccountByAppName(user, appName);
 
         if (accountByAppName.isPresent())
@@ -100,7 +102,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         }
         if (!utility.isValidString(password))
         {
-            throw new UserException("App not found...");
+            throw new UserException(INCORRECT_PASSWORD);
         }
         return password;
     }
@@ -109,29 +111,29 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     public boolean removeAccount(Optional<User> user, String appName, String masterPassword) throws UserException
     {
         boolean isDeleted;
-        user.orElseThrow(()-> new UserException("User not present!!!"));
+        user.orElseThrow(() -> new UserException(MASTER_NOT_FOUND));
         if (!isAppName(Optional.ofNullable(user.get()), appName))
         {
-            throw new UserException("Invalid AppName");
+            throw new UserException(INVALID_APP);
         }
         if (!userLoginValidation.validatePassword(user.get(), masterPassword))
         {
-            throw new UserException("Invalid master password");
+            throw new UserException(INCORRECT_PASSWORD);
         }
         Optional<UserAccount> optionalUserAccount = getAccountByAppName(user, appName);
-        UserAccount account = optionalUserAccount.orElseThrow(() -> new UserException("Invalid Account detail"));
+        UserAccount account = optionalUserAccount.orElseThrow(() -> new UserException(APP_NOT_FOUND));
         String groupToBeDeleted = account.getGroupName();
         if (user.get().getAccounts().remove(account))
         {
             deleteGroupIfContainsNoAccounts(user.get(), groupToBeDeleted);
             if (database.merge(user.get()).isEmpty())
             {
-                throw new UserException("Account cannot be removed!!! Error accessing to Database");
+                throw new UserException(DB_ERROR);
             }
             isDeleted = true;
         } else
         {
-            throw new UserException("Account cannot be removed!!! Error accessing to Database");
+            throw new UserException(DB_ERROR);
         }
 
         return isDeleted;
@@ -145,7 +147,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
                 .count();
         if (numberOfAccountInGroup < 1L && !groupOperationsDao.remove(user, groupToBeDeleted))
         {
-            throw new UserException("Group Contains No Accounts!!! Error in deleting");
+            throw new UserException(EMPTY_GROUP);
         }
     }
 
@@ -162,7 +164,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         }
         if (account == null)
         {
-            throw new UserException("App not present");
+            throw new UserException(APP_NOT_FOUND);
         }
         return Optional.ofNullable(account);
     }
@@ -202,26 +204,26 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         User user = userAccountDTO.getUser();
         if (!utility.isValidString(userAccountDTO.getAppName()))
         {
-            throw new UserException("Invalid app name");
+            throw new UserException(INVALID_APP);
         }
         if (!utility.isValidString(userAccountDTO.getUrl()))
         {
-            throw new UserException("Invalid URL provided");
+            throw new UserException(INVALID_URL);
         }
         if (!utility.isValidString(userAccountDTO.getPassword()))
         {
-            throw new UserException("Invalid password");
+            throw new UserException(INVALID_PASSWORD);
         }
         if (!utility.isValidString(userAccountDTO.getGroupName()))
         {
-            throw new UserException("Invalid group name");
+            throw new UserException(INVALID_GROUP);
         }
         if (!isAppPresent(Optional.ofNullable(user), userAccountDTO.getAppName()))
         {
-            throw new UserException("App not present in database...");
+            throw new UserException(APP_NOT_FOUND);
         }
 
-        UserAccount existingAccount = getAccountByAppName(Optional.ofNullable(user), userAccountDTO.getAppName()).orElseThrow(() -> new UserException("Account not found!!!"));
+        UserAccount existingAccount = getAccountByAppName(Optional.ofNullable(user), userAccountDTO.getAppName()).orElseThrow(() -> new UserException(APP_NOT_FOUND));
 
         String existingGroup = existingAccount.getGroupName();
         ModelMapper mapper = new ModelMapper();
@@ -241,7 +243,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         Optional<User> databaseFetchedUser = database.merge(user);
         if (databaseFetchedUser.isEmpty())
         {
-            throw new UserException("Account not updated Successfully!!! Error storing to Database");
+            throw new UserException(DB_ERROR);
         } else
         {
             isAccountUpdated = true;

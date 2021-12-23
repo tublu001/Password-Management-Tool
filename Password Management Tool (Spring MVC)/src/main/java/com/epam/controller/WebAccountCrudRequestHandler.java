@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Optional;
 
 import static com.epam.controller.WebMasterController.userId;
+import static com.epam.utility.constants.MASTER_NOT_FOUND;
 
 @Controller
 @RequestMapping("PMT")
@@ -47,8 +48,8 @@ public class WebAccountCrudRequestHandler
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            userAccountDTO.setUser(masterUsersOperationsDao.getUser(userId).orElseThrow(() -> new UserException("Can't find the user!!!")));
-            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+            userAccountDTO.setUser(getMasterUserBySessionId());
+            modelAndView.addObject("user", getMasterUserBySessionId());
             modelAndView.setViewName("error");
             if (accountsControllerDao.storeAccount(userAccountDTO))
             {
@@ -70,7 +71,7 @@ public class WebAccountCrudRequestHandler
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+            modelAndView.addObject("user", getMasterUserBySessionId());
             modelAndView.setViewName("error");
             String retrievedPassword = accountsControllerDao.retrievePassword(masterUsersOperationsDao.getUser(userId), appName);
             modelAndView.addObject("successMessage", "password is: " + retrievedPassword);
@@ -91,8 +92,8 @@ public class WebAccountCrudRequestHandler
         boolean isRenamed = false;
         try
         {
-            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
-            isRenamed = groupOperations.updateGroupName(masterUsersOperationsDao.getUser(userId).get(), oldGroupName, newGroupName);
+            modelAndView.addObject("user", getMasterUserBySessionId());
+            isRenamed = groupOperations.updateGroupName(getMasterUserBySessionId(), oldGroupName, newGroupName);
         } catch (UserException e)
         {
             e.printStackTrace();
@@ -108,12 +109,12 @@ public class WebAccountCrudRequestHandler
     }
 
     @GetMapping("deleteAccountCredential")
-    public ModelAndView deleteAccountCredential(String appName)
+    public ModelAndView deleteAccountCredential(String appName) throws UserException
     {
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            User user = masterUsersOperationsDao.getUser(userId).get();
+            User user = getMasterUserBySessionId();
             accountCredentialOperationsDao.removeAccount(Optional.ofNullable(user), appName, passwordOperations.decryptPassword(user.getPassword()));
         } catch (UserException e)
         {
@@ -121,7 +122,7 @@ public class WebAccountCrudRequestHandler
         }
         modelAndView.setViewName("retrieveAllAccounts");
         modelAndView.addObject("successMessage", "App deleted successfully...");
-        modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+        modelAndView.addObject("user", getMasterUserBySessionId());
         return modelAndView;
     }
 
@@ -129,9 +130,9 @@ public class WebAccountCrudRequestHandler
     public ModelAndView setPreferredPassword(PreferredPasswordDTO preferredPasswordDTO) throws UserException
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+        modelAndView.addObject("user", getMasterUserBySessionId());
         modelAndView.setViewName("error");
-        boolean success = masterUserOperationsDao.setPreferredPassword(masterUsersOperationsDao.getUser(userId).get(), preferredPasswordDTO.getPreferredPasswordObject());
+        boolean success = masterUserOperationsDao.setPreferredPassword(getMasterUserBySessionId(), preferredPasswordDTO.getPreferredPasswordObject());
         if (success)
         {
             modelAndView.addObject("successMessage", "You have successfully saved your Password Preference...");
@@ -142,10 +143,10 @@ public class WebAccountCrudRequestHandler
 
 
     @GetMapping("crudMenu")
-    public ModelAndView accountCrudMenu()
+    public ModelAndView accountCrudMenu() throws UserException
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+        modelAndView.addObject("user", getMasterUserBySessionId());
         modelAndView.setViewName("accountCrudMenu");
         return modelAndView;
     }
@@ -157,7 +158,7 @@ public class WebAccountCrudRequestHandler
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            User user = masterUsersOperationsDao.getUser(userId).get();
+            User user = getMasterUserBySessionId();
             UserAccount account = accountCredentialOperationsDao.getAccountByAppName(Optional.ofNullable(user), appName).orElseThrow(() -> new UserException("Can't find the application!!!"));
             modelAndView.addObject("user", user);
             modelAndView.addObject("account", account);
@@ -175,8 +176,8 @@ public class WebAccountCrudRequestHandler
         ModelAndView modelAndView = new ModelAndView();
         try
         {
-            userAccountDTO.setUser(masterUsersOperationsDao.getUser(userId).orElseThrow(() -> new UserException("Can't find the user!!!")));
-            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).get());
+            userAccountDTO.setUser(getMasterUserBySessionId());
+            modelAndView.addObject("user", getMasterUserBySessionId());
             modelAndView.setViewName("error");
             if (accountsControllerDao.editAccount(userAccountDTO))
             {
@@ -190,6 +191,16 @@ public class WebAccountCrudRequestHandler
             modelAndView.setViewName("retrieveAllAccounts");
         }
         return modelAndView;
+    }
+
+    private User getMasterUserBySessionId() throws UserException
+    {
+        return masterUsersOperationsDao.getUser(userId).orElseThrow(() -> new UserException(MASTER_NOT_FOUND));
+    }
+
+    private User getMasterUser(String masterName) throws UserException
+    {
+        return masterUsersOperationsDao.getUser(masterName).orElseThrow(() -> new UserException(MASTER_NOT_FOUND));
     }
 
 }

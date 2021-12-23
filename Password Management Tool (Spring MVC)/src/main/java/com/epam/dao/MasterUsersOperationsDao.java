@@ -2,8 +2,8 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.service.password_operations.PasswordOperations;
 import com.epam.repository.RepositoryDB;
+import com.epam.service.password_operations.PasswordOperations;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +14,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.epam.utility.constants.*;
 
 @Service
 public class MasterUsersOperationsDao
@@ -38,11 +40,11 @@ public class MasterUsersOperationsDao
         Optional<User> user;
         if (!utility.isValidString(userName) || !utility.isValidString(password))
         {
-            throw new UserException("Invalid User Name provided!!!");
+            throw new UserException(INVALID_USERNAME);
         }
         if (isMasterPresent(userName))
         {
-            throw new UserException("User already exists in database!!!");
+            throw new UserException(DUPLICATE_USER);
         }
         User newUser = new User();
         newUser.setUserName(userName);
@@ -51,7 +53,7 @@ public class MasterUsersOperationsDao
         user = database.setMasterUser(newUser);
         if (user.isEmpty())
         {
-            throw new UserException("Error accessing database. Cannot add User to the Database!!!");
+            throw new UserException(DB_ERROR);
         }
         return user;
     }
@@ -68,7 +70,7 @@ public class MasterUsersOperationsDao
     public Optional<User> getUser(String userName) throws UserException
     {
         User master = null;
-        if(isMasterPresent(userName))
+        if (isMasterPresent(userName))
         {
             users = database.findAll();
             master = users.stream()
@@ -95,7 +97,7 @@ public class MasterUsersOperationsDao
     {
         if (!utility.isValidString(userName))
         {
-            throw new UserException("Invalid User Name provided!!!");
+            throw new UserException(INVALID_USERNAME);
         }
         users = database.findAll();
         boolean isMasterPresent = !(users.stream()

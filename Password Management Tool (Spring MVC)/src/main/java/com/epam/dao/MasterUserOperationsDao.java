@@ -2,8 +2,8 @@ package com.epam.dao;
 
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.service.password_operations.PreferredPassword;
 import com.epam.repository.RepositoryDB;
+import com.epam.service.password_operations.PreferredPassword;
 import com.epam.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.epam.utility.constants.MASTER_NOT_FOUND;
 
 @Service
 public class MasterUserOperationsDao
@@ -44,7 +46,7 @@ public class MasterUserOperationsDao
         boolean isSet = false;
         if (user == null)
         {
-            throw new UserException("User not present");
+            throw new UserException(MASTER_NOT_FOUND);
         }
         user.setPreferredPassword(preferredPassword);
         isSet = database.merge(user).isPresent();

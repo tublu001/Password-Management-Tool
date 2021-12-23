@@ -3,8 +3,8 @@ package com.epam.view;
 import com.epam.dao.MasterUsersOperationsDao;
 import com.epam.exceptions.UserException;
 import com.epam.model.User;
-import com.epam.service.password_operations.PasswordOperations;
 import com.epam.service.UserLoginValidation;
+import com.epam.service.password_operations.PasswordOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Scanner;
+
+import static com.epam.utility.constants.DUPLICATE_USER;
+import static com.epam.utility.constants.MASTER_NOT_FOUND;
 
 @Service
 public class MasterCrudMenuImpl implements MasterCrudMenu
@@ -46,7 +49,7 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
             LOGGER.info("\nMaster User created");
         } else
         {
-            throw new UserException("Failed.. Master already present in database..");
+            throw new UserException(DUPLICATE_USER);
         }
         return user;
     }
@@ -66,7 +69,7 @@ public class MasterCrudMenuImpl implements MasterCrudMenu
 
         if (!masterUsersOperationsDao.isMasterPresent(userName))
         {
-            throw new UserException("User Not Present");
+            throw new UserException(MASTER_NOT_FOUND);
         }
         LOGGER.info("\n\nEnter your (Master) password: ");
         String password = input.nextLine();

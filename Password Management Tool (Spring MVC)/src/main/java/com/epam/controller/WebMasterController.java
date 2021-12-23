@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
+import static com.epam.utility.constants.MASTER_NOT_FOUND;
+
 @Controller
 @RequestMapping("PMT")
 public class WebMasterController
@@ -53,9 +55,9 @@ public class WebMasterController
         try
         {
             Optional<User> userOptional = userLoginValidation.validateMaster(username, password);
-            userOptional.orElseThrow(() -> new UserException("User not present in database"));
+            userOptional.orElseThrow(() -> new UserException(MASTER_NOT_FOUND));
             userId = userOptional.get().getUserId();
-            modelAndView.addObject("user", masterUsersOperationsDao.getUser(userId).orElseThrow(() -> new UserException("User not found!!!")));
+            modelAndView.addObject("user", getMasterUserBySessionId());
             modelAndView.setViewName("accountCrudMenu");
         } catch (UserException e)
         {
@@ -87,17 +89,22 @@ public class WebMasterController
     }
 
     @RequestMapping("logout")
-    public ModelAndView logout()
+    public ModelAndView logout() throws UserException
     {
         ModelAndView modelAndView = new ModelAndView();
         String userName = null;
         if (userId != null)
         {
-            userName = masterUsersOperationsDao.getUser(userId).get().getUserName();
+            userName = getMasterUserBySessionId().getUserName();
             modelAndView.addObject("successMessage", "Logged out of (" + userName + ")... ");
         }
         userId = null;
         modelAndView.setViewName("masterLogin");
         return modelAndView;
+    }
+
+    private User getMasterUserBySessionId() throws UserException
+    {
+        return masterUsersOperationsDao.getUser(userId).orElseThrow(() -> new UserException(MASTER_NOT_FOUND));
     }
 }

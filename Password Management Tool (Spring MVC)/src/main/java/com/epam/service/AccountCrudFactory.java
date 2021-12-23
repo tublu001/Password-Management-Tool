@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.epam.utility.constants.INVALID_INPUT;
+
 @Service
 public class AccountCrudFactory
 {
@@ -30,7 +32,7 @@ public class AccountCrudFactory
             LOGGER.info("Thank you... Signing Out...");
         } else
         {
-            throw new UserException("Invalid Input! Try again...");
+            throw new UserException(INVALID_INPUT);
         }
 
         return tempObj;

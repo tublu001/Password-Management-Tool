@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static com.epam.utility.constants.INVALID_APP;
+
 @Service
 public class DeleteAccountCredential implements UserAccountCrudOperation
 {
@@ -31,7 +33,7 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
         String appName = input.nextLine();
         if (!accountCredentialOperationsDao.isAppName(Optional.ofNullable(user), appName))
         {
-            throw new UserException("Invalid AppName");
+            throw new UserException(INVALID_APP);
         }
         LOGGER.info("Application Found : " + appName);
         LOGGER.info("\n\nEnter your (Master) password: ");

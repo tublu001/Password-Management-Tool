@@ -12,6 +12,8 @@ import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static com.epam.utility.constants.DUPLICATE_GROUP;
+
 @Service
 public class GroupCrudOperations implements AccountCrudGroup
 {
@@ -29,7 +31,7 @@ public class GroupCrudOperations implements AccountCrudGroup
         String groupName = input.nextLine();
         if (groupOperationsDao.isGroupAvailable(Optional.ofNullable(user), groupName))
         {
-            throw new UserException("Group already exists in Database!!!");
+            throw new UserException(DUPLICATE_GROUP);
         }
         return groupName;
     }
