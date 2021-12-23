@@ -114,7 +114,7 @@ public class GroupOperationsDao
         }
         user.getAccounts().forEach(account ->
         {
-            if (groupName.equals(account.getAccountGroup()))
+            if (groupName.equals(account.getGroupName()))
             {
                 LOGGER.info(count.incrementAndGet() + ". " + account);
             }
@@ -138,9 +138,9 @@ public class GroupOperationsDao
         {
             user.getAccounts().forEach(account ->
             {
-                if (oldGroupName.equals(account.getAccountGroup()))
+                if (oldGroupName.equals(account.getGroupName()))
                 {
-                    account.setAccountGroup(newGroupName);
+                    account.setGroupName(newGroupName);
                 }
             });
         }

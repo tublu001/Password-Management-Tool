@@ -4,6 +4,8 @@
 package com.epam.model;
 
 import com.epam.service.password_operations.PreferredPassword;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -49,5 +51,10 @@ public @Data class User
         this.preferredPassword = preferredPassword;
     }
 
+    @JsonManagedReference
+    public List<UserAccount> getAccounts()
+    {
+        return accounts;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.epam.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public @Data class UserAccount
     private String appName;
     private String url;
     private String password;
-    private String accountGroup = "Undefined";
+    private String groupName = "Undefined";
 
     @ManyToOne
     @JoinColumn(name = "id")
@@ -31,8 +32,25 @@ public @Data class UserAccount
         this.appName = appName;
         this.url = url;
         this.password = password;
-        this.accountGroup = group;
+        this.groupName = group;
         this.user = user;
     }
 
+    @Override
+    public String toString()
+    {
+        return "UserAccount{" +
+                "id=" + id +
+                ", appName='" + appName + '\'' +
+                ", url='" + url + '\'' +
+                ", password='" + password + '\'' +
+                ", groupName='" + groupName + '\'' +
+                '}';
+    }
+
+    @JsonBackReference
+    public User getUser()
+    {
+        return user;
+    }
 }

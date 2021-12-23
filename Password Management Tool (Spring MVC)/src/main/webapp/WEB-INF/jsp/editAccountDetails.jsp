@@ -11,7 +11,7 @@
             <label>Enter password : </label>
             <input type="password"  name="password" value="${account.password}" required>
             <label>Enter Group Name : </label>
-            <input type="text" name="groupName" value="${account.accountGroup}" required>
+            <input type="text" name="groupName" value="${account.groupName}" required>
 
             <button type="reset" class="cancelbtn"><b>Clear</b></button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             <button type="submit"><b>Update</b></button><br>

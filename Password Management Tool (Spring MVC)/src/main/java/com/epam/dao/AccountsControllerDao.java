@@ -15,7 +15,7 @@ public interface AccountsControllerDao
 
     void showAccount(UserAccount account);
 
-    boolean remove(Optional<User> user, String appName, String masterPassword) throws UserException;
+    boolean removeAccount(Optional<User> user, String appName, String masterPassword) throws UserException;
 
     Optional<UserAccount> getAccountByAppName(Optional<User> user, String appName) throws UserException;
 

@@ -23,7 +23,7 @@
                             <tr>
                              <td><b> <c:out value="${account.appName}" ></c:out> </b></td>
                              <td><b> <c:out value="${account.url}" ></c:out> </b></td>
-                             <td><b> <c:out value="${account.accountGroup}" ></c:out> </b></td>
+                             <td><b> <c:out value="${account.groupName}" ></c:out> </b></td>
                              <td>
                                  <a href="editAccountCredential?appName=${account.appName}" ><i class="fas fa-edit" style="font-size:20px;color:black;"></i></a> &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp
                                  <a href="deleteAccountCredential?appName=${account.appName}" ><i class="fas fa-trash-alt" style="font-size:20px;color:black;"></i></a>

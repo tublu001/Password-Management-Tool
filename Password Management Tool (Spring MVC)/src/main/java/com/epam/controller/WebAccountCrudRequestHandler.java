@@ -114,7 +114,7 @@ public class WebAccountCrudRequestHandler
         try
         {
             User user = masterUsersOperationsDao.getUser(userId).get();
-            accountCredentialOperationsDao.remove(Optional.ofNullable(user), appName, passwordOperations.decryptPassword(user.getPassword()));
+            accountCredentialOperationsDao.removeAccount(Optional.ofNullable(user), appName, passwordOperations.decryptPassword(user.getPassword()));
         } catch (UserException e)
         {
             e.printStackTrace();

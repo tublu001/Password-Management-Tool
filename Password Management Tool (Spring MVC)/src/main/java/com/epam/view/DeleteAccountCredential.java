@@ -36,7 +36,7 @@ public class DeleteAccountCredential implements UserAccountCrudOperation
         LOGGER.info("Application Found : " + appName);
         LOGGER.info("\n\nEnter your (Master) password: ");
         String masterPassword = input.nextLine();
-        accountCredentialOperationsDao.remove(Optional.ofNullable(user), appName, masterPassword);
+        accountCredentialOperationsDao.removeAccount(Optional.ofNullable(user), appName, masterPassword);
         return database.merge(user);
     }
 

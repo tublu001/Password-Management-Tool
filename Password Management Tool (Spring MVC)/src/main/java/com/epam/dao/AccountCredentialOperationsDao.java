@@ -106,7 +106,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     }
 
     @Override
-    public boolean remove(Optional<User> user, String appName, String masterPassword) throws UserException
+    public boolean removeAccount(Optional<User> user, String appName, String masterPassword) throws UserException
     {
         boolean isDeleted;
         user.orElseThrow(()-> new UserException("User not present!!!"));
@@ -120,7 +120,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
         }
         Optional<UserAccount> optionalUserAccount = getAccountByAppName(user, appName);
         UserAccount account = optionalUserAccount.orElseThrow(() -> new UserException("Invalid Account detail"));
-        String groupToBeDeleted = account.getAccountGroup();
+        String groupToBeDeleted = account.getGroupName();
         if (user.get().getAccounts().remove(account))
         {
             deleteGroupIfContainsNoAccounts(user.get(), groupToBeDeleted);
@@ -141,7 +141,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
     {
         long numberOfAccountInGroup = user.getAccounts()
                 .stream()
-                .filter(dbAccountGroup -> dbAccountGroup.getAccountGroup().equals(groupToBeDeleted))
+                .filter(dbAccountGroup -> dbAccountGroup.getGroupName().equals(groupToBeDeleted))
                 .count();
         if (numberOfAccountInGroup < 1L && !groupOperationsDao.remove(user, groupToBeDeleted))
         {
@@ -223,7 +223,7 @@ public class AccountCredentialOperationsDao implements AccountsControllerDao
 
         UserAccount existingAccount = getAccountByAppName(Optional.ofNullable(user), userAccountDTO.getAppName()).orElseThrow(() -> new UserException("Account not found!!!"));
 
-        String existingGroup = existingAccount.getAccountGroup();
+        String existingGroup = existingAccount.getGroupName();
         ModelMapper mapper = new ModelMapper();
         mapper.map(userAccountDTO, existingAccount);
         existingAccount.setUser(user);
