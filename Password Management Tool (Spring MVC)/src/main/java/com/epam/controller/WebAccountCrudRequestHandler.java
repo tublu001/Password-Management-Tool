@@ -13,6 +13,7 @@ import com.epam.service.password_operations.PasswordOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -86,6 +87,7 @@ public class WebAccountCrudRequestHandler
     }
 
     @PostMapping("renameGroupName")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView renameGroupName(String oldGroupName, String newGroupName)
     {
         ModelAndView modelAndView = new ModelAndView();
@@ -109,6 +111,7 @@ public class WebAccountCrudRequestHandler
     }
 
     @GetMapping("deleteAccountCredential")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView deleteAccountCredential(String appName) throws UserException
     {
         ModelAndView modelAndView = new ModelAndView();
@@ -153,6 +156,7 @@ public class WebAccountCrudRequestHandler
 
 
     @GetMapping("editAccountCredential")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView editAccountCredential(String appName)
     {
         ModelAndView modelAndView = new ModelAndView();
@@ -171,6 +175,7 @@ public class WebAccountCrudRequestHandler
     }
 
     @PostMapping("editAccount")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView editAccountCredential(UserAccountDTO userAccountDTO)
     {
         ModelAndView modelAndView = new ModelAndView();

@@ -293,3 +293,5 @@ p
 @src/test/java/com/epam/controller/WebAccountCrudFactoryTest.java,0\b\0b581e15579da9218ab74ac33817871dda9c5083
 s
 Csrc/main/java/com/epam/controller/WebAccountCrudRequestHandler.java,0\0\00920bcf9e5a5eafd11cbf0b47a0c753e3daf231
+r
+Bsrc/main/java/com/epam/rest_controller/WebUserAccountsRestAPI.java,6\5\650ac548b903b7f80ec74911e8e3a7896d2374c2

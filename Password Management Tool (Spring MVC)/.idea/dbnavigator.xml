@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="e9946a02-5e0d-4254-b438-618c39232e1e">
-        <schema name="pmtdb" object-types="table, constraint, index, column, dataset trigger" />
+        <schema name="pmtdb" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>
@@ -36,11 +36,7 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" object-ref="schemas/pmtdb/tables/user_accounts" />
-      <object connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" object-ref="schemas/pmtdb/tables/master_users" />
-      <object connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" object-ref="schemas/pmtdb/tables/user_groups" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="e9946a02-5e0d-4254-b438-618c39232e1e" />
@@ -49,6 +45,7 @@
     <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.user_accounts" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.master_users" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.user_groups" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.auth_user_group" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e9946a02-5e0d-4254-b438-618c39232e1e" dataset="pmtdb.auth_user" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">

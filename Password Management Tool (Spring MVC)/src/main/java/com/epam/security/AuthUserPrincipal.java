@@ -4,8 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 public class AuthUserPrincipal implements UserDetails
 {
@@ -15,19 +14,54 @@ public class AuthUserPrincipal implements UserDetails
      */
     private static final long serialVersionUID = 1L;
     private AuthUser authUser;
+    private List<AuthGroup> authGroups;
 
-
-    public AuthUserPrincipal(AuthUser authUser)
+    public AuthUserPrincipal(AuthUser authUser, List<AuthGroup> authGroups)
     {
         super();
         this.authUser = authUser;
+        this.authGroups = authGroups;
+    }
+
+    public AuthUser getUser()
+    {
+        return authUser;
+    }
+
+    public void setUser(AuthUser authUser)
+    {
+        this.authUser = authUser;
+    }
+
+    public List<AuthGroup> getAuthGroups()
+    {
+        return authGroups;
+    }
+
+    public void setAuthGroups(List<AuthGroup> authGroups)
+    {
+        this.authGroups = authGroups;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
 
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        Optional<List<AuthGroup>> optionalAuthGroups = Optional.of(authGroups);
+
+        Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
+
+        if (optionalAuthGroups.isPresent())
+        {
+            authGroups.forEach(group ->
+            {
+                grantedAuthorities.add(new SimpleGrantedAuthority(group.getAuthGroup()));
+            });
+        }
+
+        System.out.println(grantedAuthorities);
+
+        return grantedAuthorities;
     }
 
     @Override
