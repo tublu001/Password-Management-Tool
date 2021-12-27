@@ -1,3 +1,7 @@
-/target/
-/.idea/
 /.settings/
+*.scss
+*.xml
+/.idea/sonarlint/
+/.idea/libraries/
+/.idea/codeStyles/
+/.idea/
