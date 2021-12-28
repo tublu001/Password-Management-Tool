@@ -1,15 +1,0 @@
-
-;
-java:S5786"Remove this 'public' modifier.(Òäüı8¤í©ÀÜ/
-;
-java:S5785H"Use assertEquals instead.(óÎ·Íúÿÿÿÿ8¦í©ÀÜ/
-9
-java:S5785P"Use assertNotEquals instead.(¤€Ş¶8¦í©ÀÜ/
-;
-java:S5785W"Use assertEquals instead.(óÎ·Íúÿÿÿÿ8¦í©ÀÜ/
-;
-java:S5785Y"Use assertEquals instead.(Èİ©³ûÿÿÿÿ8§í©ÀÜ/
-;
-java:S5785`"Use assertEquals instead.(óÎ·Íúÿÿÿÿ8§í©ÀÜ/
->
-java:S5785b"Use assertNotEquals instead.(¤Í„¸úÿÿÿÿ8§í©ÀÜ/

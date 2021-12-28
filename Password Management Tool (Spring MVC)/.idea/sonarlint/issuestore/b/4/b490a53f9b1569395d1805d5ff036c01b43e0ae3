@@ -1,13 +1,0 @@
-
-SWeb:UnsupportedTagsInHtml5Check"(Remove this deprecated "center" element.(æÜÂ£
-MWeb:TableWithoutCaptionCheck" Add a description to this table.(¿‰˜ÿÿÿÿÿ
-l Web:TableHeaderHasIdOrScopeCheck
-";Add either an 'id' or a 'scope' attribute to this <th> tag.(Ÿ¢Âµúÿÿÿÿ
-g Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(û¶šº
-g Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(Ñ’©©
-l Web:TableHeaderHasIdOrScopeCheck";Add either an 'id' or a 'scope' attribute to this <th> tag.(¼¡™¬ÿÿÿÿÿ
-FWeb:BoldAndItalicTagsCheck"!Replace this <b> tag by <strong>.(¼ÍïP
-GWeb:BoldAndItalicTagsCheck"!Replace this <b> tag by <strong>.(öå…Ê
-LWeb:BoldAndItalicTagsCheck"!Replace this <b> tag by <strong>.(Ê¢“©ûÿÿÿÿ
-HWeb:BoldAndItalicTagsCheck"Replace this <i> tag by <em>.(–Ü„êûÿÿÿÿ
-CWeb:BoldAndItalicTagsCheck"Replace this <i> tag by <em>.(àœÉ
