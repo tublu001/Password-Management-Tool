@@ -1,0 +1,13 @@
+com\epam\application\Application.class
+com\epam\model\Library.class
+com\epam\repository\BookRepository.class
+com\epam\model\Book.class
+com\epam\DTO\BookDto.class
+com\epam\service\BookServicesImpl.class
+com\epam\model\User.class
+com\epam\DTO\LibraryDto.class
+com\epam\exceptions\WebRequestExceptionHandler.class
+com\epam\controller\BookController.class
+com\epam\DTO\UserDto.class
+com\epam\exceptions\UserException.class
+com\epam\service\BookServices.class

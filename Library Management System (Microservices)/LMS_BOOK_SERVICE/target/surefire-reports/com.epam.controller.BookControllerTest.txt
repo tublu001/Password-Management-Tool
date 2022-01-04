@@ -1,0 +1,39 @@
+-------------------------------------------------------------------------------
+Test set: com.epam.controller.BookControllerTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 7, Errors: 1, Skipped: 0, Time elapsed: 1.396 s <<< FAILURE! - in com.epam.controller.BookControllerTest
+testAllBooks  Time elapsed: 0.058 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<406>
+	at com.epam.controller.BookControllerTest.testAllBooks(BookControllerTest.java:36)
+
+testSaveBook  Time elapsed: 0.026 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<415>
+	at com.epam.controller.BookControllerTest.testSaveBook(BookControllerTest.java:56)
+
+testDeleteBookIfBookNotExist  Time elapsed: 0.008 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<404> but was:<406>
+	at com.epam.controller.BookControllerTest.testDeleteBookIfBookNotExist(BookControllerTest.java:103)
+
+testUpdateBook  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<415>
+	at com.epam.controller.BookControllerTest.testUpdateBook(BookControllerTest.java:75)
+
+testBookByIdIfBookNotExist  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<404> but was:<200>
+	at com.epam.controller.BookControllerTest.testBookByIdIfBookNotExist(BookControllerTest.java:49)
+
+testSaveBookIfBookAlreadyExist  Time elapsed: 0.008 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+Checked exception is invalid for this method!
+Invalid: com.epam.exceptions.UserException
+	at com.epam.controller.BookControllerTest.testSaveBookIfBookAlreadyExist(BookControllerTest.java:62)
+
+testDeleteBook  Time elapsed: 0.006 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<406>
+	at com.epam.controller.BookControllerTest.testDeleteBook(BookControllerTest.java:94)
+
+testUpdateBookIfBookNotExist  Time elapsed: 0.005 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<404> but was:<415>
+	at com.epam.controller.BookControllerTest.testUpdateBookIfBookNotExist(BookControllerTest.java:86)
+
