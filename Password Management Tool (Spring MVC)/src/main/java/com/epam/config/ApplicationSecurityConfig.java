@@ -60,13 +60,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-		http.csrf().disable().authorizeRequests().anyRequest().authenticated().and().httpBasic();
+//		http.csrf().disable().authorizeRequests().anyRequest().authenticated().and().httpBasic();
 //        http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated();
 //        http.csrf().disable();
 //        http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll().anyRequest().authenticated().and().httpBasic();
-//        http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll().anyRequest().authenticated()
-//                .and().exceptionHandling().and().sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()
+                .anyRequest().authenticated().and().httpBasic()
+                .and().exceptionHandling().and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static com.epam.utility.constants.APP_NOT_FOUND;
+import static com.epam.utility.Constants.APP_NOT_FOUND;
 
 @Service
 public class RetrieveAccountPassword implements UserAccountCrudOperation

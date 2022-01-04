@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static com.epam.utility.constants.DUPLICATE_USER;
-import static com.epam.utility.constants.MASTER_NOT_FOUND;
+import static com.epam.utility.Constants.DUPLICATE_USER;
+import static com.epam.utility.Constants.MASTER_NOT_FOUND;
 
 @Service
 public class MasterCrudMenuImpl implements MasterCrudMenu

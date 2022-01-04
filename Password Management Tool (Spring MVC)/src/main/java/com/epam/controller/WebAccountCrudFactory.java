@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import static com.epam.controller.WebMasterController.userId;
-import static com.epam.utility.constants.MASTER_NOT_FOUND;
+import static com.epam.utility.Constants.MASTER_NOT_FOUND;
 
 @Controller
 @RequestMapping("PMT")
@@ -27,46 +27,58 @@ public class WebAccountCrudFactory
     @PostMapping("UserCrudForm")
     public ModelAndView UserCrudMaster(String selection) throws UserException
     {
-        ModelAndView mv = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
 
         String result = "success";
         LOGGER.info(selection);
+        try
+        {
+            if(selection == null)
+            {
+                throw new UserException("Select any option above");
+            }
+            if (selection.equals("storeNewAccount"))
+            {
+                modelAndView.setViewName("storeNewAccount");
+                modelAndView.addObject("user", getMasterUserBySessionId());
+                return modelAndView;
+            } else if (selection.equals("retrieveAllAccounts"))
+            {
+                modelAndView.setViewName("retrieveAllAccounts");
+                modelAndView.addObject("user", getMasterUserBySessionId());
+                return modelAndView;
+            } else if (selection.equals("retrieveGroupWiseAccounts"))
+            {
+                modelAndView.setViewName("retrieveGroupWiseAccounts");
+                modelAndView.addObject("user", getMasterUserBySessionId());
+                return modelAndView;
+            } else if (selection.equals("retrieveAccountPassword"))
+            {
+                modelAndView.setViewName("retrieveAccountPassword");
+                modelAndView.addObject("user", getMasterUserBySessionId());
+                return modelAndView;
+            } else if (selection.equals("renameGroupName"))
+            {
+                modelAndView.setViewName("renameGroupName");
+                modelAndView.addObject("user", getMasterUserBySessionId());
+                return modelAndView;
+            } else if (selection.equals("setPasswordPreference"))
+            {
+                modelAndView.setViewName("setPasswordPreference");
+                modelAndView.addObject("user", getMasterUserBySessionId());
+                return modelAndView;
+            } else
+            {
 
-        if (selection.equals("storeNewAccount"))
-        {
-            mv.setViewName("storeNewAccount");
-            mv.addObject("user", getMasterUserBySessionId());
-            return mv;
-        } else if (selection.equals("retrieveAllAccounts"))
-        {
-            mv.setViewName("retrieveAllAccounts");
-            mv.addObject("user", getMasterUserBySessionId());
-            return mv;
-        } else if (selection.equals("retrieveGroupWiseAccounts"))
-        {
-            mv.setViewName("retrieveGroupWiseAccounts");
-            mv.addObject("user", getMasterUserBySessionId());
-            return mv;
-        } else if (selection.equals("retrieveAccountPassword"))
-        {
-            mv.setViewName("retrieveAccountPassword");
-            mv.addObject("user", getMasterUserBySessionId());
-            return mv;
-        } else if (selection.equals("renameGroupName"))
-        {
-            mv.setViewName("renameGroupName");
-            mv.addObject("user", getMasterUserBySessionId());
-            return mv;
-        } else if (selection.equals("setPasswordPreference"))
-        {
-            mv.setViewName("setPasswordPreference");
-            mv.addObject("user", getMasterUserBySessionId());
-            return mv;
-        } else
-        {
-
+            }
         }
-        return mv;
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            modelAndView.addObject("userException", e.getMessage());
+            modelAndView.setViewName("accountCrudMenu");
+        }
+        return modelAndView;
     }
 
     private User getMasterUserBySessionId() throws UserException

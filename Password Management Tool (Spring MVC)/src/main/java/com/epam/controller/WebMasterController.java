@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
-import static com.epam.utility.constants.MASTER_NOT_FOUND;
+import static com.epam.utility.Constants.MASTER_NOT_FOUND;
 
 @Controller
 @RequestMapping("PMT")

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.epam.utility.constants.INVALID_INPUT;
+import static com.epam.utility.Constants.INVALID_INPUT;
 
 @Service
 public class AccountCrudFactory

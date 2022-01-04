@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.epam.utility.constants.*;
+import static com.epam.utility.Constants.*;
 
 @Service
 public class MasterUsersOperationsDao

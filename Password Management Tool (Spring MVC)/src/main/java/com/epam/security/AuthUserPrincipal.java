@@ -58,9 +58,6 @@ public class AuthUserPrincipal implements UserDetails
                 grantedAuthorities.add(new SimpleGrantedAuthority(group.getAuthGroup()));
             });
         }
-
-        System.out.println(grantedAuthorities);
-
         return grantedAuthorities;
     }
 

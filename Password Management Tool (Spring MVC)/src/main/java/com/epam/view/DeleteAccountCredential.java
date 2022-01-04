@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static com.epam.utility.constants.INVALID_APP;
+import static com.epam.utility.Constants.INVALID_APP;
 
 @Service
 public class DeleteAccountCredential implements UserAccountCrudOperation

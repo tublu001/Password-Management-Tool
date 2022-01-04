@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static com.epam.utility.constants.INVALID_SELECTION;
+import static com.epam.utility.Constants.INVALID_SELECTION;
 
 @Service
 public class RenameGroupName implements UserAccountCrudOperation

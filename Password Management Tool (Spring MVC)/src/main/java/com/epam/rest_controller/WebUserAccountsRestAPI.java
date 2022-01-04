@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.epam.utility.constants.MASTER_NOT_FOUND;
+import static com.epam.utility.Constants.MASTER_NOT_FOUND;
 
 
 @RestController

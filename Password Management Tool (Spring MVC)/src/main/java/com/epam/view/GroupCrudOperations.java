@@ -12,7 +12,7 @@ import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static com.epam.utility.constants.DUPLICATE_GROUP;
+import static com.epam.utility.Constants.DUPLICATE_GROUP;
 
 @Service
 public class GroupCrudOperations implements AccountCrudGroup

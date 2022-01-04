@@ -1,6 +1,6 @@
 package com.epam.utility;
 
-public final class constants
+public final class Constants
 {
     public static final String MASTER_NOT_FOUND = "Master not found!!!";
     public static final String APP_NOT_FOUND = "App not found!!!";

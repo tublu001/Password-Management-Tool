@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Scanner;
 
-import static com.epam.utility.constants.*;
+import static com.epam.utility.Constants.*;
 
 @Service
 public class AcquireAccountCredentials implements UserAccountCrudOperation

@@ -17,8 +17,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Master_Users")
-public @Data
-class User
+public @Data class User
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
