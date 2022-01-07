@@ -25,7 +25,7 @@ import java.util.ArrayList;
 @EnableTransactionManagement
 @EntityScan(basePackages = "com.epam")
 @EnableSwagger2
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.epam")
 public class Application
 {
     public static void main(String[] args)

@@ -1,5 +1,4 @@
 com\epam\Controller\LibraryBooksController.class
-com\epam\Service\BookServicesImpl$2.class
 com\epam\Service\LibraryServicesImpl.class
 com\epam\Service\UserServicesImpl$4.class
 com\epam\DTO\BookDto.class
@@ -9,8 +8,9 @@ com\epam\exceptions\WebRequestExceptionHandler.class
 com\epam\exceptions\ErrorApi.class
 com\epam\DTO\UserDto.class
 com\epam\Repository\LibraryRepository.class
-com\epam\Service\BookServicesImpl.class
+com\epam\Service\UsersClient.class
 com\epam\DTO\UserLibraryRecordsDto.class
+com\epam\Service\BooksClient.class
 com\epam\Service\UserServicesImpl$2.class
 com\epam\application\Application.class
 com\epam\Service\LibraryServices.class
@@ -18,13 +18,10 @@ com\epam\Service\UserServicesImpl$3.class
 com\epam\Service\UserServicesImpl.class
 com\epam\Controller\LibraryUsersController.class
 com\epam\Model\Book.class
-com\epam\Service\BookServicesImpl$3.class
 com\epam\Model\User.class
-com\epam\Service\BookServicesImpl$4.class
 com\epam\DTO\LibraryDto.class
 com\epam\Controller\LibraryController.class
 com\epam\Service\UserServicesImpl$1.class
 com\epam\utils\Constants.class
 com\epam\exceptions\UserException.class
 com\epam\Service\UserServices.class
-com\epam\Service\BookServicesImpl$1.class

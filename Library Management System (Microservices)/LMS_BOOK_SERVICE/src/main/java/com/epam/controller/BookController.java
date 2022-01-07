@@ -6,6 +6,7 @@ import com.epam.model.Book;
 import com.epam.service.BookServices;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,13 @@ public class BookController
     @Autowired
     BookServices bookServices;
 
+    @Autowired
+    Environment env;
+
     @GetMapping
     public ResponseEntity<List<Book>> getBooks()
     {
+        System.out.println(env.getProperty("local.server.port"));
         return new ResponseEntity<>(bookServices.getBooks(), HttpStatus.OK);
     }
 

@@ -17,31 +17,31 @@ import java.util.List;
 public class LibraryServicesImpl implements LibraryServices
 {
     @Autowired
-    BookServices bookServices;
+    BooksClient booksClient;
     @Autowired
-    UserServices userServices;
+    UsersClient usersClient;
     @Autowired
     LibraryRepository libraryRepository;
 
     @Override
     public UserLibraryRecordsDto getUserByUserName(String userName) throws UserException
     {
-        return getUserLibraryRecordsDto( userServices.getUserByUserName(userName).getBody());
+        return getUserLibraryRecordsDto( usersClient.getUser(userName).getBody());
     }
 
     @Override
     public List<UserLibraryRecordsDto> deleteUserByUserName(String userName) throws UserException
     {
         libraryRepository.deleteAll(libraryRepository.findByUserName(userName));
-        userServices.deleteUserByUserName(userName);
+        usersClient.deleteUser(userName);
         return defaulterUsers();
     }
 
     @Override
     public List<UserLibraryRecordsDto> issueBook(String userName, Long bookId) throws UserException
     {
-        BookDto book =  bookServices.getBookById(bookId).getBody();
-        UserDto user =  userServices.getUserByUserName(userName).getBody();
+        BookDto book =  booksClient.getBook(bookId).getBody();
+        UserDto user =  usersClient.getUser(userName).getBody();
         if (libraryRepository.findByUserNameAndBookId(userName, bookId).isPresent())
         {
             throw new UserException("Book already issued by " + userName);
@@ -61,7 +61,7 @@ public class LibraryServicesImpl implements LibraryServices
         Library existingRecord = libraryRepository.findByUserNameAndBookId(userName, bookId).orElseThrow(() -> new UserException("Record Not Found"));
         System.out.println(existingRecord);
         libraryRepository.delete(existingRecord);
-        defaulterUsers().forEach(System.out::println);
+        libraryRepository.findAll();
         return defaulterUsers();
     }
 
@@ -70,7 +70,7 @@ public class LibraryServicesImpl implements LibraryServices
         ModelMapper modelMapper = new ModelMapper();
         List<UserLibraryRecordsDto> userLibraryRecordsDtoList = new ArrayList<>();
 
-        userServices.getUsers().getBody().forEach(user ->
+        usersClient.getUsers().getBody().forEach(user ->
         {
             if (!libraryRepository.findByUserName(user.getUserName()).isEmpty())
             {
@@ -87,7 +87,7 @@ public class LibraryServicesImpl implements LibraryServices
         UserDto userDto = null;
         try
         {
-            userDto = (UserDto) userServices.getUserByUserName(user.getUserName()).getBody();
+            userDto = usersClient.getUser(user.getUserName()).getBody();
         }catch(Exception e){e.printStackTrace();}
 
         newRecord.setName(userDto.getName());
@@ -97,7 +97,7 @@ public class LibraryServicesImpl implements LibraryServices
                 {
                     try
                     {
-                        newRecord.getIssuedBooks().add((BookDto) bookServices.getBookById(records.getBookId()).getBody());
+                        newRecord.getIssuedBooks().add(booksClient.getBook(records.getBookId()).getBody());
                     }catch (Exception e){e.printStackTrace();}
                 }
         );

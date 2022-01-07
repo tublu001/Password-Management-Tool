@@ -2,6 +2,7 @@ package com.epam.Controller;
 
 import com.epam.DTO.UserDto;
 import com.epam.Service.UserServices;
+import com.epam.Service.UsersClient;
 import com.epam.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,13 @@ public class LibraryUsersController
     @Autowired
     UserServices UserServices;
 
+    @Autowired
+    UsersClient usersClient;
+
     @GetMapping("users")
     public ResponseEntity<List<UserDto>> getUsers()
     {
-        return UserServices.getUsers();
+        return usersClient.getUsers();
     }
 
 //    @GetMapping("users/{userName}")
@@ -37,12 +41,12 @@ public class LibraryUsersController
     @PostMapping("users")
     public ResponseEntity<List<UserDto>> storeUsers(@RequestBody UserDto UserDto) throws UserException
     {
-        return UserServices.addUser(UserDto);
+        return usersClient.storeUsers(UserDto);
     }
 
     @PutMapping("users/{userName}")
     public ResponseEntity<List<UserDto>> updateUsers(@PathVariable String userName, @RequestBody UserDto updatedUserDto) throws UserException
     {
-        return UserServices.updateUserByUserName(userName, updatedUserDto);
+        return usersClient.updateUsers(userName, updatedUserDto);
     }
 }
